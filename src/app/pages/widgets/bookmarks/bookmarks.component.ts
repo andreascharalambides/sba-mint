@@ -17,9 +17,7 @@ interface BookmarkArticle {
   selector: 'Bookmarks',
   imports: [TranslocoPipe, NgComponentOutlet],
   templateUrl: './bookmarks.component.html',
-  host: {
-    class: 'flex flex-col h-full w-full'
-  }
+  styleUrls: ['./bookmarks.component.css']
 })
 export class BookmarksComponent {
   cdr = inject(ChangeDetectorRef);
@@ -49,7 +47,7 @@ export class BookmarksComponent {
     if (!this.bookmarks()) return;
 
     const list: BookmarkArticle[] = [];
-    this.bookmarks().forEach(async bookmark => {
+    for (const bookmark of this.bookmarks()) {
       const q = this.appStore.getQueryByName(bookmark.queryName || '');
       const name = !!q ? q.name : this.defaultQueryName();
       const query: Partial<Query> = {
@@ -64,7 +62,7 @@ export class BookmarksComponent {
       list.push({ bookmark, article });
       this.bookmarksArticle.set(list);
       this.cdr.detectChanges();
-    });
+    }
   }
 
   getArticleType(docType: string): Type<unknown> {

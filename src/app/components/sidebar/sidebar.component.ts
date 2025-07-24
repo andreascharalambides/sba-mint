@@ -1,5 +1,5 @@
 import { Component, computed, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
 import { getState } from '@ngrx/signals';
 
@@ -11,8 +11,9 @@ import { APP_FEATURES } from '../../tokens';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [RouterLink, SidebarComponent, SidebarItemComponent],
-  templateUrl: './sidebar.component.html'
+  imports: [RouterLink, RouterLinkActive, SidebarComponent, SidebarItemComponent],
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.css']
 })
 export class AppSidebarComponent {
   cn = cn;

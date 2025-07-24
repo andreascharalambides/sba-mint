@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-
 import { provideTranslocoScope } from '@jsverse/transloco';
+
 import { PageHeaderComponent } from '@sinequa/ui';
+
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { AppSidebarComponent } from '../../components/sidebar/sidebar.component';
 
@@ -10,20 +11,13 @@ import { AppSidebarComponent } from '../../components/sidebar/sidebar.component'
   selector: 'widgets-layout',
   imports: [RouterOutlet, PageHeaderComponent, NavbarComponent, AppSidebarComponent],
   template: `
-    <app-sidebar class="fixed top-0 h-full" />
+    <app-navbar class="navbar" />
 
-    <PageHeader class="fixed top-0 z-1 ml-8 w-full bg-white">
-      <app-navbar class="layout-search py-4" />
-    </PageHeader>
-
-    <app-sidebar class="fixed top-0 h-full" />
-
-    <div class="mt-16">
-      <router-outlet />
-    </div>
+    <router-outlet />
   `,
+  styleUrls: ['./layout.css'],
   host: {
-    class: 'flex flex-col h-full w-full'
+    class: 'widgets-layout'
   },
   providers: [provideTranslocoScope('bookmarks', 'saved-searches', 'recent-searches', 'collections', 'alerts')]
 })

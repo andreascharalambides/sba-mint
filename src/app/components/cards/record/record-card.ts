@@ -50,6 +50,7 @@ const HIDDEN_METADATA = ['web', 'htm', 'html', 'xhtm', 'xhtml', 'mht', 'mhtml', 
     CardMenuComponent
   ],
   templateUrl: './record-card.html',
+  styleUrls: ['./record-card.css'],
   hostDirectives: [
     {
       directive: SelectArticleOnClickDirective,

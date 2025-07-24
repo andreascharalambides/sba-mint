@@ -41,6 +41,7 @@ import {
     AvatarFallbackComponent
   ],
   templateUrl: './user-menu.html',
+  styleUrls: ['./user-menu.css'],
   providers: [provideTranslocoScope('user-menu')]
 })
 export class UserMenuComponent {

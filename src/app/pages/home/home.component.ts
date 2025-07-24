@@ -65,6 +65,7 @@ const homeFeatures: HomeTab[] = [
   selector: 'app-home',
   imports: [NgComponentOutlet, TranslocoPipe, SearchInputComponent, AutocompleteComponent, UserMenuComponent, TabsComponent, TabComponent, AppSidebarComponent],
   templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css'],
   host: {
     class: 'layout-search h-screen',
     '[attr.drawer-opened]': 'drawerOpened'

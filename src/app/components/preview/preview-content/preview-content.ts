@@ -4,44 +4,14 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { getState } from '@ngrx/signals';
 import { PreviewData } from '@sinequa/atomic';
 import { PreviewService, SelectionStore } from '@sinequa/atomic-angular';
-import { PreviewActionsComponent } from './actions';
+import { PreviewActionsComponent } from './actions/actions';
 
 @Component({
   selector: 'preview-content',
   standalone: true,
   imports: [TranslocoPipe, PreviewActionsComponent],
-  template: `
-    <!-- Use hidden and absolute positioning -->
-    @if (canLoadIframe()) {
-      <section class="flex h-full flex-col gap-4">
-        <preview-actions class="flex justify-end" />
-
-        <iframe
-          #preview
-          frameborder="0"
-          class="h-full flex-grow"
-          [src]="previewUrl()"
-          (load)="onLoaded()"
-          title="{{ 'preview.documentPreview' | transloco }}"
-          [attr.aria-label]="'preview.documentPreview' | transloco"></iframe>
-      </section>
-    } @else if (previewUrlError()) {
-      <section class="flex h-full w-full items-center justify-center">
-        <p class="text-center text-xl">
-          <i class="fa-fw far fa-image text-secondary mb-6 text-6xl"></i><br />
-          {{ 'previewUnavailable' | transloco }}
-        </p>
-      </section>
-    }
-  `,
-  styles: [
-    `
-      :host {
-        display: block;
-        height: 100%;
-      }
-    `
-  ]
+  templateUrl: './preview-content.html',
+  styleUrls: ['./preview-content.css']
 })
 export class PreviewContentComponent {
   iframe = viewChild<ElementRef<HTMLIFrameElement>>('preview');
@@ -105,7 +75,11 @@ export class PreviewContentComponent {
   onLoaded() {
     const { previewHighlights } = getState(this.selectionStore);
     if (previewHighlights?.snippetId !== undefined) {
-      const message: any = { action: 'select', id: `snippet_${previewHighlights!.snippetId}`, usePassageHighlighter: true };
+      const message: any = {
+        action: 'select',
+        id: `snippet_${previewHighlights!.snippetId}`,
+        usePassageHighlighter: true
+      };
       this.previewService.sendMessage(message);
     }
     this.loading.set(false);

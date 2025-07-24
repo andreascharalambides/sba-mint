@@ -1,0 +1,121 @@
+/* Host styles */
+:host {
+  font-family: var(--font-body);
+  display: block;
+  height: 100%;
+}
+
+/* Preview Section Container */
+.preview-section {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Actions Container */
+.actions-container {
+  width: 5%;
+  position: absolute;
+  bottom: var(--spacing-2xl);
+  right: var(--spacing-2xl);
+  z-index: 10;
+}
+
+/* Preview Iframe */
+.preview-iframe {
+  height: 100%;
+  flex-grow: 1;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--color-background);
+  box-shadow: var(--shadow-md);
+}
+
+/* Error Container */
+.error-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background: var(--glass-background);
+  backdrop-filter: var(--glass-backdrop-blur);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--grays-07);
+}
+
+/* Error Text */
+.error-text {
+  text-align: center;
+  font-size: var(--text-3xl);
+  line-height: 1.4;
+  color: var(--grays-02);
+  font-family: var(--font-body);
+  font-weight: var(--font-medium);
+  margin-top: var(--spacing-lg);
+}
+
+/* Error Icon */
+.error-icon {
+  font-weight: var(--font-regular);
+  width: 1.25em; /* fa-fw equivalent - fixed width */
+  text-align: center;
+  color: var(--grays-04);
+  margin-bottom: var(--spacing-xl);
+  font-size: 4rem;
+  line-height: 1;
+  transition: var(--transition-normal);
+}
+
+.error-icon::before {
+  font-family: 'Font Awesome 6 Pro';
+  font-weight: var(--font-regular);
+  content: '\f03e'; /* fa-image */
+}
+
+/* Error state hover effect */
+.error-container:hover .error-icon {
+  color: var(--grays-02);
+  transform: scale(1.05);
+}
+
+.error-container:hover .error-text {
+  color: var(--grays-01);
+}
+
+/* Loading state for preview iframe */
+.preview-iframe.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .actions-container {
+    width: auto;
+    bottom: var(--spacing-lg);
+    right: var(--spacing-lg);
+  }
+
+  .error-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .error-text {
+    font-size: var(--text-xl);
+    margin-top: var(--spacing-md);
+  }
+}
+
+/* Accessibility improvements */
+.error-container {
+  role: alert;
+  aria-live: polite;
+}
+
+.preview-iframe:focus {
+  outline: 2px solid var(--primary-02);
+  outline-offset: 2px;
+}

@@ -17,15 +17,15 @@
   @if (hasExternalLink()) {
     <button variant="ghost" size="icon" [attr.title]="'preview.copyPreviewLink' | transloco" (click)="copyLink()">
       @if (copied) {
-        <circle-check class="size-4" />
+        <circle-check class="icon-size" />
       } @else {
-        <link-icon class="size-4" />
+        <link-icon class="icon-size" />
       }
     </button>
   }
 
   @if (navConfig.showSearchButton && article()) {
-    <div class="ml-auto *:flex *:items-center *:gap-2 *:text-nowrap">
+    <div class="search-button-container">
       @if (isExtended()) {
         <button variant="outline" (click)="drawerStack.extend()">
           <i class="fa-fw far fa-eye-slash"></i>

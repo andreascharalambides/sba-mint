@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Main suggestions container with tabs inside */
+.suggestions-list {
+  z-index: 10;
+  max-height: 20rem;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background-color: var(--glass-background);
+  backdrop-filter: var(--glass-backdrop-blur);
+  padding: var(--spacing-sm);
+  font-family: var(--font-body);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Options container for tabs */
+.options {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+  width: 100%;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Individual tab containers */
+.saved-tab,
+.recent-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.saved-tab.active,
+.recent-tab.active {
+  border-bottom-color: #4d6165;
+  background: none;
+}
+
+.saved-tab:not(.active),
+.recent-tab:not(.active) {
+  border-bottom-color: #677b7f;
+  border-bottom-width: 1px;
+}
+
+/* Tab content container */
+.tab-content {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+/* Icon sizing */
+.icon-16 {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.icon-20 {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.icon-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.icon-svg path {
+  transition: fill 0.3s ease;
+}
+
+/* Tab text styling */
+.tab-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #677b7f;
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  line-height: 0;
+  flex-shrink: 0;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.tab-text.active {
+  font-weight: 600;
+  color: #4d6165;
+  background: none;
+}
+
+.tab-text p {
+  display: block;
+  line-height: normal;
+  white-space: pre;
+}
+
+/* Suggestions content area */
+.suggestions-content {
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Category header */
+.category-header {
+  color: var(--color-muted-foreground);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--text-sm);
+  line-height: 1rem;
+  font-weight: var(--font-semibold);
+}
+
+/* Suggestion item container */
+.suggestion-item {
+  display: flex;
+  width: 100%;
+  align-items: baseline;
+  gap: 0.5rem;
+  color: var(--grays-00);
+  font-size: var(--text-sm);
+  font-weight: var(--font-regular);
+
+  &:hover {
+    background: none;
+    font-weight: var(--font-medium);
+  }
+
+  ::ng-deep svg {
+    color: var(--grays-00);
+  }
+}
+
+/* Suggestion text */
+.suggestion-text {
+  overflow: hidden; /* line-clamp-1 */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis; /* text-ellipsis */
+}
+
+/* Highlight match */
+.highlight-match {
+  font-weight: 700; /* font-bold */
+}
+
+/* No suggestions message */
+.no-suggestions {
+  color: var(--color-muted-foreground); /* text-muted-foreground */
+  padding-left: var(--spacing-sm);
+  padding-right: var(--spacing-sm);
+  width: 100%;
+  overflow: hidden;
+  display: -webkit-box;
+}

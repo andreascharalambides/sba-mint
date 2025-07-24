@@ -1,0 +1,111 @@
+<div class="layout-search">
+  <div class="content-container">
+    <div class="heading-container">
+      <!-- Title Section -->
+      <div class="title-section">
+        <i class="fa-fw fas fa-inbox title-icon" aria-hidden></i>
+        <h1 class="title-text">{{ 'myCollections' | transloco }}</h1>
+      </div>
+
+      <!-- Create Form Section -->
+      @if (creating()) {
+        <div class="input-form">
+          <input
+            #createInput
+            type="text"
+            class="input-field"
+            autocomplete="off"
+            spellcheck="false"
+            [attr.aria-label]="'collections.collectionName' | transloco"
+            [attr.placeholder]="'collections.collectionName' | transloco"
+            [ngModel]="newCollectionName()"
+            (ngModelChange)="newCollectionName.set($event)"
+            (keydown.enter)="postCreate()"
+            (keydown.escape)="$event.preventDefault(); onCreate()" />
+
+          <button class="action-button cancel-button" tabindex="0" [attr.title]="'collections.cancelCreation' | transloco" (click)="onCreate()">
+            <i class="fas fa-times"></i>
+          </button>
+
+          <button class="action-button save-button" tabindex="1" [attr.title]="'collections.save' | transloco" (click)="postCreate()">
+            <i class="fas fa-check"></i>
+          </button>
+        </div>
+      } @else {
+        <div class="create-button-container">
+          <button class="create-button" tabindex="0" [attr.title]="'collections.createCollection' | transloco" (click)="onCreate()">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+      }
+    </div>
+
+    @if (tmpCollections.length > 0) {
+      <ul class="collections-list" cdkDropList [cdkDropListData]="tmpCollections" (cdkDropListDropped)="dropped($event)">
+        @for (collection of tmpCollections; track $index) {
+          @if (modifiedIndex() === undefined || modifiedIndex() !== $index) {
+            <li class="collection-item" role="listitem" cdkDrag (click)="onClick(collection)">
+              <i class="fas fa-inbox collection-icon"></i>
+              <span class="collection-name">{{ collection.name }}</span>
+
+              <button
+                class="edit-button"
+                [attr.title]="'Edit collection' | transloco"
+                [attr.aria-label]="'Edit collection' | transloco"
+                (click)="$event.stopPropagation(); onEdit(collection, $index)">
+                <i class="fa-fw far fa-pen-to-square edit-icon" aria-hidden></i>
+              </button>
+
+              <button
+                class="delete-button"
+                [attr.title]="'Delete collection' | transloco"
+                [attr.aria-label]="'Delete collection' | transloco"
+                (click)="$event.stopPropagation(); deleteCollection(collection, $index)">
+                <i class="fa-fw far fa-trash delete-icon" aria-hidden></i>
+              </button>
+
+              <button class="drag-button" [attr.title]="'Drag to reorder' | transloco" [attr.aria-label]="'Drag to reorder' | transloco">
+                <i class="fa-fw far fa-bars drag-icon" aria-hidden></i>
+              </button>
+            </li>
+          } @else {
+            <div class="input-form">
+              <input
+                class="input-field"
+                #renameInput
+                type="text"
+                autocomplete="off"
+                spellcheck="false"
+                [attr.aria-label]="'collections.collectionName' | transloco"
+                [attr.placeholder]="'collections.collectionName' | transloco"
+                [ngModel]="collectionName()"
+                (ngModelChange)="collectionName.set($event)"
+                (keydown.enter)="onBlur($event)"
+                (keydown.escape)="onBlur($event)"
+                (blur)="onBlur($event)" />
+
+              <button class="action-button cancel-button" tabindex="0" [attr.title]="'collections.cancelCreation' | transloco" (click)="onCancelEdit()">
+                <i class="fas fa-times"></i>
+              </button>
+
+              <button class="action-button save-button" tabindex="1" [attr.title]="'collections.save' | transloco" (click)="onSaveEdit()">
+                <i class="fas fa-check"></i>
+              </button>
+            </div>
+          }
+        }
+      </ul>
+    } @else {
+      <div class="no-records-container">
+        <div class="main-text">
+          <p>No collections found</p>
+        </div>
+        <div class="subtitle-text">
+          <p>Create a new collection to group and organize your saved articles</p>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+
+<delete-collection-dialog />

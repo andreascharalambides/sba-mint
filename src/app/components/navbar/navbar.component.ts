@@ -24,13 +24,16 @@ import { ButtonComponent, cn, PopoverComponent, PopoverContentComponent } from '
 import { AutocompleteComponent } from '../search-input/autocomplete/autocomplete.component';
 import { SearchInputComponent } from '../search-input/search-input.component';
 import { UserMenuComponent } from '../user-menu/user-menu';
+import { HttpClient } from '@angular/common/http';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 export type NavbarMenu = {
   display: string;
-  iconClass: string;
+  // iconClass: string;
   routerLink?: string;
   keepOnMouseLeave?: boolean;
   component?: Type<unknown>;
+  icon?: string;
 };
 
 @Component({
@@ -70,12 +73,32 @@ export class NavbarComponent {
   readonly drawerOpened = signal(false);
   readonly searchText = signal<string>('');
 
+  private readonly http = inject(HttpClient);
+  private readonly sanitizer = inject(DomSanitizer);
+
+  svgCache = new Map<string, SafeHtml>();
+
+  loadSvg(path: string): void {
+    if (!this.svgCache.has(path)) {
+      this.http.get(path, { responseType: 'text' }).subscribe(svg => {
+        // Remove the fixed fill to make it CSS-customizable
+        const modifiedSvg = svg.replace(/fill="#[^"]*"/g, 'fill="currentColor"');
+        this.svgCache.set(path, this.sanitizer.bypassSecurityTrustHtml(modifiedSvg));
+      });
+    }
+  }
+
+  getSvg(path: string): SafeHtml | null {
+    this.loadSvg(path); // Load if not cached
+    return this.svgCache.get(path) || null;
+  }
+
   protected readonly menus = signal<NavbarMenu[]>([
-    { display: 'recentSearches.label', iconClass: 'far fa-clock-rotate-left', routerLink: '/widgets/recent-searches', component: RecentSearchesComponent },
-    { display: 'bookmarks.label', iconClass: 'far fa-bookmark', routerLink: '/widgets/bookmarks', component: BookmarksComponent },
-    { display: 'collections.label', iconClass: 'far fa-inbox', routerLink: '/widgets/collections', component: CollectionsComponent },
-    { display: 'savedSearches.label', iconClass: 'far fa-star', routerLink: '/widgets/saved-searches', component: SavedSearchesComponent },
-    { display: 'alerts.label', iconClass: 'far fa-bell', component: AlertsComponent }
+    // { display: 'recentSearches.label', iconClass: 'far fa-clock-rotate-left', routerLink: '/widgets/recent-searches', component: RecentSearchesComponent },
+    { display: 'bookmarks.label', icon: './../../assets/icons/bookmark.svg', routerLink: '/widgets/bookmarks', component: BookmarksComponent },
+    { display: 'collections.label', icon: './../../assets/icons/collection.svg', routerLink: '/widgets/collections', component: CollectionsComponent },
+    // { display: 'savedSearches.label', iconClass: 'far fa-star', routerLink: '/widgets/saved-searches', component: SavedSearchesComponent },
+    { display: 'alerts.label', icon: './../../assets/icons/alert.svg', component: AlertsComponent }
   ]);
 
   private readonly transloco = inject(TranslocoService);

@@ -1,0 +1,34 @@
+::ng-deep preview-actions {
+  display: inline-flex;
+  padding: var(--spacing-sm);
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--primary-04);
+  background: var(--grays-08);
+}
+
+button {
+  transition: var(--transition-normal);
+  color: var(--primary-03);
+
+  &:hover {
+    color: var(--primary-01);
+    background: none;
+  }
+
+  i,
+  span i {
+    font-size: var(--text-lg);
+  }
+}
+
+/* Icon Stack Container */
+.icon-stack {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}

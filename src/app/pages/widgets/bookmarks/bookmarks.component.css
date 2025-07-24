@@ -1,0 +1,123 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100% !important;
+  width: 100%;
+  font-family: var(--font-body);
+}
+
+::ng-deep .layout-search {
+  height: 100%;
+  min-height: 0;
+}
+
+.content-container {
+  grid-column: span 2 / span 2;
+  grid-column-start: 2;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+
+  padding: var(--spacing-lg);
+  gap: var(--spacing-lg);
+
+  border-radius: var(--radius-lg);
+  background: var(--glass-background);
+  backdrop-filter: var(--glass-backdrop-blur);
+}
+
+/* Page title */
+.page-title-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  align-self: stretch;
+}
+
+.page-title {
+  color: var(--grays-00);
+  text-align: justify;
+  font-size: var(--text-2xl);
+  font-style: normal;
+  font-weight: var(--font-medium);
+  line-height: normal;
+  flex: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Title icon */
+.title-icon {
+  font-size: var(--text-2xl);
+  aspect-ratio: 1 / 1;
+  flex-shrink: 0;
+  color: var(--grays-00);
+}
+
+/* Bookmarks list */
+.bookmarks-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  overflow: auto;
+  overflow-x: hidden;
+  width: 100%;
+  min-height: 0;
+  flex: 1 0 0;
+  align-self: stretch;
+}
+
+.no-records {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-xl);
+  color: var(--grays-04);
+  font-style: italic;
+}
+
+/* Delete button */
+.delete-button {
+  color: var(--color-alert);
+  margin-inline-start: var(--spacing-xs);
+  transition: transform 0.125s ease-in-out;
+}
+
+.delete-button:hover {
+  transform: scale(1.25);
+}
+
+/* No Records */
+.no-records-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xl);
+}
+
+.main-text {
+  font-weight: var(--font-medium);
+  min-width: 100%;
+  position: relative;
+  flex-shrink: 0;
+  color: var(--primary-03);
+  font-size: var(--text-xl);
+  width: min-content;
+}
+
+.subtitle-text {
+  font-weight: var(--font-medium);
+  position: relative;
+  flex-shrink: 0;
+  color: var(--primary-04);
+  font-size: var(--text-sm);
+  min-width: 100%;
+  width: min-content;
+}

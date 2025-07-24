@@ -9,57 +9,8 @@ import { countFilters, RecentSearch, TranslocoDateImpurePipe, UserSettingsStore,
 @Component({
   selector: 'app-recent-searches',
   imports: [RouterModule, TranslocoPipe],
-  template: `
-    <div class="layout-search overflow-auto">
-      <div class="col-span-2 col-start-2">
-        <h1 class="mt-6 mb-4 flex items-center gap-2 text-2xl font-semibold">
-          <i class="fa-fw far fa-clock-rotate-left" aria-hidden></i>
-          {{ 'history' | transloco }}
-        </h1>
-
-        <ul class="flex flex-col">
-          @for (scope of history(); track $index) {
-            <li role="presentation" class="my-3 text-lg font-semibold capitalize">
-              {{ getDate(scope.date) }}
-            </li>
-
-            @for (search of scope.searches; track $index) {
-              <li
-                class="group grid grid-cols-[auto_20%_min-content] rounded-md p-1 hover:cursor-pointer hover:bg-blue-50"
-                role="link"
-                attr.data-href="{{ search.path || search.queryParams?.path }}"
-                [routerLink]="[search.path || search.queryParams?.path]"
-                [queryParams]="getQueryParams(search)">
-                <span class="ms-2">
-                  {{ search.display || search.label }}
-                </span>
-
-                <span class="text-gray-500">
-                  {{ 'in' | transloco }}
-
-                  <span class="font-semibold capitalize">
-                    {{ search.queryParams?.tab ?? 'all' }}
-                  </span>
-
-                  @if (search.filterCount) {
-                    ,
-                    <span class="font-semibold lowercase"> {{ search.filterCount }} {{ 'filters' | transloco }} </span>
-                  }
-                </span>
-
-                <button class="invisible text-red-500 group-hover:visible" (click)="remove($event, search)">
-                  <i class="fa-fw far fa-trash" aria-hidden></i>
-                </button>
-              </li>
-            }
-          }
-        </ul>
-      </div>
-    </div>
-  `,
-  host: {
-    class: 'flex flex-col h-full w-full'
-  },
+  templateUrl: './recent-searches.component.html',
+  styleUrls: ['./recent-searches.component.css'],
   providers: [TranslocoDateImpurePipe]
 })
 export class RecentSearchesComponent {
@@ -127,7 +78,7 @@ export class RecentSearchesComponent {
     // if today, add "Today - " in front of the formatted date
     if (d.toLocaleLowerCase() === 'today') {
       const langDate = getRelativeDate(this.transloco.getActiveLang(), date);
-      return `${langDate} - ${formattedDate}`;
+      return `${langDate}`;
     }
 
     return formattedDate || date;

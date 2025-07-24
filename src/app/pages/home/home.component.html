@@ -1,42 +1,24 @@
-<app-sidebar class="fixed top-0 h-full" />
-<app-user-menu class="absolute right-0 mt-4 pr-10" />
-<div class="col-span-2 col-start-2">
-  <header class="flex h-1/3">
-    <img class="mx-auto mt-auto mb-16 w-64" id="logo" alt="logo" />
+<!-- User menu container -->
+<div class="user-menu-container">
+  <app-user-menu class="user-menu" />
+</div>
+
+<!-- Main content -->
+<div class="content-container">
+  <!-- Logo section -->
+  <header class="logo-container">
+    <img class="logo-image" id="logo" alt="Company Logo" />
   </header>
 
-  <main class="flex h-[50vh] flex-col gap-16">
+  <!-- Search section -->
+  <main class="search-container">
     <app-search-input (debounced)="searchText.set($event)" (validated)="search($event)">
       <app-autocomplete [text]="searchText()" (onClick)="autocompleteItemClicked($event)" />
     </app-search-input>
-
-    <div class="flex max-h-full grow flex-col">
-      <tabs class="flex font-semibold" role="tablist" aria-label="widgets tabs">
-        @for (tab of tabs(); track tab.label) {
-          <tab
-            variant="selected2"
-            role="tab"
-            [value]="tab.label"
-            class="w-fit"
-            [attr.disabled]="tab.disabled ?? null"
-            [active]="selectedTabId() === $index"
-            (click)="selectTab(tab)"
-            (keydown.enter)="selectTab(tab)">
-            <i class="fa-fw {{ tab.iconClass }}" aria-hidden="true"></i>
-            {{ tab.label | transloco }}
-          </tab>
-        }
-      </tabs>
-
-      <div class="scrollbar-thin my-2 overflow-y-auto">
-        @for (tab of tabs(); track tab.label) {
-          <div [class.hidden]="selectedTabId() !== $index">
-            <ng-container *ngComponentOutlet="tab.component; inputs: tab.inputs" />
-          </div>
-        }
-      </div>
-
-      <hr class="border-neutral-300" />
-    </div>
   </main>
+</div>
+
+<!-- Bottom-bar container -->
+<div class="bottom-bar-container">
+  <app-sidebar />
 </div>

@@ -21,12 +21,13 @@ type Article = A & {
   providers: [provideTranslocoScope({ scope: 'preview' })],
   imports: [AssistantComponent, PreviewNavbarComponent, PreviewTabsComponent, PreviewHeaderComponent, PreviewContentComponent],
   templateUrl: './preview.html',
+  styleUrls: ['./preview.css'],
   host: {
     class: 'grow flex flex-col overflow-hidden'
   }
 })
 export class PreviewComponent {
-  public readonly previewData = input.required<PreviewData>();
+  public readonly previewData = input<PreviewData | null>(null);
   public readonly article = computed(() => this.previewData()?.record as Article);
 
   protected readonly locationSegments = computed(() => this.article().treepath[0]?.split('/')?.slice(1, -1));
@@ -84,11 +85,12 @@ export class PreviewComponent {
 
   constructor() {
     effect(() => {
-      if (!this.previewData()) return;
+      const previewData = this.previewData(); // Store the signal value
+      if (!previewData) return;
       this.cdr.detectChanges();
 
       // create a new query for the mini preview assistant
-      const { record } = this.previewData();
+      const { record } = previewData;
 
       this.miniPreviewQuery = {
         name: this.appStore.getDefaultQuery()?.name || '_query',
@@ -104,7 +106,8 @@ export class PreviewComponent {
     });
 
     effect(() => {
-      document.title = this.loading() ? 'Loading...' : this.article()?.title || 'Preview';
+      const article = this.article();
+      document.title = this.loading() ? 'Loading...' : article?.title || 'Preview';
     });
   }
 

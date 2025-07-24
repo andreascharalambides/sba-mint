@@ -1,0 +1,19 @@
+.icon-size {
+  width: var(--text-lg);
+  height: var(--text-lg);
+}
+
+.search-button-container {
+  margin-left: auto;
+}
+
+.search-button-container > * {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  white-space: nowrap;
+}
+
+::ng-deep menu {
+  padding: 0 !important;
+}

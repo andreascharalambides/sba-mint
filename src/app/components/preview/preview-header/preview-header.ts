@@ -15,24 +15,7 @@ type Article = A & {
   standalone: true,
   imports: [TranslocoPipe, TranslocoDateImpurePipe, ButtonComponent, DocumentLocatorComponent, MetadataComponent],
   templateUrl: './preview-header.html',
-  styles: [
-    `
-      tr {
-        display: grid;
-        grid-template-columns: 25% auto;
-        margin-bottom: --spacing(1);
-
-        th {
-          text-align: start;
-          color: var(--color-neutral-500);
-          font-weight: var(--font-medium);
-          font-size: var(--text-xs);
-          line-height: var(--text-xs--line-height);
-          align-self: center;
-        }
-      }
-    `
-  ]
+  styleUrls: ['./preview-header.css']
 })
 export class PreviewHeaderComponent {
   cn = cn;

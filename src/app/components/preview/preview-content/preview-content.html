@@ -1,0 +1,22 @@
+<!-- Use hidden and absolute positioning -->
+@if (canLoadIframe()) {
+  <section class="preview-section">
+    <preview-actions class="actions-container" />
+
+    <iframe
+      #preview
+      frameborder="0"
+      class="preview-iframe"
+      [src]="previewUrl()"
+      (load)="onLoaded()"
+      title="{{ 'preview.documentPreview' | transloco }}"
+      [attr.aria-label]="'preview.documentPreview' | transloco"></iframe>
+  </section>
+} @else if (previewUrlError()) {
+  <section class="error-container">
+    <p class="error-text">
+      <i class="error-icon"></i><br />
+      {{ 'previewUnavailable' | transloco }}
+    </p>
+  </section>
+}

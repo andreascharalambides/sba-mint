@@ -1,17 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 :host {
-  /* Hides cancel button from input that as type='search' */
   input[type='search']::-webkit-search-cancel-button {
     -webkit-appearance: none;
   }
 
   &:has([popover]:popover-open) {
+    position: relative;
     z-index: 5000;
     box-shadow: 0 0 0 max(100vh, 100vw) rgba(0, 0, 0, 0.3);
+    border-radius: var(--radius-lg);
+  }
+}
+/* Search container styles (from complex cn() expression) */
+.search-container {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-md);
+  color: var(--primary-00);
+  border: 1px solid var(--primary-04);
+  &:hover {
+    border: 1px solid var(--primary-02);
+  }
+  ::ng-deep input::placeholder {
+    color: var(--primary-03);
+    opacity: 1;
   }
 
-  [popover]::backdrop {
-    background-color: transparent;
-    backdrop-filter: none;
+  ::ng-deep svg {
+    color: var(--primary-00);
   }
 }
 
@@ -38,7 +54,45 @@
   left: anchor(left);
   margin: 0;
   padding: 0;
-  border-radius: 0 0 6px 6px;
+  border-radius: var(--radius-md);
+}
+
+/* Save button */
+.save-button.peer-disabled {
+  opacity: 0.5;
+}
+
+/* Save icon filled (fas fa-star) */
+.save-icon-filled {
+  width: 1.25em; /* fa-fw equivalent */
+  text-align: center; /* fa-fw equivalent */
+  font-weight: 900; /* fas */
+}
+
+/* Save icon outline (far fa-star) */
+.save-icon-outline {
+  width: 1.25em; /* fa-fw equivalent */
+  text-align: center; /* fa-fw equivalent */
+  font-weight: 400; /* far */
+}
+
+/* AI button */
+.ai-button {
+  margin: 0.25rem; /* m-1 */
+  height: 1.5rem; /* h-6 */
+  border-radius: 0.125rem; /* rounded-sm */
+  font-size: 0.75rem; /* text-xs */
+  line-height: 1rem; /* text-xs */
+  transition-property: all; /* transition */
+  transition-timing-function: ease-in; /* ease-in */
+}
+
+/* AI icon (fa-regular fa-sparkles) */
+.ai-icon {
+  width: 1.25em; /* fa-fw equivalent */
+  text-align: center; /* fa-fw equivalent */
+  font-weight: 400; /* fa-regular */
+  margin-inline-end: 0.25rem; /* me-1 */
 }
 
 .animate-save {

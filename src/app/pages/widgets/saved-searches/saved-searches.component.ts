@@ -18,9 +18,7 @@ type SavedSearch = S & {
   selector: 'SavedSearches',
   imports: [TranslocoPipe],
   templateUrl: './saved-searches.component.html',
-  host: {
-    class: 'flex flex-col h-full w-full'
-  }
+  styleUrls: ['./saved-searches.component.css']
 })
 export class SavedSearchesComponent {
   cdr = inject(ChangeDetectorRef);

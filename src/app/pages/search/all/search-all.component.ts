@@ -1,5 +1,5 @@
 import { NgComponentOutlet } from '@angular/common';
-import { Component, computed, effect, inject, input, signal, Type } from '@angular/core';
+import { Component, computed, effect, inject, input, signal, Type, viewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Placement } from '@floating-ui/dom';
 import { getState } from '@ngrx/signals';
@@ -7,7 +7,7 @@ import { injectInfiniteQuery } from '@tanstack/angular-query-experimental';
 import { lastValueFrom, map, Subscription, tap } from 'rxjs';
 
 import { MessageHandler } from '@sinequa/assistant/chat';
-import { Aggregation, Article, CCApp, isNotInputEvent, Query, QueryParams, Result as R } from '@sinequa/atomic';
+import { Aggregation, Article, CCApp, isNotInputEvent, PreviewData, Query, QueryParams, Result as R, Suggestion } from '@sinequa/atomic';
 import {
   AggregationsStore,
   AppStore,
@@ -19,6 +19,8 @@ import {
   NoResultComponent,
   PrincipalStore,
   QueryParamsStore,
+  SavedSearch,
+  SavedSearchesService,
   SearchFeedbackComponent,
   SearchService,
   SelectionService,
@@ -33,6 +35,9 @@ import { AssistantComponent } from '../../../components/assistant/assistant';
 import { CardSkeleton } from '../../../components/cards/record/skeleton';
 import { getComponentsForDocumentType } from '../../../registry/document-type-registry';
 import { APP_FEATURES } from '../../../tokens';
+import { PreviewComponent } from '../../../components/preview/preview';
+import { AutocompleteComponent } from '../../../components/search-input/autocomplete/autocomplete.component';
+import { SearchInputComponent } from '../../../components/search-input/search-input.component';
 
 type Result = R & { nextPage?: number; previousPage?: number };
 type QueryParamsProps = {
@@ -59,9 +64,13 @@ type QueryParamsProps = {
     NavbarTabsComponent,
     ButtonComponent,
     AssistantComponent,
-    CardSkeleton
+    CardSkeleton,
+    PreviewComponent,
+    AutocompleteComponent,
+    SearchInputComponent
   ],
   templateUrl: './search-all.component.html',
+  styleUrls: ['./search-all.component.css'],
   styles: [
     `
       app-overview-people:not(.hidden) + app-overview-slides {
@@ -76,9 +85,9 @@ type QueryParamsProps = {
     `
   ],
   host: {
-    class: 'layout-search',
-    '(keydown.enter)': 'handleKeydownEnter($event)',
-    '[attr.drawer-opened]': 'drawerOpened() || false'
+    class: 'main-container'
+    // '(keydown.enter)': 'handleKeydownEnter($event)',
+    // '[attr.drawer-opened]': 'drawerOpened() || false'
   }
 })
 export class SearchAllComponent {
@@ -91,8 +100,10 @@ export class SearchAllComponent {
   protected readonly s = input<string>(); // sort
   protected readonly f = input<string>(); // filters
   protected readonly n = input<string>(); // query param
-
-  protected readonly drawerOpened = signal(false);
+  private readonly savedSearchesService = inject(SavedSearchesService);
+  readonly showInput = input<boolean>(true);
+  readonly searchInput = viewChild(SearchInputComponent);
+  // protected readonly drawerOpened = signal(false);
 
   protected readonly result = signal<Result | undefined>(undefined);
   protected readonly queryText = signal<string>('');
@@ -102,7 +113,7 @@ export class SearchAllComponent {
   protected readonly showAssistant = signal<boolean>(false);
 
   protected readonly searchService = inject(SearchService);
-  protected readonly drawerStack = inject(DrawerStackService);
+  // protected readonly drawerStack = inject(DrawerStackService);
   protected readonly selectionService = inject(SelectionService);
 
   protected readonly appFeatures = inject(APP_FEATURES);
@@ -118,6 +129,8 @@ export class SearchAllComponent {
   protected aggregations: Aggregation[];
 
   protected readonly sub = new Subscription();
+
+  readonly searchText = signal<string>('');
 
   currentKeys = signal<QueryParams | undefined>(undefined);
 
@@ -163,8 +176,7 @@ export class SearchAllComponent {
             if (id) {
               result.records?.forEach(article => {
                 if (article.id === id) {
-                  this.selectionService.setCurrentArticle(article);
-                  this.drawerStack.open();
+                  this.selectedArticle.set(article);
                 }
               });
             }
@@ -218,7 +230,7 @@ export class SearchAllComponent {
    *
    * @returns The computed placement value of type `Placement`.
    */
-  position = computed<Placement>(() => (this.drawerOpened() ? 'bottom-end' : 'bottom-start'));
+  position = computed<Placement>(() => 'bottom-start');
 
   /**
    * If query has rowCount greater than 0, we have results, otherwise no results found.
@@ -301,11 +313,11 @@ export class SearchAllComponent {
       }
     });
 
-    this.sub.add(this.drawerStack.isOpened.subscribe(state => this.drawerOpened.set(state)));
+    // this.sub.add(this.drawerStack.isOpened.subscribe(state => this.drawerOpened.set(state)));
 
     this.conditionalMessageHandler.set('SkillsTester', { handler: message => this.handleConditionalDisplayMessage(message), isGlobalHandler: false });
 
-    effect(() => this.onDrawerOpenedChange(this.drawerOpened()));
+    // effect(() => this.onDrawerOpenedChange(this.drawerOpened()));
   }
 
   ngOnDestroy(): void {
@@ -384,5 +396,60 @@ export class SearchAllComponent {
 
   protected beforeSearch(query: Query): void {
     this.assistantQuery = { ...this.assistantQuery, ...query };
+  }
+
+  protected readonly selectedArticle = signal<Article | null>(null);
+  protected readonly selectedArticlePreviewData = computed(() => {
+    const article = this.selectedArticle();
+    if (!article) return null;
+    return { record: article } as PreviewData;
+  });
+  protected search(text: string): void {
+    this.queryParamsStore.patch({ text });
+
+    // ! we need to remove the page parameter from the query params when new search is performed
+    this.router.navigate(['search'], { queryParams: { q: text, p: undefined }, queryParamsHandling: 'replace' });
+  }
+
+  autocompleteItemClicked(item: Suggestion): void {
+    if (!item.display) {
+      console.error('No display property found on item', item);
+      return;
+    }
+
+    this.searchInput()?.closeAutocompletePopover();
+
+    this.search(item.display!);
+  }
+
+  /**
+   * Occurs when the search input is validated by the user
+   * (e.g. by pressing enter or clicking on a search button)
+   *
+   * @param text The validated text
+   */
+  protected validated(text: string): void {
+    this.search(text);
+  }
+
+  /**
+   * Occurs when the search input is updated by the user and debounced by the system
+   *
+   * @param text The debounced text
+   */
+  protected debounced(text: string): void {
+    this.searchText.set(text);
+  }
+
+  /**
+   * Occurs when the user clicks on the save button
+   */
+  protected saveSearch(savedSearch?: SavedSearch): void {
+    if (savedSearch) {
+      const index = this.savedSearchesService.getSavedSearches().indexOf(savedSearch);
+      if (index !== -1) {
+        this.savedSearchesService.deleteSavedSearch(index);
+      }
+    }
   }
 }

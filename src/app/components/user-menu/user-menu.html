@@ -1,33 +1,34 @@
 <menu>
-  <Avatar class="cursor-pointer">
-    <AvatarImage src="" width="44" height="44" alt="avatar" />
-    <AvatarFallback class="text-muted-foreground bg-gray-200 text-sm font-semibold">
+  <Avatar class="avatar-container">
+    <AvatarImage src="" width="50" height="50" alt="avatar" />
+    <AvatarFallback class="avatar-fallback">
       @if (initials()) {
         <span>{{ initials() }}</span>
       } @else {
-        <UserRound class="size-7 p-1" />
+        <UserRound class="avatar-icon" />
+        <i class="fa-solid fa-chevron-down arrow-down"></i>
       }
     </AvatarFallback>
   </Avatar>
 
   <!-- min-w-max used to display all the content -->
-  <MenuContent position="bottom-start" class="min-w-max">
+  <MenuContent position="bottom-start" class="menu-content-main">
     <menu position="left-start" class="dropdown-content">
       <menuitem>
-        <span class="grow">{{ 'userMenu.selectLanguage' | transloco }}</span>
-        <ChevronRight class="size-4" />
+        <span class="menu-grow">{{ 'userMenu.selectLanguage' | transloco }}</span>
+        <ChevronRight class="menu-icon" />
       </menuitem>
 
       <!-- max with to fit content but min width is 10rem (160px) -->
-      <MenuContent position="left-start" class="max-w-fit min-w-40">
-        <menuitem (click)="changeLanguage('en')" class="justify-between">
+      <MenuContent position="left-start" class="language-menu-content">
+        <menuitem (click)="changeLanguage('en')" class="language-item">
           <span>{{ 'userMenu.english' | transloco }}</span>
-          <FlagEnglish class="size-4" />
+          <FlagEnglish class="flag-icon" />
         </menuitem>
 
-        <menuitem (click)="changeLanguage('fr')" class="justify-between">
+        <menuitem (click)="changeLanguage('fr')" class="language-item">
           <span>{{ 'userMenu.french' | transloco }}</span>
-          <FlagFrench class="size-4" />
+          <FlagFrench class="flag-icon" />
         </menuitem>
       </MenuContent>
     </menu>
@@ -54,15 +55,14 @@
 
     <MenuSeparator />
 
-    <menuitem (click)="openSinequa()" class="justify-between">
-      <img class="size-4" src="assets/logo/small.svg" alt="sinequa logo" />
-      <span class="grow">{{ 'userMenu.aboutSinequa' | transloco }}</span>
-      <i class="fa-fw far fa-arrow-up-right-from-square text-[12px]"></i>
+    <menuitem (click)="openSinequa()" class="sinequa-item">
+      <img class="sinequa-logo" src="assets/logo/small.svg" alt="sinequa logo" />
+      <span class="menu-grow">{{ 'userMenu.aboutSinequa' | transloco }}</span>
     </menuitem>
 
     <menuitem (click)="handleLogout()">
       <i class="fa-fw fal fa-arrow-right-from-bracket text-[16px]"></i>
-      <span class="grow">{{ 'logout' | transloco }} {{ user().fullName || user().name }}</span>
+      <span class="menu-grow">{{ 'logout' | transloco }} {{ user().fullName || user().name }}</span>
     </menuitem>
   </MenuContent>
 </menu>

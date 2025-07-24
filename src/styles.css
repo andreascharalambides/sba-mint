@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 @plugin "@tailwindcss/typography";
 
 /* css overrides */
@@ -19,6 +21,7 @@
 html,
 body {
   height: 100%;
+  font-family: 'Poppins', serif;
 }
 html {
   overflow-x: hidden;
@@ -28,53 +31,123 @@ body {
 }
 
 @theme {
-  --font-display: 'Segoe UI', 'SF Pro Text', 'Aria', 'sans-serif';
+  --font-display: 'Poppins', 'Segoe UI', 'SF Pro Text', 'Aria', 'sans-serif';
+  --font-body: 'Poppins', 'Segoe UI', 'SF Pro Text', 'Aria', 'sans-serif';
 
   --text-xxs: 0.625rem;
 
   --drawer-box-shadow: -10px 0px 10px rgba(0, 0, 0, 0.1);
 
-  --logo-small: url('assets/logo/small.svg');
-  --logo-large: url('assets/logo/large.svg');
+  --logo-small: url('assets/logo/logo_new.png');
+  --logo-large: url('assets/logo/logo_new.png');
   --logo-alt-text: 'Sinequa logo';
 
+  /* Gray Scale */
+  --grays-00: #1b3439;
+  --grays-01: #354b4f;
+  --grays-02: #4d6165;
+  --grays-03: #677b7f;
+  --grays-04: #819295;
+  --grays-05: #9aa8aa;
+  --grays-06: #b3c0c2;
+  --grays-07: #cdd7d8;
+  --grays-08: #e5ebec;
+  --grays-09: #f2f5f6;
+
+  /* Primary Colors */
+  --primary-00: #074956;
+  --primary-01: #054b57;
+  --primary-02: #376f79;
+  --primary-03: #69939a;
+  --primary-04: #9bb7bc;
+  --primary-05: #cddbdd;
+
+  /* CARD AND GLASSMORPHISM EFFECTS */
+  --card-background: rgba(255, 255, 255, 0.6);
+  --glass-background: rgba(255, 255, 255, 0.6);
+  --glass-backdrop-blur: blur(10px);
+  --glass-border: rgba(155, 183, 188, 0.2);
+
+  /* BORDER RADIUS SYSTEM */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* SPACING SYSTEM */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+
+  /* TYPOGRAPHY SCALE */
+  --text-xs: 10px;
+  --text-sm: 12px;
+  --text-base: 14px;
+  --text-lg: 16px;
+  --text-xl: 18px;
+  --text-2xl: 20px;
+  --text-3xl: 24px;
+
+  /* FONT WEIGHTS */
+  --font-light: 300;
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* SHADOWS */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+
+  /* TRANSITIONS */
+  --transition-fast: 0.15s ease-in-out;
+  --transition-normal: 0.2s ease-in-out;
+  --transition-slow: 0.3s ease-in-out;
+
+  /* EXISTING THEME COLORS - Updated to use new palette where appropriate */
   --color-backdrop: rgba(0, 0, 0, 0.4);
   --color-background: #ffffff;
-  --color-foreground: #23272e;
-  --color-card: #ffffff;
-  --color-card-foreground: #1c1c1c;
+  --color-foreground: var(--grays-00);
+  --color-card: var(--card-background);
+  --color-card-foreground: var(--grays-00);
   --color-popover: #ffffff;
-  --color-popover-foreground: #1c1c1c;
+  --color-popover-foreground: var(--grays-00);
 
-  --color-primary: #0084ff;
-  --color-primary-hover: #0056ff;
-  --color-primary-active: #0040bf;
+  --color-primary: var(--primary-02);
+  --color-primary-hover: var(--primary-01);
+  --color-primary-active: var(--primary-00);
   --color-primary-foreground: #ffffff;
 
-  --color-secondary: #526077;
-  --color-secondary-hover: #434e61;
-  --color-secondary-active: #3a4252;
+  --color-secondary: var(--grays-02);
+  --color-secondary-hover: var(--grays-01);
+  --color-secondary-active: var(--grays-00);
   --color-secondary-foreground: #ffffff;
 
-  --color-muted: #f6f7f9;
-  --color-muted-foreground: #8695aa;
+  --color-muted: var(--grays-09);
+  --color-muted-foreground: var(--grays-02);
 
-  --color-accent: #f2f2f2;
-  --color-accent-foreground: #1c1c1c;
+  --color-accent: var(--grays-08);
+  --color-accent-foreground: var(--grays-00);
 
-  --color-destructive: #ff2a1d;
-  --color-destructive-hover: #c8180d;
-  --color-destructive-active: #a5180f;
-  --color-destructive-disable: #ffc8c5;
-  --color-destructive-foreground: #ffffff;
+  --color-destructive: #a83434;
+  --color-destructive-hover: #8c1c1c;
+  --color-destructive-active: #750b0b;
+  --color-destructive-disable: #cb8585;
+  --color-destructive-foreground: #fde3e3;
 
-  --color-border: #f6f7f9;
-  --color-input: #d5d9e2;
-  --color-ring: #1a73e8;
+  --color-border: var(--grays-07);
+  --color-input: var(--grays-06);
+  --color-ring: var(--primary-02);
 
-  --color-alert: #ff2a1d;
-  --color-success: #2ed73f;
-  --color-highlight: #fff7ab;
+  --color-alert: #a83434;
+  --color-success: #469144;
+  --color-highlight: #fbd995;
 
   --shadow-dropdown: 6px 4px 20px 0px rgba(0, 0, 0, 0.2);
   --shadow-article: 4px 4px 12px 0px rgba(0, 0, 0, 0.15);
@@ -144,7 +217,7 @@ body {
   /* layout */
   .layout-search {
     display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-columns: 30% 20% 20% 30%;
     transition: 250ms ease-out;
     &[drawer-opened='true'] {
       grid-template-columns: 4% 24% 25% 48%;
@@ -174,6 +247,43 @@ body {
     overflow-wrap: break-word;
     word-wrap: break-word;
     word-break: break-word;
+  }
+
+  .glass-card {
+    background: var(--glass-background);
+    backdrop-filter: var(--glass-backdrop-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .glass-navbar {
+    background: var(--glass-border);
+    backdrop-filter: var(--glass-backdrop-blur);
+    border-radius: var(--radius-md);
+  }
+
+  .text-primary-dark {
+    color: var(--grays-00);
+  }
+
+  .text-primary-medium {
+    color: var(--grays-02);
+  }
+
+  .text-primary-light {
+    color: var(--grays-04);
+  }
+
+  .bg-primary-gradient {
+    background: linear-gradient(135deg, var(--primary-04), var(--primary-02));
+  }
+
+  .transition-smooth {
+    transition: var(--transition-normal);
+  }
+
+  .shadow-glass {
+    box-shadow: var(--shadow-md);
   }
 }
 
@@ -228,4 +338,37 @@ sq-chat-v3 {
   .sq-chat-message-actions {
     z-index: 1 !important;
   }
+}
+
+/* Scrollbar */
+* {
+  scrollbar-width: thin; /* narrow bar */
+  scrollbar-color: rgba(120, 120, 120, 0.3) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(120, 120, 120, 0.3);
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(120, 120, 120, 0.6);
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background-color: rgba(120, 120, 120, 1);
+}
+
+b {
+  font-weight: var(--font-weight-semibold);
 }

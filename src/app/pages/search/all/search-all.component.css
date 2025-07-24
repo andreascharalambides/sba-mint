@@ -1,0 +1,321 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+::ng-deep app-search-all {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  column-gap: var(--spacing-xl);
+  width: 100% !important;
+  height: 100%;
+  min-height: 0;
+}
+
+@media (max-width: 1024px) {
+  ::ng-deep app-search-all {
+    gap: var(--spacing-xl);
+  }
+}
+
+@media (max-width: 768px) {
+  ::ng-deep app-search-all {
+    gap: var(--spacing-xl);
+  }
+}
+
+.skeleton-header {
+  margin-top: var(--spacing-lg);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.skeleton-header button:not(:last-child) {
+  margin-right: var(--spacing-sm);
+}
+
+.skeleton-header button:nth-last-child(2) {
+  margin-right: auto; /* push the last button to the right */
+}
+
+.skeleton-button-small {
+  height: 2.25rem;
+  width: 6rem;
+  opacity: 0.15;
+  background: var(--grays-07);
+  border-radius: var(--radius-sm);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-button-medium {
+  height: 2.25rem;
+  width: 7rem;
+  opacity: 0.15;
+  background: var(--grays-07);
+  border-radius: var(--radius-sm);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-export {
+  margin-top: var(--spacing-2xl);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.skeleton-list {
+  margin-top: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  grid-column: 1 / -1; /* Span both columns when loading */
+}
+
+.sticky-header {
+  height: fit-content;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  background: var(--glass-background);
+  backdrop-filter: var(--glass-backdrop-blur);
+}
+
+.navbar-tabs {
+  margin-bottom: var(--spacing-lg);
+  display: block;
+}
+
+.filters-bar {
+  height: fit-content;
+  width: 100%;
+}
+
+.did-you-mean {
+  color: var(--color-alert);
+  /*padding: var(--spacing-sm) 0;*/
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+}
+
+.sort-export {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-xs);
+  position: absolute;
+  bottom: var(--spacing-lg);
+  right: var(--spacing-lg);
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-md);
+  background: var(--glass-border);
+  backdrop-filter: var(--glass-backdrop-blur);
+  z-index: 10;
+  transition: var(--transition-normal);
+
+  ::ng-deep sort-selector {
+    &:hover {
+      background: none !important;
+    }
+  }
+}
+
+.sort-export:has(+ ul > li.no-records) {
+  display: none;
+}
+
+.assistant-container {
+  position: relative;
+  border-radius: var(--radius-sm);
+  border: 1px solid #fed7aa; /* border-orange-100 */
+  padding: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+  background: var(--glass-background);
+  backdrop-filter: var(--glass-backdrop-blur);
+  transition: var(--transition-normal);
+}
+
+.assistant-container.collapsed {
+  max-height: 3.5rem;
+  overflow: hidden;
+  background-color: #fff7ed; /* bg-orange-50 */
+}
+
+.assistant-header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-sm);
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  color: #fb923c; /* text-orange-400 */
+}
+
+.assistant-icon {
+  display: flex;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  border: 1px solid #fed7aa; /* border-orange-100 */
+  background-color: white;
+  transition: var(--transition-normal);
+
+  &:hover {
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.assistant-toggle {
+  margin-left: auto;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  transition: transform var(--transition-slow);
+
+  &:hover {
+    color: var(--primary-02);
+  }
+}
+
+.assistant-toggle.rotated {
+  transform: rotate(180deg);
+}
+
+.assistant-component {
+  max-height: 24rem;
+  height: fit-content;
+}
+
+.assistant-component.hidden {
+  display: none;
+}
+
+.results-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  flex: 1;
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  background: var(--glass-background);
+  backdrop-filter: var(--glass-backdrop-blur);
+  min-height: 0;
+  width: 100%;
+}
+
+.component-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  width: 100%;
+  gap: var(--spacing-2xl);
+}
+
+.component-header__inner {
+  display: flex;
+  align-items: center;
+  flex: 1 0 0;
+  gap: var(--spacing-sm);
+  max-width: 40%;
+}
+
+.component-header__icon {
+  width: 24px;
+  height: 24px;
+  aspect-ratio: 1/1;
+  flex-shrink: 0;
+  color: var(--grays-00);
+}
+
+.component-header__text {
+  color: var(--grays-00);
+  font-weight: var(--font-medium);
+  font-size: var(--text-2xl);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  flex: 1 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-style: normal;
+  line-height: normal;
+}
+
+.component-header__search-input {
+  width: 60%;
+}
+
+.results-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  overflow: auto;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.feedback-component {
+  position: fixed;
+  right: var(--spacing-2xl);
+  transition: bottom var(--transition-slow);
+  z-index: 50;
+}
+
+.feedback-component.visible {
+  bottom: var(--spacing-md);
+}
+
+.feedback-component.hidden {
+  bottom: -3rem;
+}
+
+.no-result {
+  grid-column: 1 / -1; /* Span both columns */
+  margin-top: var(--spacing-lg);
+  text-align: center;
+  color: var(--grays-02);
+  font-size: var(--text-lg);
+}
+
+.loading-state {
+  grid-column: 1 / -1;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.preview-column {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  width: 100%;
+}
+
+.component-header__search-input {
+  ::ng-deep .search-container {
+    background: rgba(205, 219, 221, 0.8);
+    border: none !important;
+
+    &:hover {
+      border: none !important;
+    }
+  }
+}

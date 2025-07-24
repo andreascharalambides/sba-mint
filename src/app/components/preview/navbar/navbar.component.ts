@@ -28,7 +28,8 @@ const DEFAULT_CONFIG: PreviewNavbarConfig = {
     DrawerNavbarComponent,
     VerticalDividerComponent
   ],
-  templateUrl: './navbar.component.html'
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.css']
 })
 export class PreviewNavbarComponent {
   cn = cn;

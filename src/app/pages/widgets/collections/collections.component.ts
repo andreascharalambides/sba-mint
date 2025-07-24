@@ -10,91 +10,8 @@ import { ButtonComponent } from '@sinequa/ui';
 @Component({
   selector: 'Collections',
   imports: [RouterModule, FormsModule, TranslocoPipe, DragDropModule, DeleteCollectionDialog, ButtonComponent],
-  template: `
-    <div class="layout-search overflow-auto">
-      <div class="col-span-2 col-start-2">
-        <h1 class="mt-6 mb-4 flex items-center gap-2 text-2xl font-semibold">
-          <i class="fa-fw fas fa-inbox" aria-hidden></i>
-          {{ 'myCollections' | transloco }}
-        </h1>
-
-        @if (creating()) {
-          <span class="flex gap-2">
-            <input
-              #createInput
-              type="text"
-              autocomplete="off"
-              spellcheck="false"
-              [attr.aria-label]="'collections.collectionName' | transloco"
-              [attr.placeholder]="'collections.collectionName' | transloco"
-              [ngModel]="newCollectionName()"
-              (ngModelChange)="newCollectionName.set($event)"
-              (keydown.enter)="postCreate()"
-              (keydown.escape)="$event.preventDefault(); onCreate()" />
-
-            <button variant="outline" class="w-fit" tabindex="0" [attr.title]="'collections.cancelCreation' | transloco" (click)="onCreate()">
-              {{ 'collections.cancelCreation' | transloco }}
-            </button>
-            <button tabindex="1" [attr.title]="'collections.save' | transloco" (click)="postCreate()">
-              {{ 'collections.save' | transloco }}
-            </button>
-          </span>
-        } @else {
-          <div class="row-reverse flex">
-            <button tabindex="0" [attr.title]="'collections.createCollection' | transloco" (click)="onCreate()">
-              {{ 'collections.createCollection' | transloco }}
-            </button>
-          </div>
-        }
-
-        <ul class="mt-4 flex flex-col gap-2" cdkDropList [cdkDropListData]="tmpCollections" (cdkDropListDropped)="dropped($event)">
-          @for (collection of tmpCollections; track $index) {
-            @if (modifiedIndex() === undefined || modifiedIndex() !== $index) {
-              <li
-                class="group grid grid-cols-[min-content_auto_min-content_min-content_min-content] rounded-md p-1 hover:cursor-pointer hover:bg-blue-50"
-                role="listitem"
-                cdkDrag
-                (click)="onClick(collection)">
-                <i class="fas fa-inbox"></i>
-                <span class="mx-2">{{ collection.name }}</span>
-                <button variant="ghost" class="text-primary invisible group-hover:visible" (click)="$event.stopPropagation(); onEdit(collection, $index)">
-                  <i class="fa-fw far fa-pen-to-square" aria-hidden></i>
-                </button>
-                <button
-                  variant="ghost"
-                  class="invisible text-red-500 group-hover:visible"
-                  (click)="$event.stopPropagation(); deleteCollection(collection, $index)">
-                  <i class="fa-fw far fa-trash" aria-hidden></i>
-                </button>
-                <button variant="ghost">
-                  <i class="fa-fw far fa-bars" aria-hidden></i>
-                </button>
-              </li>
-            } @else {
-              <input
-                class="grow"
-                #renameInput
-                type="text"
-                autocomplete="off"
-                spellcheck="false"
-                [attr.aria-label]="'collections.collectionName' | transloco"
-                [attr.placeholder]="'collections.collectionName' | transloco"
-                [ngModel]="collectionName()"
-                (ngModelChange)="collectionName.set($event)"
-                (keydown.enter)="onBlur($event)"
-                (keydown.escape)="onBlur($event)"
-                (blur)="onBlur($event)" />
-            }
-          }
-        </ul>
-      </div>
-    </div>
-
-    <delete-collection-dialog />
-  `,
-  host: {
-    class: 'flex flex-col h-full w-full'
-  },
+  templateUrl: './collections.component.html',
+  styleUrls: ['./collections.component.css'],
   providers: [TranslocoDateImpurePipe]
 })
 export class CollectionsComponent {
@@ -155,14 +72,24 @@ export class CollectionsComponent {
   onBlur(e: Event): void {
     e.preventDefault();
     e.stopImmediatePropagation();
-    let modifiedName = false;
-    if (this.collectionName()) {
+  }
+
+  onSaveEdit(): void {
+    if (this.collectionName() && this.modifiedIndex() !== undefined) {
       const collection = this.tmpCollections[this.modifiedIndex()!];
-      modifiedName = collection.name !== this.collectionName();
-      collection.name = this.collectionName();
+      const modifiedName = collection.name !== this.collectionName();
+      if (modifiedName) {
+        collection.name = this.collectionName();
+        this.save();
+      }
     }
     this.modifiedIndex.set(undefined);
-    if (modifiedName) this.save();
+  }
+
+  onCancelEdit(): void {
+    // Simply exit edit mode without saving
+    this.modifiedIndex.set(undefined);
+    this.collectionName.set('');
   }
 
   postCreate(): void {

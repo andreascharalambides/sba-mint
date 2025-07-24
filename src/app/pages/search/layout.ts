@@ -11,18 +11,13 @@ import { AppSidebarComponent } from '../../components/sidebar/sidebar.component'
   selector: 'app-search-layout',
   imports: [RouterOutlet, PageHeaderComponent, NavbarComponent, AppSidebarComponent],
   template: `
-    <app-sidebar class="fixed top-0 h-full" />
+    <app-navbar class="navbar" />
 
-    <PageHeader class="fixed top-0 z-100 ml-8 w-full bg-white">
-      <app-navbar class="layout-search py-4" />
-    </PageHeader>
-
-    <div class="mt-16">
-      <router-outlet />
-    </div>
+    <router-outlet />
   `,
+  styleUrls: ['./layout.css'],
   host: {
-    class: 'flex flex-col h-full w-full'
+    class: 'search-layout-host'
   },
   providers: [provideTranslocoScope('bookmarks', 'saved-searches', 'recent-searches', 'collections', 'alerts')]
 })

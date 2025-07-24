@@ -1,25 +1,131 @@
-:host {
-  position: relative;
-  align-items: center;
-  grid-template-rows: 1fr;
-  padding-bottom: 1rem;
-  z-index: auto;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-  #navbar-logo {
-    transition: margin-left 0.2s;
+:host {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 50px;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+}
+
+/* Logo link */
+.logo-link {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: var(--glass-border);
+  backdrop-filter: var(--glass-backdrop-blur);
+  padding: var(--spacing-md);
+  transition: var(--transition-normal);
+}
+
+/* Logo image */
+.logo-image {
+  max-height: 2rem;
+  width: 100%;
+}
+
+/* Logo content (moved from inline styles) */
+#logo {
+  content: var(--logo-small) / var(--logo-alt-text);
+}
+
+/* Search input container */
+.search-input-container {
+  grid-column: span 2 / span 2;
+  width: 25%;
+}
+
+/* Navigation container */
+.navigation-container {
+  display: flex;
+  list-style-type: none;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  background: var(--glass-border);
+  backdrop-filter: var(--glass-backdrop-blur);
+  transition: var(--transition-normal);
+
+  li {
+    button {
+      color: var(--grays-00);
+      transition: var(--transition-normal);
+
+      &:hover {
+        background: none;
+        color: var(--primary-02);
+      }
+    }
+  }
+}
+
+/* Navigation full span (when menu is hidden) */
+.navigation-full-span {
+  grid-column: span 3 / span 3; /* col-span-3 */
+}
+
+/* Menu icon */
+::ng-deep .menu-icon-btn {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  background: none;
+
+  &:hover {
+    .menu-icon {
+      color: var(--primary-00);
+      //font-size: 20px !important;
+    }
+  }
+}
+
+.menu-icon {
+  font-size: 18px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+  color: var(--primary-02);
+  transition: var(--transition-normal);
+}
+
+/* User menu container */
+::ng-deep app-user-menu {
+  flex-shrink: 0; /* shrink-0 */
+
+  &:hover {
+    i,
+    svg {
+      color: var(--primary-00) !important;
+    }
+  }
+}
+
+/* Drawer opened state styles */
+:host[drawer-opened='true'] {
+  grid-template-columns: 5% 22% 25% 25%;
+
+  .logo-link {
+    margin-left: var(--spacing-lg);
+  }
+}
+
+/* Responsive design for navigation */
+@media (max-width: 768px) {
+  .navigation-container {
+    padding: var(--spacing-sm);
+    gap: var(--spacing-xs);
   }
 
-  /**
-   * Styles for the navbar logo when the drawer is opened.
-   *
-   * When the `drawer-opened` attribute is set to `true` on the parent element,
-   * the host will have smaller colums to contain the logo and input.
-   */
-  &[drawer-opened='true'] {
-    grid-template-columns: 5% 22% 25% 25%;
-
-    #navbar-logo {
-      margin-left: 1rem;
-    }
+  .logo-link {
+    padding: var(--spacing-sm) var(--spacing-lg);
   }
 }

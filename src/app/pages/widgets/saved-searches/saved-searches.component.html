@@ -1,43 +1,52 @@
 <div class="layout-search" [attr.drawer-opened]="drawerOpened()">
-  <div class="col-span-2 col-start-2">
-    <h1 class="mt-6 mb-4 flex items-center gap-2 text-2xl font-semibold">
-      <i class="fa-fw fas fa-star" aria-hidden></i>
-      {{ 'mySavedSearches' | transloco }}
-    </h1>
+  <div class="content-container">
+    <div class="page-title-container">
+      <h1 class="page-title">
+        <i class="fa-fw fas fa-star title-icon" aria-hidden></i>
+        {{ 'mySavedSearches' | transloco }}
+      </h1>
+    </div>
 
-    <ul class="mt-4 flex flex-col gap-2">
-      @for (savedSearch of savedSearches(); track savedSearch.display + $index) {
-        <li
-          class="group grid grid-cols-[auto_20%_min-content] rounded-md p-1 hover:cursor-pointer hover:bg-blue-50"
-          role="link"
-          (click)="onClick(savedSearch)"
-          (keydown.enter)="onClick(savedSearch)">
-          <span class="ms-2">
-            {{ savedSearch.display || savedSearch.label }}
-          </span>
-
-          <span class="text-gray-500">
-            {{ 'in' | transloco }}
-
-            <span class="font-semibold capitalize">
-              {{ savedSearch.queryParams?.tab ?? 'all' }}
+    @if (savedSearches().length > 0) {
+      <ul class="saved-searches-list">
+        @for (savedSearch of savedSearches(); track savedSearch.display + $index) {
+          <li class="saved-search-item" role="link" (click)="onClick(savedSearch)" (keydown.enter)="onClick(savedSearch)">
+            <span class="search-display">
+              {{ savedSearch.display || savedSearch.label }}
             </span>
 
-            @if (savedSearch.filterCount) {
-              ,
-              <span class="font-semibold lowercase"> {{ savedSearch.filterCount }} {{ 'filters' | transloco }} </span>
-            }
-          </span>
+            <span class="search-details">
+              {{ 'in' | transloco }}
 
-          <button class="invisible text-red-500 group-hover:visible" (click)="$event.stopPropagation(); onDelete($index)">
-            <i class="fa-fw far fa-trash" aria-hidden></i>
-          </button>
-        </li>
-      } @empty {
-        <li class="no-records">
-          {{ 'saved-searches.noSavedSearches' | transloco }}
-        </li>
-      }
-    </ul>
+              <span class="search-tab">
+                {{ savedSearch.queryParams?.tab ?? 'all' }}
+              </span>
+
+              @if (savedSearch.filterCount) {
+                ,
+                <span class="search-filters"> {{ savedSearch.filterCount }} {{ 'filters' | transloco }} </span>
+              }
+            </span>
+
+            <button
+              class="delete-button"
+              [attr.title]="'Remove saved search' | transloco"
+              [attr.aria-label]="'Remove saved search' | transloco"
+              (click)="$event.stopPropagation(); onDelete($index)">
+              <i class="fa-fw far fa-trash delete-icon" aria-hidden></i>
+            </button>
+          </li>
+        }
+      </ul>
+    } @else {
+      <div class="no-records-container">
+        <div class="main-text">
+          <p>No saved searches found</p>
+        </div>
+        <div class="subtitle-text">
+          <p>You can save searches to access them quickly later</p>
+        </div>
+      </div>
+    }
   </div>
 </div>
