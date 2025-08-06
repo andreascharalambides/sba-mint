@@ -15,11 +15,15 @@
 
 /* Actions Container */
 .actions-container {
-  width: 5%;
+  /*width: 30px;*/
+  opacity: 40%;
   position: absolute;
-  bottom: var(--spacing-2xl);
-  right: var(--spacing-2xl);
+  bottom: var(--spacing-xl);
+  right: var(--spacing-xl);
   z-index: 10;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 /* Preview Iframe */

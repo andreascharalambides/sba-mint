@@ -35,31 +35,8 @@ import { cn } from '@sinequa/ui';
 @Component({
   selector: 'assistant, Assistant',
   imports: [ChatComponent, ChatSettingsV3Component],
-  template: `
-    @if (isChatInitialized() || showAssistant()) {
-      <sq-chat-v3
-        [class]="cn('prose prose-sm prose-p:m-0 prose-ul:gap-1! prose-ol:gap-1! prose-li:m-0 prose-li:p-0', class())"
-        #sqChat
-        [query]="_query"
-        [chat]="initChat"
-        [instanceId]="instanceId()!"
-        (openPreview)="handlePreview($event)"
-        (openDocument)="handleRedirect($event)"
-        (config)="getChatConfig($event)"
-        (connection)="onConnection.emit($event)"
-        [messageHandlers]="messageHandlers()" />
-
-      <ng-template #sqChatSettings>
-        <sq-chat-settings-v3
-          [style.--ast-chat-settings-width]="'570px'"
-          [instanceId]="instanceId()!"
-          (update)="handleUpdate($event)"
-          (cancel)="handleCancel($event)">
-        </sq-chat-settings-v3>
-      </ng-template>
-    }
-  `,
-  styleUrl: './assistant.css',
+  templateUrl: './assistant.html',
+  styleUrls: ['./assistant.css'],
   host: {
     '[attr.no-progress]': 'noProgress'
   },

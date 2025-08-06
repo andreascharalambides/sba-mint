@@ -1,0 +1,38 @@
+<ul
+  role="list"
+  class="flex min-w-80 flex-col p-2"
+  cdkDropList
+  [cdkDropListData]="tmpAlerts"
+  [cdkDropListDisabled]="!reordering()"
+  (cdkDropListDropped)="dropped($event)">
+  @if (floating) {
+    <label class="text-xl font-bold">{{ 'alerts.label' | transloco }}</label>
+    <MenuSeparator />
+  }
+  @for (alert of tmpAlerts; track $index) {
+    <li role="listitem" class="group h-10" tabindex="0" cdkDrag (click)="onClick($index)" (keydown.enter)="onClick($index)">
+      <i class="fa-fw fas fa-bell shrink-0" aria-hidden="true"></i>
+      <p class="line-clamp-1">{{ alert.name }}</p>
+      @if (!reordering()) {
+        <button
+          variant="icon"
+          class="text-destructive hover:text-destructive invisible ms-auto transition-transform group-hover:visible hover:scale-125"
+          title="{{ 'alerts.deleteAlert' | transloco }}"
+          [attr.aria-label]="'alerts.deleteAlert' | transloco"
+          (click)="deleteAlert($event, $index)">
+          <i class="fa-fw fa-regular fa-trash-can" aria-hidden="true"></i>
+        </button>
+      } @else {
+        <i class="fa-fw fa-regular fa-bars"></i>
+      }
+    </li>
+  } @empty {
+    <li role="listitem" class="py-4 text-center text-neutral-500">{{ 'alerts.noAlerts' | transloco }}</li>
+  }
+</ul>
+<div class="flex flex-col gap-2 p-2">
+  <button variant="outline" class="w-full" tabindex="0" [attr.title]="'alerts.manageAlerts' | transloco" [disabled]="!alerts().length" (click)="reorder()">
+    {{ (reordering() ? 'save' : 'alerts.manageAlerts') | transloco }}
+  </button>
+  <button class="w-full" [attr.title]="'alerts.createAlert' | transloco" (click)="createAlert()">{{ 'alerts.createAlert' | transloco }}</button>
+</div>

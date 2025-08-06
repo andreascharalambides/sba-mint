@@ -2,7 +2,7 @@ import { Component, computed, inject, input, signal } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 
 import { Article as A, LegacyFilter } from '@sinequa/atomic';
-import { AppStore, DocumentLocatorComponent, MetadataComponent, QueryParamsStore, TranslocoDateImpurePipe } from '@sinequa/atomic-angular';
+import { AppStore, DocumentLocatorComponent, MetadataComponent, QueryParamsStore, SourceComponent, TranslocoDateImpurePipe } from '@sinequa/atomic-angular';
 import { ButtonComponent, cn } from '@sinequa/ui';
 
 export type PreviewTab = 'summary' | 'preview' | 'discussion';
@@ -13,7 +13,7 @@ type Article = A & {
 @Component({
   selector: 'app-preview-header',
   standalone: true,
-  imports: [TranslocoPipe, TranslocoDateImpurePipe, ButtonComponent, DocumentLocatorComponent, MetadataComponent],
+  imports: [TranslocoPipe, TranslocoDateImpurePipe, ButtonComponent, DocumentLocatorComponent, MetadataComponent, SourceComponent],
   templateUrl: './preview-header.html',
   styleUrls: ['./preview-header.css']
 })

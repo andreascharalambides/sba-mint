@@ -17,10 +17,12 @@
 
 .preview-title-text {
   color: var(--grays-00);
-  font-size: var(--text-2xl);
-  margin-right: auto;
-  overflow: hidden;
+  text-align: justify;
+  font-size: var(--text-xl) !important;
+  font-style: normal;
   font-weight: var(--font-medium);
+  line-height: normal;
+  flex: 1;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -29,8 +31,8 @@
   background: none;
 
   svg {
-    height: 24px;
-    width: 24px;
+    height: 19px;
+    width: 19px;
   }
 }
 
@@ -39,8 +41,8 @@
   transition-duration: var(--transition-slow);
   transition-timing-function: ease;
   color: var(--grays-00);
-  height: 22px;
-  width: 22px;
+  height: 18px;
+  width: 18px;
 }
 
 .collapse-button.collapsed svg {
@@ -72,7 +74,7 @@
 
 .metadata-table th {
   color: var(--grays-02);
-  font-size: var(--text-base);
+  font-size: var(--text-sm);
   font-weight: var(--font-medium);
   width: auto;
   display: flex;
@@ -84,7 +86,7 @@
 
 .metadata-table td {
   color: var(--grays-02);
-  font-size: var(--text-base);
+  font-size: var(--text-sm);
   font-weight: var(--font-regular);
   flex: 1;
   overflow: visible;

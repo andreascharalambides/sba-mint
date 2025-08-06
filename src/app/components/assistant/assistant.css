@@ -22,3 +22,642 @@
     transform: rotate(360deg);
   }
 }
+
+/* =================================================================
+   STYLES FOR CHAT COMPONENT
+   ================================================================= */
+
+/* Main chat component container */
+sq-chat-v3 {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  min-height: 0;
+}
+
+/* Main chat container wrapper */
+sq-chat-v3 .h-100.d-flex.flex-column {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* =================================================================
+   MESSAGES LIST CONTAINER
+   ================================================================= */
+
+/* Messages list container with optimized scrollbar */
+sq-chat-v3 ul.d-flex.flex-column.list-unstyled.gap-3.overflow-auto.flex-grow-1 {
+  flex: 1;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: var(--spacing-md) !important;
+  gap: var(--spacing-md) !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100% !important;
+  max-height: calc(100vh - 200px);
+}
+
+/* Override Bootstrap's overflow-auto class */
+sq-chat-v3 ul.d-flex.flex-column.list-unstyled.gap-3.overflow-auto.flex-grow-1.overflow-auto {
+  overflow-y: auto !important;
+}
+
+/* Messages wrapper override */
+sq-chat-v3 .h-100.d-flex.flex-column > ul.overflow-auto {
+  overflow-y: auto !important;
+  max-height: 100% !important;
+  height: auto !important;
+}
+
+/* =================================================================
+   MESSAGE ITEMS BASE STYLES
+   ================================================================= */
+
+/* Individual message list items */
+sq-chat-v3 li.list-group-item {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  margin-bottom: 1rem;
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+sq-chat-v3 sq-chat-message .message-content {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+sq-chat-v3 sq-chat-message .message-content p {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* =================================================================
+   CHAT MESSAGE COMPONENTS
+   ================================================================= */
+
+/* Base chat message styling */
+sq-chat-v3 sq-chat-message {
+  display: flex;
+  gap: var(--spacing-md);
+  width: 100%;
+}
+
+/* =================================================================
+   USER MESSAGES
+   ================================================================= */
+
+/* User message container */
+sq-chat-v3 sq-chat-message.sq-user-message {
+  flex-direction: row-reverse;
+}
+
+/* User message content wrapper */
+sq-chat-v3 sq-chat-message.sq-user-message .message-user {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* User message content styling */
+sq-chat-v3 sq-chat-message.sq-user-message .message-content {
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  margin-bottom: var(--radius-sm) !important;
+  background: var(--grays-08) !important;
+}
+
+/* User message paragraphs */
+sq-chat-v3 sq-chat-message.sq-user-message .message-content p {
+  color: var(--grays-00);
+  font-size: var(--text-base);
+  font-weight: var(--font-regular);
+  line-height: normal;
+  margin: 0;
+}
+
+/* =================================================================
+   ASSISTANT MESSAGES
+   ================================================================= */
+
+/* Hide assistant message icon */
+sq-chat-v3 sq-chat-message.message-assistant .message-icon,
+sq-chat-v3 sq-chat-message:not(.sq-user-message) .message-icon {
+  display: none !important;
+}
+
+/* Assistant message content styling */
+sq-chat-v3 sq-chat-message.message-assistant .message-content,
+sq-chat-v3 sq-chat-message:not(.sq-user-message) .message-content {
+  border-radius: 0 !important;
+  margin-bottom: var(--radius-sm) !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+/* Assistant message text content */
+sq-chat-v3 sq-chat-message.message-assistant .message-content remark,
+sq-chat-v3 sq-chat-message:not(.sq-user-message) .message-content remark,
+sq-chat-v3 sq-chat-message.message-assistant .message-content remark-node p,
+sq-chat-v3 sq-chat-message:not(.sq-user-message) .message-content remark-node p {
+  color: var(--grays-00);
+  font-size: var(--text-base);
+  font-weight: var(--font-regular);
+  line-height: normal;
+  margin: 0;
+
+  strong {
+    font-weight: var(--font-semibold) !important;
+  }
+}
+
+/* Inline reference links within message text */
+sq-chat-v3 sq-chat-message .message-content remark remark-node a.reference {
+  background: var(--primary-04) !important;
+  border-radius: 4px;
+  padding: 2px 3px !important;
+  font-size: 10px !important;
+  text-decoration: none !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Inline reference links hover state */
+sq-chat-v3 sq-chat-message .message-content remark remark-node a.reference:hover {
+  background: var(--primary-03) !important;
+  transform: scale(1.05);
+}
+
+/* =================================================================
+   MESSAGE ACTIONS
+   ================================================================= */
+
+/* Message action buttons */
+sq-chat-v3 sq-chat-message .sq-chat-message-actions {
+  gap: var(--spacing-md);
+}
+
+sq-chat-v3 sq-chat-message .sq-chat-message-actions .btn {
+  padding: 0 !important;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--spacing-xs);
+  transition: transform 0.2s ease;
+  color: var(--grays-02) !important;
+}
+
+sq-chat-v3 sq-chat-message .sq-chat-message-actions .btn:hover {
+  transform: scale(1.08);
+}
+
+sq-chat-v3 sq-chat-message .sq-chat-message-actions .btn:active {
+  color: var(--primary-02) !important;
+}
+
+/* =================================================================
+   USER INPUT SECTION
+   ================================================================= */
+
+/* Main input container */
+sq-chat-v3 .user-input.mt-auto {
+  padding: 0 !important;
+  margin: 0 !important;
+  flex-shrink: 0;
+  position: sticky;
+  bottom: 0;
+  z-index: 999;
+}
+
+/* Remove extra padding wrappers */
+sq-chat-v3 .user-input.mt-auto .py-2 {
+  padding: 0 !important;
+}
+
+sq-chat-v3 .user-input.mt-auto .py-2 .px-3 {
+  padding: 0 !important;
+}
+
+/* Input container styling */
+sq-chat-v3 .user-input.mt-auto .ast-input-container {
+  width: 100%;
+  display: flex;
+  align-items: center !important;
+  align-self: stretch !important;
+  justify-content: center !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background: none !important;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-sm) !important;
+}
+
+/* Input container focus state */
+sq-chat-v3 .user-input.mt-auto .ast-input-container:focus-within {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Hide search button */
+sq-chat-v3 .user-input.mt-auto .ast-input-container .btn.btn-light:first-child {
+  display: none !important;
+}
+
+/* =================================================================
+   TEXTAREA STYLING
+   ================================================================= */
+
+/* Main textarea input */
+sq-chat-v3 .user-input.mt-auto .ast-input-container textarea.form-control {
+  display: flex;
+  padding: var(--spacing-md) var(--spacing-lg) !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  flex: 1 0 0;
+  font-size: var(--text-base);
+  background: var(--grays-08);
+  border-radius: var(--radius-xl);
+}
+
+/* Textarea placeholder styling */
+sq-chat-v3 .user-input.mt-auto .ast-input-container textarea.form-control::placeholder {
+  color: var(--grays-04);
+  text-align: justify;
+}
+
+/* =================================================================
+   SEND BUTTON STYLING
+   ================================================================= */
+
+/* Send button */
+sq-chat-v3 .user-input.mt-auto .ast-input-container #chat-actions .btn.btn-light {
+  background: var(--primary-02) !important;
+  border: none !important;
+  color: white !important;
+  padding: var(--spacing-md) !important;
+  border-radius: var(--radius-full) !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  align-self: stretch !important;
+
+  i {
+    display: inline-flex !important;
+    width: 13px !important;
+    height: 13px !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  svg {
+    width: 100% !important;
+    height: 100% !important;
+    flex: 0 0 auto;
+  }
+}
+
+/* Send button hover state */
+sq-chat-v3 .user-input.mt-auto .ast-input-container #chat-actions .btn.btn-light:hover {
+  background: var(--primary-01) !important;
+}
+
+/* =================================================================
+   PROCESSING STATE
+   ================================================================= */
+
+/* Processing indicator */
+sq-chat-v3 .user-input.mt-auto .ast-input-container #chat-actions .processing {
+  color: var(--grays-04);
+  font-size: var(--text-base);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Processing spinner */
+sq-chat-v3 .user-input.mt-auto .ast-input-container #chat-actions .processing i.fa-spinner {
+  margin-right: var(--spacing-lg);
+}
+
+/* =================================================================
+   DISCLAIMER TEXT
+   ================================================================= */
+
+/* Hidden disclaimer text */
+sq-chat-v3 .user-input.mt-auto .text-end.small.text-muted {
+  margin-top: 0 !important;
+  font-size: var(--text-xs);
+  color: var(--grays-04);
+  text-align: center !important;
+  width: 100%;
+}
+
+/* =================================================================
+   REFERENCES SECTION
+   ================================================================= */
+
+/* References container details */
+sq-chat-v3 .references details .references-title {
+  font-size: var(--text-base) !important;
+  font-weight: var(--font-regular) !important;
+  color: var(--grays-02) !important;
+  cursor: pointer !important;
+  border: none !important;
+}
+
+/* References title hover state */
+sq-chat-v3 .references details .references-title:hover {
+  color: var(--grays-01) !important;
+}
+
+/* References list */
+sq-chat-v3 .references details ul {
+  margin: 0 !important;
+  margin-top: var(--spacing-md) !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+/* References component styling */
+sq-chat-v3 .references sq-chat-reference {
+  display: block;
+  background: none !important;
+}
+
+/* =================================================================
+   REFERENCE DATA STYLING
+   ================================================================= */
+
+/* Reference data container */
+sq-chat-v3 .references sq-chat-reference .reference-data {
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: var(--spacing-xs) !important;
+  background: none;
+  min-height: 28px;
+}
+
+/* Reference number badge */
+sq-chat-v3 .references sq-chat-reference .reference-data .reference {
+  background: var(--primary-02) !important;
+  color: var(--grays-09) !important;
+  border-radius: var(--radius-xs);
+  width: 15px;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-xs) !important;
+  font-weight: var(--font-regular) !important;
+  flex-shrink: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Format icon styling */
+sq-chat-v3 .references sq-chat-reference .reference-data sq-format-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  margin: 0 !important;
+}
+
+/* Hide format icon span */
+sq-chat-v3 .references sq-chat-reference .reference-data sq-format-icon span {
+  display: none !important;
+}
+
+/* Reference link styling */
+sq-chat-v3 .references sq-chat-reference .reference-data a {
+  color: var(--grays-02) !important;
+  text-decoration: none !important;
+  font-size: var(--text-sm);
+  font-weight: var(--font-regular);
+  flex: 1;
+}
+
+/* Reference link hover state */
+sq-chat-v3 .references sq-chat-reference .reference-data a:hover {
+  color: var(--primary-00) !important;
+  text-decoration: none !important;
+}
+
+/* Icons styling */
+sq-chat-v3 .references sq-chat-reference .reference-data .fa-eye,
+sq-chat-v3 .references sq-chat-reference .reference-data .fa-arrow-up-right-from-square {
+  color: var(--grays-02) !important;
+  font-size: var(--text-base);
+  cursor: pointer;
+}
+
+/* Icons hover state */
+sq-chat-v3 .references sq-chat-reference .reference-data .fa-eye:hover,
+sq-chat-v3 .references sq-chat-reference .reference-data .fa-arrow-up-right-from-square:hover {
+  color: var(--primary-00) !important;
+}
+
+/* =================================================================
+   REFERENCE PASSAGES
+   ================================================================= */
+
+/* Reference passages container */
+sq-chat-v3 .references sq-chat-reference .reference-passages {
+  background: none !important;
+  padding: 0 !important;
+  gap: var(--spacing-sm) !important;
+  display: inline-flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+}
+
+/* Individual reference passage */
+sq-chat-v3 .references sq-chat-reference .reference-passages .reference-passage {
+  border-top: none !important;
+  display: flex;
+  gap: var(--spacing-sm);
+  padding: 0 !important;
+}
+
+/* Reference passage number */
+sq-chat-v3 .references sq-chat-reference .reference-passages .reference-passage .reference {
+  background: none !important;
+  color: var(--primary-02) !important;
+  width: 18px !important;
+  height: 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: var(--text-sm) !important;
+  font-weight: var(--font-medium) !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  margin-top: var(--spacing-xs) !important;
+  font-style: normal !important;
+}
+
+/* Reference passage text */
+sq-chat-v3 .references sq-chat-reference .reference-passages .reference-passage .w-100 {
+  font-size: var(--text-sm) !important;
+  font-weight: var(--font-regular) !important;
+  line-height: normal !important;
+  text-align: justify !important;
+  color: var(--grays-02) !important;
+  padding: 0 !important;
+  font-style: normal !important;
+}
+
+/* =================================================================
+   REFERENCE TOOLTIP COMPONENT
+   ================================================================= */
+
+sq-chat-reference {
+  background: none !important;
+}
+
+/* Main reference tooltip container */
+.reference-tooltip {
+  padding: var(--spacing-lg) !important;
+  border-radius: var(--radius-lg) !important;
+  background: var(--glass-background) !important;
+  backdrop-filter: var(--glass-backdrop-blur) !important;
+}
+
+/* Reference data container */
+.reference-tooltip .reference-data {
+  padding: var(--spacing-sm) 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: var(--spacing-xs) !important;
+  background: none;
+  min-height: 28px;
+}
+
+/* Reference number badge */
+.reference-tooltip .reference-data .reference.me-1 {
+  background: var(--primary-02) !important;
+  color: var(--grays-09) !important;
+  border-radius: var(--radius-xs);
+  width: 15px;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-xs) !important;
+  font-weight: var(--font-regular) !important;
+  flex-shrink: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Format icon styling */
+.reference-tooltip .reference-data sq-format-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  margin: 0 !important;
+}
+
+/* Hide format icon span */
+.reference-tooltip .reference-data sq-format-icon span {
+  display: none !important;
+}
+
+/* Reference link styling */
+.reference-tooltip .reference-data a {
+  color: var(--grays-02) !important;
+  text-decoration: none !important;
+  font-size: var(--text-sm);
+  font-weight: var(--font-regular);
+  flex: 1;
+}
+
+/* Reference link hover state */
+.reference-tooltip .reference-data a:hover {
+  color: var(--primary-00) !important;
+  text-decoration: none !important;
+}
+
+/* Action icons styling */
+.reference-tooltip .reference-data .fa-eye,
+.reference-tooltip .reference-data .fa-arrow-up-right-from-square {
+  color: var(--grays-02) !important;
+  font-size: var(--text-base);
+  cursor: pointer;
+}
+
+/* Action icons hover state */
+.reference-tooltip .reference-data .fa-eye:hover,
+.reference-tooltip .reference-data .fa-arrow-up-right-from-square:hover {
+  color: var(--primary-00) !important;
+}
+
+/* =================================================================
+   REFERENCE PASSAGES SECTION
+   ================================================================= */
+
+/* Reference passages container */
+.reference-tooltip .reference-passages {
+  background: none !important;
+  padding: 0 !important;
+  gap: var(--spacing-sm) !important;
+  display: inline-flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  margin-top: var(--spacing-sm) !important;
+}
+
+/* Individual reference passage */
+.reference-tooltip .reference-passages .reference-passage {
+  border-top: none !important;
+  display: flex;
+  gap: var(--spacing-sm);
+  padding: 0 !important;
+}
+
+/* Passage reference number */
+.reference-tooltip .reference-passages .reference-passage .reference.me-1 {
+  background: none !important;
+  color: var(--primary-02) !important;
+  width: 18px !important;
+  height: 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: var(--text-sm) !important;
+  font-weight: var(--font-medium) !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  margin-top: 6px !important;
+  font-style: normal !important;
+}
+
+/* Passage text content */
+.reference-tooltip .reference-passages .reference-passage .w-100.pe-2 {
+  font-size: var(--text-sm) px !important;
+  font-weight: var(--font-regular) !important;
+  line-height: normal !important;
+  text-align: justify !important;
+  color: var(--grays-02) !important;
+  padding: 0 !important;
+  font-style: normal !important;
+}

@@ -1,0 +1,52 @@
+@if (floating) {
+  <div class="header-container">
+    <div class="header-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M18 6.27915C18 5.13145 18 4.5576 17.782 4.11901C17.5903 3.7334 17.2843 3.41988 16.908 3.22339C16.48 3 15.92 3 14.8 3H9.2C8.08 3 7.52 3 7.092 3.22339C6.71569 3.41988 6.40974 3.7334 6.218 4.11901C6 4.5576 6 5.13145 6 6.27915V19.9132C6 20.4113 6 20.6603 6.101 20.7966C6.14464 20.8558 6.20034 20.9047 6.26422 20.9397C6.32811 20.9748 6.39866 20.9951 6.471 20.9995C6.638 21.0097 6.84 20.8714 7.244 20.5957L12 17.3463L16.756 20.5947C17.16 20.8714 17.362 21.0097 17.53 20.9995C17.6022 20.995 17.6725 20.9745 17.7362 20.9395C17.7999 20.9045 17.8555 20.8557 17.899 20.7966C18 20.6603 18 20.4113 18 19.9132V6.27915Z"
+          fill="currentColor" />
+      </svg>
+    </div>
+    <label class="header-title">{{ 'bookmarks.label' | transloco }}</label>
+  </div>
+}
+
+<ul class="list-container" role="list">
+  @for (bookmark of paginatedBookmarks(); track $index) {
+    <li role="listitem" class="list-item" tabindex="0" (click)="onClick(bookmark)" (keydown.enter)="onClick(bookmark)">
+      <p class="item-name">{{ bookmark.label }}</p>
+
+      @if (bookmark.author) {
+        <p class="bookmark-meta">
+          {{ bookmark.author }}
+        </p>
+      }
+      @if (bookmark.parentFolder) {
+        <p class="bookmark-meta">
+          {{ bookmark.parentFolder }}
+        </p>
+      }
+
+      <button
+        variant="icon"
+        title="{{ 'bookmarks.openBookmark' | transloco }}"
+        class="delete-button"
+        [attr.title]="'bookmarks.removeBookmark' | transloco"
+        [attr.aria-label]="'bookmarks.removeBookmark' | transloco"
+        (click)="onDelete(bookmark, $event)">
+        <i class="fa-fw fa-regular fa-trash-can" aria-hidden="true"></i>
+      </button>
+    </li>
+  } @empty {
+    <li class="empty-state">{{ 'bookmarks.noBookmarks' | transloco }}</li>
+  }
+</ul>
+
+<div class="actions-container">
+  @if (hasMore() && config.showLoadMore) {
+    <button variant="outline" class="load-more-button" tabindex="0" [attr.title]="'loadMore' | transloco" (click)="loadMore($event)">
+      {{ 'loadMore' | transloco }}
+    </button>
+  }
+  <button variant="link" class="see-more-button" [attr.title]="'seeMore' | transloco" [routerLink]="[config.routerLink]">{{ 'seeMore' | transloco }}</button>
+</div>

@@ -1,0 +1,22 @@
+@if (isChatInitialized() || showAssistant()) {
+  <sq-chat-v3
+    [class]="cn('chat-prose', class())"
+    #sqChat
+    [query]="_query"
+    [chat]="initChat"
+    [instanceId]="instanceId()!"
+    (openPreview)="handlePreview($event)"
+    (openDocument)="handleRedirect($event)"
+    (config)="getChatConfig($event)"
+    (connection)="onConnection.emit($event)"
+    [messageHandlers]="messageHandlers()" />
+
+  <ng-template #sqChatSettings>
+    <sq-chat-settings-v3
+      [style.--ast-chat-settings-width]="'570px'"
+      [instanceId]="instanceId()!"
+      (update)="handleUpdate($event)"
+      (cancel)="handleCancel($event)">
+    </sq-chat-settings-v3>
+  </ng-template>
+}

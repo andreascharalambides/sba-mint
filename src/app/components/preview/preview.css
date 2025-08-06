@@ -21,7 +21,7 @@
   display: flex;
   height: 100%;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: var(--spacing-sm);
   overflow: auto;
 }
 
@@ -97,7 +97,7 @@
   .header-header__empty-state__text {
     color: var(--grays-00);
     text-align: justify;
-    font-size: var(--text-2xl);
+    font-size: var(--text-xl);
     font-style: normal;
     font-weight: var(--font-medium);
     line-height: normal;

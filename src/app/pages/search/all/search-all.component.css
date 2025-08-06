@@ -120,70 +120,65 @@
 }
 
 .assistant-container {
-  position: relative;
-  border-radius: var(--radius-sm);
-  border: 1px solid #fed7aa; /* border-orange-100 */
-  padding: var(--spacing-sm);
-  margin-bottom: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  flex: 1;
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
   background: var(--glass-background);
   backdrop-filter: var(--glass-backdrop-blur);
-  transition: var(--transition-normal);
-}
-
-.assistant-container.collapsed {
-  max-height: 3.5rem;
+  min-height: 0;
+  max-height: 100vh;
+  width: 100%;
   overflow: hidden;
-  background-color: #fff7ed; /* bg-orange-50 */
 }
 
 .assistant-header {
   display: flex;
-  align-items: baseline;
-  gap: var(--spacing-sm);
-  font-size: var(--text-lg);
-  font-weight: var(--font-bold);
-  color: #fb923c; /* text-orange-400 */
-}
-
-.assistant-icon {
-  display: flex;
-  width: 2rem;
-  height: 2rem;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-full);
-  border: 1px solid #fed7aa; /* border-orange-100 */
-  background-color: white;
-  transition: var(--transition-normal);
-
-  &:hover {
-    box-shadow: var(--shadow-md);
-  }
+  align-self: stretch;
+  width: 100%;
+  gap: var(--spacing-2xl);
 }
 
-.assistant-toggle {
-  margin-left: auto;
-  width: 2rem;
-  height: 2rem;
-  cursor: pointer;
-  transition: transform var(--transition-slow);
-
-  &:hover {
-    color: var(--primary-02);
-  }
+.assistant-header__inner {
+  display: flex;
+  align-items: center;
+  flex: 1 0 0;
+  gap: var(--spacing-sm);
+  width: 100%;
 }
 
-.assistant-toggle.rotated {
-  transform: rotate(180deg);
+.assistant-header__icon {
+  width: 24px;
+  height: 24px;
+  aspect-ratio: 1/1;
+  flex-shrink: 0;
+  color: var(--grays-00);
+}
+
+.assistant-header__text {
+  color: var(--grays-00);
+  font-weight: var(--font-medium);
+  font-size: var(--text-2xl);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  flex: 1 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-style: normal;
+  line-height: normal;
 }
 
 .assistant-component {
-  max-height: 24rem;
-  height: fit-content;
-}
-
-.assistant-component.hidden {
-  display: none;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .results-list-container {
@@ -241,6 +236,7 @@
 
 .component-header__search-input {
   width: 60%;
+  /*max-width: 100%;*/
 }
 
 .results-list {

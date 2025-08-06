@@ -1,0 +1,49 @@
+/* Tabs container */
+.tabs-container {
+  display: flex;
+  align-items: flex-end;
+  align-self: stretch;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+/* Base tab button */
+.tab-button {
+  margin-bottom: -1px;
+  border-bottom-color: var(--grays-03);
+  color: var(--grays-03);
+  border-bottom-width: 1px;
+  padding: var(--spacing-sm);
+  padding-top: 0;
+  font-size: var(--text-base);
+  line-height: 1.25rem;
+  font-weight: var(--font-regular);
+  width: 100%;
+}
+
+.tab-button:focus {
+  outline: none;
+}
+
+/* Active tab (preview) */
+.tab-active {
+  border-bottom-color: var(--grays-02);
+  color: var(--grays-02);
+  border-bottom-width: 2px;
+  font-weight: var(--font-medium);
+}
+
+.tab-inactive:hover {
+  border-bottom-color: var(--grays-02);
+  color: var(--grays-02);
+}
+
+/* Spin animation for streaming icon */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

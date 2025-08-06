@@ -7,7 +7,8 @@ export type PreviewTab = 'summary' | 'preview' | 'discussion';
   selector: 'app-preview-tabs',
   standalone: true,
   imports: [TranslocoPipe],
-  templateUrl: './preview-tabs.html'
+  templateUrl: './preview-tabs.html',
+  styleUrls: ['./preview-tabs.css']
 })
 export class PreviewTabsComponent {
   activeTab = model<PreviewTab>('preview');

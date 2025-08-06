@@ -89,7 +89,7 @@
 
 .title-text p {
   font-weight: var(--font-regular);
-  font-size: var(--text-xl);
+  font-size: var(--text-lg);
   color: var(--grays-00);
   text-align: left;
   white-space: nowrap;
@@ -185,6 +185,7 @@
 
 .description p {
   margin: 0;
+  font-size: var(--text-sm);
 }
 
 /* Custom Metadata */

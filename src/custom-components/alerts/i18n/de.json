@@ -1,0 +1,33 @@
+{
+  "label": "Benachrichtigungen",
+  "createAlert": "Benachrichtigung erstellen",
+  "manageAlerts": "Benachrichtigungen verwalten",
+  "deleteAlert": "Benachrichtigung löschen",
+  "alertName": "Benachrichtigungsname",
+  "alertFrequency": "Häufigkeit",
+  "alertDays": "Tage",
+  "alertHours": "Stunden",
+  "alertActive": "Aktiv",
+  "noAlerts": "Noch keine Benachrichtigungen",
+  "execute": "Anfrage ausführen",
+  "updateQuery": "Abfrage aktualisieren",
+  "queryUpdated": "Abfrage erfolgreich aktualisiert",
+  "placeholder": "z.B. Tägliche Standup-Erinnerung",
+  "repeatOn": "Wiederholen am",
+  "weekdays": {
+    "monday": "Montag",
+    "tuesday": "Dienstag",
+    "wednesday": "Mittwoch",
+    "thursday": "Donnerstag",
+    "friday": "Freitag",
+    "saturday": "Samstag",
+    "sunday": "Sonntag"
+  },
+  "frequency": {
+    "Daily": "Täglich",
+    "Hourly": "Stündlich",
+    "Immediate": "Sofort",
+    "Weekly": "Wöchentlich",
+    "Monthly": "Monatlich"
+  }
+}

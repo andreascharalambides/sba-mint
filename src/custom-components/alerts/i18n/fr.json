@@ -1,0 +1,33 @@
+{
+  "label": "Alertes",
+  "createAlert": "Créer une alerte",
+  "manageAlerts": "Gérer les Alertes",
+  "deleteAlert": "Supprimer l'alerte",
+  "alertName": "Nom de l'alerte",
+  "alertFrequency": "Fréquence",
+  "alertDays": "Jours",
+  "alertHours": "Horaires",
+  "alertActive": "Active",
+  "noAlerts": "Aucune alerte",
+  "execute": "Exécuter la requête",
+  "updateQuery": "Mettre à jour la requête",
+  "queryUpdated": "Requête mise à jour avec succès",
+  "placeholder": "ex. Rappel de réunion quotidienne",
+  "repeatOn": "Répéter le",
+  "weekdays": {
+    "monday": "Lundi",
+    "tuesday": "Mardi",
+    "wednesday": "Mercredi",
+    "thursday": "Jeudi",
+    "friday": "Vendredi",
+    "saturday": "Samedi",
+    "sunday": "Dimanche"
+  },
+  "frequency": {
+    "Daily": "Quotidien",
+    "Hourly": "Horaire",
+    "Immediate": "Immédiat",
+    "Weekly": "Hebdomadaire",
+    "Monthly": "Mensuel"
+  }
+}

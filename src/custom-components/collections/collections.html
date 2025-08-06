@@ -1,0 +1,40 @@
+<div class="header-container">
+  <div class="header-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 20 18" fill="none">
+      <path
+        d="M0 16.0714C0 16.5829 0.197544 17.0735 0.549175 17.4351C0.900805 17.7968 1.37772 18 1.875 18H18.125C18.6223 18 19.0992 17.7968 19.4508 17.4351C19.8025 17.0735 20 16.5829 20 16.0714V7.07143C20 6.55994 19.8025 6.0694 19.4508 5.70772C19.0992 5.34605 18.6223 5.14286 18.125 5.14286H1.875C1.37772 5.14286 0.900805 5.34605 0.549175 5.70772C0.197544 6.0694 0 6.55994 0 7.07143L0 16.0714ZM2.5 3.21429C2.5 3.38478 2.56585 3.5483 2.68306 3.66885C2.80027 3.78941 2.95924 3.85714 3.125 3.85714H16.875C17.0408 3.85714 17.1997 3.78941 17.3169 3.66885C17.4342 3.5483 17.5 3.38478 17.5 3.21429C17.5 3.04379 17.4342 2.88028 17.3169 2.75972C17.1997 2.63916 17.0408 2.57143 16.875 2.57143H3.125C2.95924 2.57143 2.80027 2.63916 2.68306 2.75972C2.56585 2.88028 2.5 3.04379 2.5 3.21429ZM5 0.642857C5 0.813353 5.06585 0.976867 5.18306 1.09743C5.30027 1.21798 5.45924 1.28571 5.625 1.28571H14.375C14.5408 1.28571 14.6997 1.21798 14.8169 1.09743C14.9342 0.976867 15 0.813353 15 0.642857C15 0.472361 14.9342 0.308848 14.8169 0.188288C14.6997 0.0677294 14.5408 0 14.375 0H5.625C5.45924 0 5.30027 0.0677294 5.18306 0.188288C5.06585 0.308848 5 0.472361 5 0.642857Z"
+        fill="currentColor" />
+    </svg>
+  </div>
+  <label class="header-title">Collections</label>
+</div>
+
+<ul class="list-container">
+  @for (collection of paginatedCollections(); track $index) {
+    <li role="listitem" class="list-item" tabindex="0" (click)="onClick(collection)" (keydown.enter)="onClick(collection)">
+      <p class="item-name">{{ collection.name }}</p>
+
+      <button
+        variant="icon"
+        class="delete-button"
+        title="{{ 'collections.deleteCollection' | transloco }}"
+        [attr.aria-label]="'collections.deleteCollection' | transloco"
+        (click)="onDelete(collection, $index, $event)">
+        <i class="fa-fw fa-regular fa-trash-can" aria-hidden="true"></i>
+      </button>
+    </li>
+  } @empty {
+    <li class="empty-state">{{ 'collections.noCollections' | transloco }}</li>
+  }
+</ul>
+
+<div class="actions-container">
+  @if (hasMore() && config.showLoadMore) {
+    <button variant="outline" class="load-more-button" tabindex="0" [attr.title]="'loadMore' | transloco" (click)="loadMore($event)">
+      {{ 'loadMore' | transloco }}
+    </button>
+  }
+  <button variant="link" class="see-more-button" [attr.title]="'seeMore' | transloco" [routerLink]="[config.routerLink]">{{ 'seeMore' | transloco }}</button>
+</div>
+
+<delete-collection-dialog />

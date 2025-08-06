@@ -1,4 +1,10 @@
-<div class="result-item" [class.selected]="selected()" [attr.aria-selected]="selected()" tabindex="0" (keydown.control.enter)="onCtrlEnter()" role="option">
+<div
+  class="result-item group"
+  [class.selected]="selected()"
+  [attr.aria-selected]="selected()"
+  tabindex="0"
+  (keydown.control.enter)="onCtrlEnter()"
+  role="option">
   <!-- Top Section -->
   <div class="top">
     <!-- Title -->
@@ -50,21 +56,6 @@
     <p [innerHTML]="extract()"></p>
   </div>
 
-  <!-- Custom Metadata-->
-  @if (customMetadata()?.length && article()) {
-    <div class="custom-metadata-container">
-      @for (metadata of customMetadata(); track $index) {
-        @if (metadata.fields) {
-          <div class="custom-metadata-row">
-            @for (field of metadata.fields; track $index) {
-              <Metadata variant="outline" [article]="article()" [metadata]="field" class="metadata-tag" (click)="onMetadataClick($event)" />
-            }
-          </div>
-        }
-      }
-    </div>
-  }
-
   <!--  &lt;!&ndash; Like/Dislike &ndash;&gt;-->
   <!--  <div class="like-dislike">-->
   <!--    &lt;!&ndash; Thumbs Up &ndash;&gt;-->
@@ -96,5 +87,7 @@
   <!--  </div>-->
 
   <!-- Missing terms footer -->
-  <!--    <missing-terms [article]="article()" />-->
+  @if (article()['missingTerms']?.length) {
+    <missing-terms [article]="article()" />
+  }
 </div>

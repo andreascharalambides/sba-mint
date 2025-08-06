@@ -1,11 +1,19 @@
-import { Component, computed, inject, viewChild, viewChildren } from '@angular/core';
+import { Component, computed, inject, signal, viewChild, viewChildren } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslocoPipe, TranslocoService, provideTranslocoScope } from '@jsverse/transloco';
 import { getState } from '@ngrx/signals';
 
 import { logout, setGlobalConfig } from '@sinequa/atomic';
-import { OverrideUserDialogComponent, PrincipalStore, ResetUserSettingsDialogComponent, UserSettingsStore } from '@sinequa/atomic-angular';
+import {
+  AlertsComponent,
+  BookmarksComponent,
+  CollectionsComponent,
+  OverrideUserDialogComponent,
+  PrincipalStore,
+  ResetUserSettingsDialogComponent,
+  UserSettingsStore
+} from '@sinequa/atomic-angular';
 
 import {
   AvatarComponent,
@@ -20,6 +28,10 @@ import {
   MenuItemComponent,
   UserRoundIconComponent
 } from '@sinequa/ui';
+import { HttpClient } from '@angular/common/http';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { NavbarMenu } from '../navbar/navbar.component';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-user-menu',
@@ -38,7 +50,8 @@ import {
     ChevronRightIconComponent,
     AvatarComponent,
     AvatarImageComponent,
-    AvatarFallbackComponent
+    AvatarFallbackComponent,
+    NgIf
   ],
   templateUrl: './user-menu.html',
   styleUrls: ['./user-menu.css'],
@@ -58,6 +71,28 @@ export class UserMenuComponent {
     const principal = getState(this.principalStore).principal;
     return principal;
   });
+
+  private readonly http = inject(HttpClient);
+  private readonly sanitizer = inject(DomSanitizer);
+
+  svgCache = new Map<string, SafeHtml>();
+
+  loadSvg(path: string): void {
+    if (!this.svgCache.has(path)) {
+      this.http.get(path, { responseType: 'text' }).subscribe(svg => {
+        // Remove the fixed fill to make it CSS-customizable
+        const modifiedSvg = svg.replace(/fill="#[^"]*"/g, 'fill="currentColor"');
+        this.svgCache.set(path, this.sanitizer.bypassSecurityTrustHtml(modifiedSvg));
+      });
+    }
+  }
+
+  getSvg(path: string): SafeHtml | null {
+    this.loadSvg(path); // Load if not cached
+    return this.svgCache.get(path) || null;
+  }
+
+  protected readonly userIcon = './../../assets/icons/user.svg';
 
   readonly initials = computed(() => {
     const principal = this.user();

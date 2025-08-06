@@ -9,8 +9,6 @@ import { Suggestion } from '@sinequa/atomic';
 import {
   AlertsComponent,
   AutocompleteService,
-  BookmarksComponent,
-  CollectionsComponent,
   DrawerStackService,
   OverflowManagerDirective,
   QueryParamsStore,
@@ -26,6 +24,8 @@ import { SearchInputComponent } from '../search-input/search-input.component';
 import { UserMenuComponent } from '../user-menu/user-menu';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { CollectionsComponent } from '../../../custom-components/collections/collections';
+import { BookmarksComponent } from '../../../custom-components/bookmarks/bookmarks';
 
 export type NavbarMenu = {
   display: string;
@@ -94,11 +94,8 @@ export class NavbarComponent {
   }
 
   protected readonly menus = signal<NavbarMenu[]>([
-    // { display: 'recentSearches.label', iconClass: 'far fa-clock-rotate-left', routerLink: '/widgets/recent-searches', component: RecentSearchesComponent },
-    { display: 'bookmarks.label', icon: './../../assets/icons/bookmark.svg', routerLink: '/widgets/bookmarks', component: BookmarksComponent },
-    { display: 'collections.label', icon: './../../assets/icons/collection.svg', routerLink: '/widgets/collections', component: CollectionsComponent },
-    // { display: 'savedSearches.label', iconClass: 'far fa-star', routerLink: '/widgets/saved-searches', component: SavedSearchesComponent },
-    { display: 'alerts.label', icon: './../../assets/icons/alert.svg', component: AlertsComponent }
+    { display: 'bookmarks.label', icon: './../../assets/icons/bookmark.svg', component: BookmarksComponent },
+    { display: 'collections.label', icon: './../../assets/icons/collection.svg', component: CollectionsComponent }
   ]);
 
   private readonly transloco = inject(TranslocoService);

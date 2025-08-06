@@ -1,0 +1,69 @@
+<app-navbar [showInput]="false" [showMenu]="false" />
+
+<div class="main-container">
+  <div class="content-area">
+    <!-- Sidebar -->
+    <div [class]="cn('sidebar-panel', opened() ? 'sidebar-panel-closed' : 'sidebar-panel-open')">
+      <!-- Saved Chats -->
+      @if (showSavedChats()) {
+        <section class="saved-chats-section">
+          <div class="saved-chats-header">
+            <div class="saved-chats-header__inner">
+              <div class="assistant-icon-wrapper">
+                <svg
+                  class="assistant-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path
+                    d="M4.3677 19.6879C3.76259 19.8166 3.24667 19.2392 3.44239 18.6523L4.17411 16.4584C4.25283 16.2223 4.21494 15.9643 4.08599 15.7515C2.03689 12.3701 2.98681 8.14241 6.39736 5.72365C9.92063 3.22596 14.9807 3.43069 18.2332 6.20302C21.4856 8.97634 21.9253 13.4594 19.2614 16.6901C16.653 19.8534 11.8577 20.8577 7.94531 19.0965C7.78303 19.0234 7.60184 19.0002 7.42777 19.0372L4.3677 19.6879Z" />
+                </svg>
+              </div>
+              <h3 class="saved-chats-title">Assistant</h3>
+            </div>
+            <button
+              class="new-chat-btn"
+              [title]="'assistant.new-discussion' | transloco"
+              [attr.aria-label]="'assistant.new-discussion' | transloco"
+              (click)="chat()?.newChat()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path
+                  d="M8.16634 0.833008C8.28672 0.833008 8.40604 0.856765 8.51725 0.902832C8.62842 0.948898 8.72936 1.01647 8.81445 1.10156C8.89954 1.18665 8.96712 1.28759 9.01318 1.39876C9.05925 1.50998 9.08301 1.6293 9.08301 1.74967C9.08301 1.87005 9.05925 1.98937 9.01318 2.10059C8.96712 2.21175 8.89954 2.3127 8.81445 2.39779C8.72936 2.48288 8.62842 2.55045 8.51725 2.59652C8.40604 2.64258 8.28672 2.66634 8.16634 2.66634H4.49967C4.01344 2.66634 3.54727 2.85963 3.20345 3.20345C2.85963 3.54727 2.66634 4.01344 2.66634 4.49967V15.4997C2.66634 15.9859 2.85963 16.4521 3.20345 16.7959C3.54727 17.1397 4.01344 17.333 4.49967 17.333H15.4997C15.9859 17.333 16.4521 17.1397 16.7959 16.7959C17.1397 16.4521 17.333 15.9859 17.333 15.4997V11.833C17.333 11.5899 17.4297 11.3568 17.6016 11.1849C17.7735 11.013 18.0066 10.9163 18.2497 10.9163C18.4928 10.9163 18.7259 11.013 18.8978 11.1849C19.0697 11.3568 19.1663 11.5899 19.1663 11.833V15.4997C19.1663 16.4721 18.7798 17.4045 18.0921 18.0921C17.4045 18.7798 16.4721 19.1663 15.4997 19.1663H4.49967C3.52721 19.1663 2.59486 18.7798 1.90723 18.0921C1.21959 17.4045 0.833008 16.4721 0.833008 15.4997V4.49967C0.833008 3.52721 1.21959 2.59486 1.90723 1.90723C2.59486 1.21959 3.52721 0.833008 4.49967 0.833008H8.16634Z"
+                  class="chat-icon-path" />
+                <path
+                  d="M16.0824 0.833008C16.3918 0.832948 16.6981 0.893707 16.9839 1.01204C17.2697 1.13044 17.5296 1.30437 17.7484 1.52319L18.4779 2.25456C18.9186 2.69633 19.1663 3.29474 19.1663 3.9187C19.1663 4.54268 18.9187 5.14109 18.4779 5.58284L11.0882 12.9762C10.6472 13.4171 10.0478 13.6663 9.42318 13.6663H6.91667C6.59463 13.6663 6.33301 13.4047 6.33301 13.0827V10.5914C6.33334 9.96775 6.58086 9.36964 7.0214 8.92814L14.4165 1.52409C14.6351 1.30517 14.8952 1.13147 15.181 1.01294C15.4668 0.894435 15.7731 0.83308 16.0824 0.833008Z"
+                  class="chat-icon-path" />
+              </svg>
+            </button>
+          </div>
+          <sq-saved-chats-v3 class="saved-chats-content" [instanceId]="instanceId()"></sq-saved-chats-v3>
+        </section>
+      }
+
+      <!-- Aggregation -->
+      <section class="aggregation-section">
+        <Aggregation name="Sources" column="treepath" [showCount]="true" class="aggregation-container" />
+      </section>
+
+      <!-- Document Uploader -->
+      @if (showDocumentUploader()) {
+        <assistant-upload [instanceId]="instanceId()" />
+      }
+    </div>
+
+    <!-- Assistant -->
+    <div [class]="cn('assistant-panel', opened() ? 'assistant-panel-narrow' : 'assistant-panel-wide')">
+      <Assistant [instanceId]="instanceId()" (onReady)="handleReady($event)" (onConnection)="handleConnection($event)" />
+    </div>
+  </div>
+</div>
+
+<div class="bottom-bar-container">
+  <app-sidebar />
+</div>

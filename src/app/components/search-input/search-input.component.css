@@ -76,25 +76,6 @@
   font-weight: 400; /* far */
 }
 
-/* AI button */
-.ai-button {
-  margin: 0.25rem; /* m-1 */
-  height: 1.5rem; /* h-6 */
-  border-radius: 0.125rem; /* rounded-sm */
-  font-size: 0.75rem; /* text-xs */
-  line-height: 1rem; /* text-xs */
-  transition-property: all; /* transition */
-  transition-timing-function: ease-in; /* ease-in */
-}
-
-/* AI icon (fa-regular fa-sparkles) */
-.ai-icon {
-  width: 1.25em; /* fa-fw equivalent */
-  text-align: center; /* fa-fw equivalent */
-  font-weight: 400; /* fa-regular */
-  margin-inline-end: 0.25rem; /* me-1 */
-}
-
 .animate-save {
   animation: saved 1s;
 }

@@ -23,3 +23,7 @@
   width: 100%;
   height: 100%;
 }
+
+.bottom-bar-container {
+  position: relative;
+}

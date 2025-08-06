@@ -1,0 +1,541 @@
+/* Host styles */
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  max-height: 100vh;
+  padding: var(--spacing-md);
+  gap: var(--spacing-lg);
+  overflow: hidden;
+  background: url('../../../assets/background.png') center/cover no-repeat;
+}
+
+/* Main container */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 0 0;
+  align-self: stretch;
+  padding: 12px;
+  gap: 12px;
+  border-radius: var(--radius-lg);
+  background: var(--card-background);
+  backdrop-filter: var(--glass-backdrop-blur);
+}
+
+.content-area {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  flex: 1 0 0;
+  align-self: stretch;
+  min-height: 0;
+  height: 100%;
+}
+
+/* Sidebar panel closed state */
+.sidebar-panel-closed {
+  z-index: -1;
+  transform: translateX(-120%);
+  opacity: 0;
+  height: 100%;
+}
+
+/* Sidebar panel open state */
+.sidebar-panel-open {
+  transform: translateX(0);
+  display: flex;
+  width: 18%;
+  min-width: 200px;
+  padding: var(--spacing-lg);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-lg);
+  align-self: stretch;
+  border-radius: var(--radius-md);
+  background: var(--grays-09);
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Saved chats section */
+.saved-chats-section {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100% !important;
+}
+
+/* Saved chats header */
+.saved-chats-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.saved-chats-header__inner {
+  display: flex;
+  align-items: center;
+  flex: 1 0 0;
+  gap: var(--spacing-xs);
+  width: 100%;
+}
+
+.assistant-icon {
+  color: var(--grays-00);
+  width: 20px;
+  height: 20px;
+  display: block;
+  margin: auto;
+}
+
+.assistant-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+/* Saved chats title */
+.saved-chats-title {
+  color: var(--grays-00);
+  font-weight: var(--font-medium);
+  font-size: var(--text-xl);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  flex: 1 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-style: normal;
+  line-height: normal;
+}
+
+.new-chat-btn {
+  padding: 0 !important;
+  background: none !important;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  transition: transform 0.2s ease;
+}
+
+.new-chat-btn svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+  margin: auto;
+}
+
+.new-chat-btn .chat-icon-path {
+  fill: var(--grays-05);
+  transition: fill 0.2s ease;
+}
+
+.new-chat-btn:hover {
+  transform: scale(1.05);
+}
+
+.new-chat-btn:active .chat-icon-path {
+  fill: var(--primary-03);
+}
+
+/* Main saved chats container */
+::ng-deep .saved-chats {
+  /* Container for each time period group (Today, Last week, etc.) */
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+}
+
+/* Date group headers */
+::ng-deep .saved-chat-date {
+  /* Styling for date separators like "Today", "Last week" */
+  font-size: var(--text-sm) !important;
+  font-weight: var(--font-medium) !important;
+  color: var(--grays-04) !important;
+  margin: 0 !important;
+  padding: var(--spacing-xs) 0 !important;
+  background: var(--grays-09) !important;
+}
+
+/* ADD new class for saved chats content container */
+.saved-chats-content {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  max-height: 100% !important;
+}
+
+/* Individual saved chat item */
+::ng-deep .saved-chat {
+  /* Base styling for each chat item */
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  align-self: stretch !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  transition: all 0.2s ease !important;
+  margin: 0 !important;
+  padding: var(--spacing-xs) !important;
+  cursor: pointer !important;
+  height: 32px !important;
+}
+
+/* Chat title */
+::ng-deep .saved-chat .title {
+  /* Title text styling with text truncation */
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 1 !important;
+  flex: 1 0 0 !important;
+  overflow: hidden !important;
+  color: var(--grays-00) !important;
+  text-overflow: ellipsis !important;
+  font-size: var(--text-sm) !important;
+  font-style: normal !important;
+  font-weight: var(--font-regular) !important;
+  line-height: normal !important;
+  margin: 0 !important;
+}
+
+/* Action buttons container */
+::ng-deep .saved-chat-actions {
+  /* Styling for edit and delete icons */
+  color: var(--grays-03) !important;
+  opacity: 0 !important;
+  transition: opacity 0.2s ease !important;
+  cursor: pointer !important;
+  padding-left: var(--spacing-sm) !important;
+  margin: 0 !important;
+}
+
+/* Hover state - show icons and style changes */
+::ng-deep .saved-chat:hover {
+  background: transparent !important;
+}
+
+::ng-deep .saved-chat:hover .title {
+  font-weight: 500 !important;
+}
+
+::ng-deep .saved-chat:hover .saved-chat-actions {
+  opacity: 1 !important;
+}
+
+::ng-deep .saved-chat-actions:hover {
+  /*background-color: var(--grays-07) !important;*/
+  color: var(--grays-01) !important;
+  /*transform: scale(1.1) !important;*/
+}
+
+/* Active/selected state */
+::ng-deep .saved-chat.active {
+  display: flex !important;
+  padding: var(--spacing-xs) !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  align-self: stretch !important;
+  border-radius: var(--radius-sm) !important;
+  background: var(--primary-05) !important;
+}
+
+::ng-deep .saved-chat.active .title {
+  overflow: hidden !important;
+  color: var(--grays-00) !important;
+  text-overflow: ellipsis !important;
+  font-style: normal !important;
+  font-weight: var(--font-medium) !important;
+  line-height: normal !important;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 1 !important;
+  flex: 1 0 0 !important;
+}
+
+::ng-deep .saved-chat.active .saved-chat-actions {
+  /*opacity: 1 !important;*/
+  /*color: var(--color-primary-foreground) !important;*/
+}
+
+::ng-deep .saved-chat.active .saved-chat-actions:hover {
+  /*background-color: rgba(255, 255, 255, 0.2) !important;*/
+}
+
+/* FontAwesome icons within actions */
+::ng-deep .saved-chat-actions svg {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+/* Delete action specific styling */
+::ng-deep .saved-chat-actions:last-child:hover {
+  color: var(--color-destructive) !important;
+}
+
+/* Dialog components */
+::ng-deep sq-dialog-delete-saved-chat dialog,
+::ng-deep sq-dialog-rename-saved-chat dialog {
+  /* Modal dialog styling */
+  backdrop-filter: blur(4px) !important;
+}
+
+::ng-deep sq-dialog-delete-saved-chat dialog {
+  /* Delete confirmation dialog */
+}
+
+::ng-deep sq-dialog-rename-saved-chat dialog {
+  /* Rename dialog */
+}
+
+/* Dialog buttons */
+::ng-deep sq-dialog-delete-saved-chat .btn-danger,
+::ng-deep sq-dialog-rename-saved-chat .btn-primary {
+  /* Confirm action buttons */
+}
+
+::ng-deep sq-dialog-delete-saved-chat .btn-ghost,
+::ng-deep sq-dialog-rename-saved-chat .btn-ghost {
+  /* Cancel buttons */
+}
+
+/* Dialog input field (rename dialog) */
+::ng-deep sq-dialog-rename-saved-chat input[type='text'] {
+  /* Text input for renaming */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  ::ng-deep .saved-chat {
+    padding: var(--spacing-sm) !important;
+  }
+
+  ::ng-deep .saved-chat .title {
+    font-size: var(--text-xs) !important;
+  }
+
+  ::ng-deep .saved-chat-actions svg {
+    width: 12px !important;
+    height: 12px !important;
+  }
+}
+
+/* Scrollbar for saved chats list - Main component scrollbar */
+::ng-deep sq-saved-chats-v3 {
+  max-height: 400px !important;
+  overflow-y: auto !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: var(--grays-06) transparent !important;
+}
+
+::ng-deep sq-saved-chats-v3::-webkit-scrollbar {
+  width: 6px !important;
+}
+
+::ng-deep sq-saved-chats-v3::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+::ng-deep sq-saved-chats-v3::-webkit-scrollbar-thumb {
+  background-color: var(--grays-06) !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+/* Empty state (when no saved chats) */
+::ng-deep .saved-chats:empty::before {
+  content: 'No saved conversations' !important;
+  display: block !important;
+  text-align: center !important;
+  color: var(--grays-04) !important;
+  font-size: var(--text-sm) !important;
+  padding: var(--spacing-lg) !important;
+  font-style: italic !important;
+}
+
+/* Loading state */
+::ng-deep .saved-chats.loading {
+  opacity: 0.6 !important;
+  pointer-events: none !important;
+}
+
+::ng-deep .saved-chats.loading::after {
+  content: '' !important;
+  display: block !important;
+  width: 20px !important;
+  height: 20px !important;
+  margin: var(--spacing-lg) auto !important;
+  border: 2px solid var(--grays-06) !important;
+  border-top: 2px solid var(--color-primary) !important;
+  border-radius: 50% !important;
+  animation: spin 1s linear infinite !important;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg) !important;
+  }
+  100% {
+    transform: rotate(360deg) !important;
+  }
+}
+
+/* Aggregation section */
+.aggregation-section {
+  width: 100%;
+}
+
+/* Aggregation container */
+.aggregation-container {
+  height: 100%;
+  overflow: auto;
+}
+
+/* Assistant panel base */
+.assistant-panel {
+  transition-property: all;
+  transition-duration: 300ms;
+  transition-timing-function: ease-in-out;
+  height: 100%;
+}
+
+/* Assistant panel narrow (when sidebar is closed) */
+.assistant-panel-narrow {
+  width: 50%; /* w-1/2 */
+  transform: translateX(-50%);
+  height: 100%;
+}
+
+/* Assistant panel wide (when sidebar is open) */
+.assistant-panel-wide {
+  width: 100%;
+  height: 100%;
+  transform: translateX(0); /* translate-x-0 */
+}
+
+/* =================================================================
+   ASSISTANT CHAT CENTERING - 60% WIDTH WITH RIGHT-EDGE SCROLLBAR
+   ================================================================= */
+
+/* Ensure the chat component allows proper layout */
+::ng-deep sq-chat-v3 {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Main chat container - create the layout structure */
+::ng-deep sq-chat-v3 .h-100.d-flex.flex-column {
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important; /* This centers the input */
+  height: 100% !important;
+  overflow: hidden !important; /* No scroll on main container */
+}
+
+/* Create a scrollable wrapper for messages only */
+::ng-deep sq-chat-v3 .h-100.d-flex.flex-column {
+  position: relative !important;
+}
+
+/* Messages container - this will be scrollable and span full width */
+::ng-deep sq-chat-v3 ul.d-flex.flex-column.list-unstyled.gap-3.overflow-auto.flex-grow-1 {
+  flex: 1 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  width: 100% !important; /* Full width for scrollbar positioning */
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: var(--spacing-md) 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important; /* Center the message items */
+  gap: var(--spacing-md) !important;
+}
+
+/* Individual message items - centered at 60% */
+::ng-deep sq-chat-v3 li.list-group-item {
+  width: 60% !important;
+  max-width: 60% !important;
+  flex-shrink: 0 !important;
+}
+
+/* Ensure chat message components fill the message item width */
+::ng-deep sq-chat-v3 sq-chat-message {
+  width: 100% !important;
+}
+
+/* Keep user input fixed at bottom and centered */
+::ng-deep sq-chat-v3 .user-input.mt-auto {
+  width: 60% !important;
+  max-width: 60% !important;
+  margin: 0 !important; /* Remove auto margin since parent centers it */
+  flex-shrink: 0 !important;
+  position: relative !important;
+  z-index: 999 !important;
+  padding: var(--spacing-md) 0 !important;
+}
+
+/* Style the scrollbar on the messages list */
+::ng-deep sq-chat-v3 ul.d-flex.flex-column.list-unstyled.gap-3.overflow-auto.flex-grow-1::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+::ng-deep sq-chat-v3 ul.d-flex.flex-column.list-unstyled.gap-3.overflow-auto.flex-grow-1::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+::ng-deep sq-chat-v3 ul.d-flex.flex-column.list-unstyled.gap-3.overflow-auto.flex-grow-1::-webkit-scrollbar-thumb {
+  background-color: var(--grays-06) !important;
+  border-radius: 4px !important;
+}
+
+::ng-deep sq-chat-v3 ul.d-flex.flex-column.list-unstyled.gap-3.overflow-auto.flex-grow-1::-webkit-scrollbar-thumb:hover {
+  background-color: var(--grays-05) !important;
+}
+
+/* Firefox scrollbar styling */
+::ng-deep sq-chat-v3 ul.d-flex.flex-column.list-unstyled.gap-3.overflow-auto.flex-grow-1 {
+  scrollbar-width: thin !important;
+  scrollbar-color: var(--grays-06) transparent !important;
+}
+
+/* Ensure chat message components fill the available width */
+::ng-deep sq-chat-v3 sq-chat-message {
+  width: 100% !important;
+}
+
+/* Style the scrollbar to be more visible at the right edge */
+::ng-deep sq-chat-v3 .h-100.d-flex.flex-column::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+::ng-deep sq-chat-v3 .h-100.d-flex.flex-column::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+::ng-deep sq-chat-v3 .h-100.d-flex.flex-column::-webkit-scrollbar-thumb {
+  background-color: var(--grays-06) !important;
+  border-radius: 4px !important;
+}
+
+::ng-deep sq-chat-v3 .h-100.d-flex.flex-column::-webkit-scrollbar-thumb:hover {
+  background-color: var(--grays-05) !important;
+}
+
+/* Firefox scrollbar styling */
+::ng-deep sq-chat-v3 .h-100.d-flex.flex-column {
+  scrollbar-width: thin !important;
+  scrollbar-color: var(--grays-06) transparent !important;
+}

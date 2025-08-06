@@ -1,42 +1,33 @@
-<div class="sidebar-container">
-  <ul class="sidebar-nav">
-    <li class="sidebar-item">
-      <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" aria-label="Explore" title="Explore">
-        <div class="icon">
-          <i class="far fa-globe"></i>
-        </div>
-        <span>Explore</span>
-      </a>
-    </li>
+<div
+  class="sidebar-wrapper"
+  [class.sidebar-static]="!shouldSlide()"
+  [class.sidebar-slide]="shouldSlide()"
+  [class.slide-up]="shouldSlide() && isSlideUp()"
+  [class.slide-down]="shouldSlide() && !isSlideUp()"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()">
+  <div class="sidebar-container">
+    <ul class="sidebar-nav">
+      <li class="sidebar-item">
+        <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" aria-label="Explore" title="Explore">
+          <div class="icon">
+            <i class="far fa-globe"></i>
+          </div>
+          <span>Explore</span>
+        </a>
+      </li>
 
-    <!--    @if (allowAI()) {-->
-    <li class="sidebar-item">
-      <a routerLink="/assistant" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" aria-label="Assistant" title="Assistant">
-        <div class="icon">
-          <i class="far fa-comment"></i>
-        </div>
-        <span>Assistant</span>
-      </a>
-    </li>
-    <!--    }-->
-    <ng-content></ng-content>
-  </ul>
-
-  <!--  <ul class="sidebar-actions">-->
-  <!--    @if (isAdmin()) {-->
-  <!--      <li class="sidebar-item">-->
-  <!--        <button (click)="openAdmin()" aria-label="Administration" title="Administration">-->
-  <!--          <i class="fas fa-gear"></i>-->
-  <!--          <span>Administration</span>-->
-  <!--        </button>-->
-  <!--      </li>-->
-  <!--    }-->
-
-  <!--    <li class="sidebar-item">-->
-  <!--      <button (click)="openHelp()" aria-label="Help" title="Help">-->
-  <!--        <i class="far fa-question-circle"></i>-->
-  <!--        <span>Help</span>-->
-  <!--      </button>-->
-  <!--    </li>-->
-  <!--  </ul>-->
+      @if (allowAI()) {
+        <li class="sidebar-item">
+          <a routerLink="/assistant" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" aria-label="Assistant" title="Assistant">
+            <div class="icon">
+              <i class="far fa-comment"></i>
+            </div>
+            <span>Assistant</span>
+          </a>
+        </li>
+      }
+      <ng-content></ng-content>
+    </ul>
+  </div>
 </div>

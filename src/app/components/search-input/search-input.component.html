@@ -24,20 +24,6 @@
     </button>
   }
 
-  @if (allowAI()) {
-    <button
-      variant="ai"
-      class="ai-button"
-      title="Ask AI"
-      aria-label="Ask AI"
-      [disabled]="value() === ''"
-      [routerLink]="['/assistant']"
-      [queryParams]="{ q: value() }">
-      <i class="fa-fw fa-regular fa-sparkles ai-icon" aria-hidden="true"></i>
-      Ask AI
-    </button>
-  }
-
   <div
     style="background: none; margin-top: var(--spacing-sm)"
     popover

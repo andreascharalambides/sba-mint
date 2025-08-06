@@ -5,7 +5,8 @@
       @if (initials()) {
         <span>{{ initials() }}</span>
       } @else {
-        <UserRound class="avatar-icon" />
+        <!--        <UserRound class="avatar-icon" />-->
+        <span *ngIf="userIcon" [innerHTML]="getSvg(userIcon)" class="avatar-icon"></span>
         <i class="fa-solid fa-chevron-down arrow-down"></i>
       }
     </AvatarFallback>

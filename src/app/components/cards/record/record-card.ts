@@ -10,7 +10,6 @@ import {
   PreviewService,
   QueryParamsStore,
   SearchService,
-  SelectArticleOnClickDirective,
   SelectionStore,
   SelectionStrategy,
   ShowBookmarkDirective,
@@ -20,6 +19,7 @@ import {
 import { BadgeComponent, CardComponent, CardContentComponent, CardFooterComponent, CardHeaderComponent } from '@sinequa/ui';
 
 import { CardMenuComponent } from '../menu';
+import { SelectArticleOnClickDirective } from '../../../../custom-components/select-article-on-click.directive';
 
 type Tab = 'attachments' | 'similars';
 

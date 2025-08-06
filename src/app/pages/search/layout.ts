@@ -14,6 +14,10 @@ import { AppSidebarComponent } from '../../components/sidebar/sidebar.component'
     <app-navbar class="navbar" />
 
     <router-outlet />
+
+    <div class="bottom-bar-container">
+      <app-sidebar />
+    </div>
   `,
   styleUrls: ['./layout.css'],
   host: {

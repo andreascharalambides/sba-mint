@@ -5,7 +5,7 @@
   gap: var(--spacing-sm);
   width: 100%;
   z-index: 100;
-  border-radius: 99999px;
+  border-radius: var(--radius-full);
   padding: var(--spacing-md);
   background: var(--glass-border) !important;
   backdrop-filter: var(--glass-backdrop-blur);
@@ -82,9 +82,11 @@
 .sidebar-item a.active {
   background: var(--primary-00);
   border-radius: var(--radius-xl);
+
   i {
     color: var(--grays-08);
   }
+
   span {
     display: inline-block;
     color: var(--grays-08);
@@ -100,4 +102,49 @@
   span {
     display: inline-block;
   }
+}
+
+/* Base wrapper styles */
+.sidebar-wrapper {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  cursor: pointer;
+  width: auto;
+  /*min-width: 200px;*/
+}
+
+/* Static sidebar for home page */
+.sidebar-static {
+  bottom: 10px;
+  transition: none;
+}
+
+/* Sliding sidebar for search/assistant pages */
+.sidebar-slide {
+  bottom: 10px;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-slide .sidebar-container {
+  /*border-top-left-radius: 12px;*/
+  /*border-top-right-radius: 12px;*/
+  /*border-bottom-left-radius: 0;*/
+  /*border-bottom-right-radius: 0;*/
+}
+
+/* Slide down state (showing 10%) */
+.sidebar-slide.slide-down {
+  transform: translateX(-50%) translateY(70%);
+}
+
+/* Slide up state (fully visible) */
+.sidebar-slide.slide-up {
+  transform: translateX(-50%) translateY(0%);
+}
+
+/* Smooth transitions for all elements */
+.sidebar-wrapper * {
+  transition: all 0.3s ease-in-out;
 }

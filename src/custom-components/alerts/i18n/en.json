@@ -1,0 +1,33 @@
+{
+  "label": "Alerts",
+  "createAlert": "Create Alert",
+  "manageAlerts": "Manage Alerts",
+  "deleteAlert": "Delete Alert",
+  "alertName": "Alert name",
+  "alertFrequency": "Frequency",
+  "alertDays": "Days",
+  "alertHours": "Hours",
+  "alertActive": "Active",
+  "noAlerts": "No alerts yet",
+  "execute": "Execute the request",
+  "updateQuery": "Update query",
+  "queryUpdated": "Query successfully updated",
+  "placeholder": "e.g. Daily Standup Reminder",
+  "repeatOn": "Repeat on",
+  "weekdays": {
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday"
+  },
+  "frequency": {
+    "Daily": "Daily",
+    "Hourly": "Hourly",
+    "Immediate": "Immediate",
+    "Weekly": "Weekly",
+    "Monthly": "Monthly"
+  }
+}

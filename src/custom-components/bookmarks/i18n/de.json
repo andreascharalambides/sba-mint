@@ -1,0 +1,11 @@
+{
+  "label": "Lesezeichen",
+  "addBookmark": "Lesezeichen hinzufügen",
+  "bookmarkAdded": "Lesezeichen hinzugefügt",
+  "bookmarkDocument": "Dokument mit Lesezeichen versehen",
+  "bookmarkRemoved": "Lesezeichen entfernt",
+  "noBookmarks": "Noch keine Lesezeichen",
+  "removeBookmark": "Lesezeichen entfernen",
+  "myBookmarks": "Meine Lesezeichen",
+  "openBookmark": "Lesezeichen öffnen"
+}

@@ -17,6 +17,7 @@ import {
   InfinityScrollDirective,
   NavbarTabsComponent,
   NoResultComponent,
+  PreviewService,
   PrincipalStore,
   QueryParamsStore,
   SavedSearch,
@@ -24,6 +25,7 @@ import {
   SearchFeedbackComponent,
   SearchService,
   SelectionService,
+  SelectionStore,
   SortingChoice,
   SortSelectorComponent,
   SponsoredResultsComponent,
@@ -103,17 +105,14 @@ export class SearchAllComponent {
   private readonly savedSearchesService = inject(SavedSearchesService);
   readonly showInput = input<boolean>(true);
   readonly searchInput = viewChild(SearchInputComponent);
-  // protected readonly drawerOpened = signal(false);
 
   protected readonly result = signal<Result | undefined>(undefined);
   protected readonly queryText = signal<string>('');
 
-  // the Assistant is expanded and visible by default
-  protected readonly assistantCollapsed = signal<boolean>(true);
+  // the Assistant is visible by default
   protected readonly showAssistant = signal<boolean>(false);
 
   protected readonly searchService = inject(SearchService);
-  // protected readonly drawerStack = inject(DrawerStackService);
   protected readonly selectionService = inject(SelectionService);
 
   protected readonly appFeatures = inject(APP_FEATURES);
@@ -126,9 +125,14 @@ export class SearchAllComponent {
   protected readonly router = inject(Router);
   protected readonly route = inject(ActivatedRoute);
 
+  protected readonly previewService = inject(PreviewService);
+  protected readonly selectedArticlePreviewData = signal<PreviewData | null>(null);
+
   protected aggregations: Aggregation[];
 
   protected readonly sub = new Subscription();
+
+  protected readonly selectionStore = inject(SelectionStore);
 
   readonly searchText = signal<string>('');
 
@@ -302,22 +306,47 @@ export class SearchAllComponent {
       this.aggregationsStore.update(result.aggregations);
     });
 
+    // Initialize assistant visibility
     effect(() => {
-      const { collapseAssistant } = getState(this.usersettingsStore);
-
-      if (collapseAssistant !== undefined) {
-        this.assistantCollapsed.set(collapseAssistant);
-        if (!this.showAssistant()) {
-          this.showAssistant.set(!collapseAssistant);
-        }
+      if (!this.showAssistant()) {
+        this.showAssistant.set(true);
       }
     });
 
-    // this.sub.add(this.drawerStack.isOpened.subscribe(state => this.drawerOpened.set(state)));
-
     this.conditionalMessageHandler.set('SkillsTester', { handler: message => this.handleConditionalDisplayMessage(message), isGlobalHandler: false });
 
-    // effect(() => this.onDrawerOpenedChange(this.drawerOpened()));
+    effect(() => {
+      const state = getState(this.selectionStore);
+      console.log('SelectionStore state changed:', state);
+
+      if (state.article && state.id) {
+        console.log('Article selected, fetching preview for ID:', state.id);
+        this.selectedArticle.set(state.article);
+
+        // Fetch the actual preview data
+        const query = this.queryParamsStore.getQuery();
+        this.previewService
+          .preview(state.id, {
+            name: query.name || '_query',
+            text: query.text || ''
+          })
+          .subscribe({
+            next: previewData => {
+              console.log('Preview data fetched successfully:', previewData);
+              this.selectedArticlePreviewData.set(previewData);
+              console.log('selectedArticlePreviewData signal value:', this.selectedArticlePreviewData());
+            },
+            error: error => {
+              console.error('Error fetching preview data:', error);
+              this.selectedArticlePreviewData.set(null);
+            }
+          });
+      } else {
+        console.log('No article selected, clearing preview');
+        this.selectedArticle.set(null);
+        this.selectedArticlePreviewData.set(null);
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -333,11 +362,6 @@ export class SearchAllComponent {
     if (isNotInputEvent(e)) {
       e.stopImmediatePropagation(); // required for the drawer to open properly
     }
-  }
-
-  onDrawerOpenedChange(opened: boolean): void {
-    // Your function logic here
-    console.log(`Drawer opened state changed to: ${opened}`);
   }
 
   onSort(sort: SortingChoice): void {
@@ -371,13 +395,6 @@ export class SearchAllComponent {
   }
 
   /**
-   * Switch the assistant collapsed status.
-   */
-  onAssistantCollapse() {
-    this.usersettingsStore.updateAssistantCollapsed(!this.assistantCollapsed());
-  }
-
-  /**
    * Updates the article type for each record in the result.
    *
    * This method maps over the `records` array in the `result` object and updates each
@@ -399,11 +416,7 @@ export class SearchAllComponent {
   }
 
   protected readonly selectedArticle = signal<Article | null>(null);
-  protected readonly selectedArticlePreviewData = computed(() => {
-    const article = this.selectedArticle();
-    if (!article) return null;
-    return { record: article } as PreviewData;
-  });
+
   protected search(text: string): void {
     this.queryParamsStore.patch({ text });
 
