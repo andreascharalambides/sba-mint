@@ -41,12 +41,12 @@
     </div>
 
     @if (tmpCollections.length > 0) {
-      <ul class="collections-list" cdkDropList [cdkDropListData]="tmpCollections" (cdkDropListDropped)="dropped($event)">
+      <ul class="list-container" cdkDropList [cdkDropListData]="tmpCollections" (cdkDropListDropped)="dropped($event)">
         @for (collection of tmpCollections; track $index) {
           @if (modifiedIndex() === undefined || modifiedIndex() !== $index) {
-            <li class="collection-item" role="listitem" cdkDrag (click)="onClick(collection)">
+            <li class="list-item" role="listitem" cdkDrag (click)="onClick(collection)">
               <i class="fas fa-inbox collection-icon"></i>
-              <span class="collection-name">{{ collection.name }}</span>
+              <span class="item-name">{{ collection.name }}</span>
 
               <button
                 class="edit-button"

@@ -1,0 +1,495 @@
+.section-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.section-title {
+  pointer-events: none;
+  font-size: var(--text-sm);
+  line-height: 1.25rem;
+  font-weight: var(--font-medium);
+  color: var(--grays-03);
+  padding-left: var(--spacing-xs);
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+}
+
+::ng-deep .icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2rem;
+  height: 1.2rem;
+  padding: var(--spacing-xs);
+  border: none;
+  background-color: transparent;
+  color: var(--grays-04);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: var(--text-base);
+}
+
+::ng-deep .icon-button:hover {
+  transform: scale(1.1);
+}
+
+::ng-deep .icon-button:active {
+  transform: scale(1.1);
+  color: var(--grays-02);
+}
+
+/* Main container for uploaded documents */
+::ng-deep .uploaded-docs {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Date header styling */
+::ng-deep .uploaded-docs-date {
+  font-size: var(--text-sm) !important;
+  font-weight: var(--font-medium) !important;
+  color: var(--grays-04) !important;
+  margin: 0 !important;
+  padding: var(--spacing-xs) 0 !important;
+}
+
+/* Individual document item container */
+::ng-deep .uploaded-doc {
+  /* Base styling for each document item */
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  align-self: stretch !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  transition: all 0.2s ease !important;
+  margin: 0 !important;
+  padding: var(--spacing-xs) !important;
+  cursor: pointer !important;
+  height: 32px !important;
+}
+
+/* PDF icon container styling */
+::ng-deep .uploaded-doc sq-format-icon {
+  display: flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+  padding-right: var(--spacing-xs) !important;
+  flex-shrink: 0 !important;
+}
+
+/* PDF icon styling */
+::ng-deep .uploaded-doc .svg-inline--fa.fa-file-pdf {
+  font-size: var(--text-sm) !important;
+  width: var(--text-sm) !important;
+  height: var(--text-sm) !important;
+  color: var(--grays-03) !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Document title styling */
+::ng-deep .uploaded-doc .title {
+  /* Title text styling with text truncation */
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 1 !important;
+  flex: 1 0 0 !important;
+  overflow: hidden !important;
+  color: var(--grays-00) !important;
+  text-overflow: ellipsis !important;
+  font-size: var(--text-sm) !important;
+  font-style: normal !important;
+  font-weight: var(--font-regular) !important;
+  line-height: normal !important;
+  margin: 0 !important;
+}
+
+/* Action buttons container */
+::ng-deep .uploaded-doc-actions {
+  /* Styling for delete icon */
+  color: var(--color-destructive-disable) !important;
+  opacity: 0 !important;
+  transition: opacity 0.2s ease !important;
+  cursor: pointer !important;
+  padding-left: var(--spacing-sm) !important;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+/* Delete icon styling */
+::ng-deep .uploaded-doc-actions .svg-inline--fa.fa-trash {
+  font-size: var(--text-sm) !important;
+  width: var(--text-sm) !important;
+  height: var(--text-sm) !important;
+  color: inherit !important;
+  transition: color 0.2s ease !important;
+}
+
+/* Hover state - show icons and style changes */
+::ng-deep .uploaded-doc:hover {
+  background: transparent !important;
+}
+
+::ng-deep .uploaded-doc:hover .title {
+  font-weight: 500 !important;
+}
+
+::ng-deep .uploaded-doc:hover .uploaded-doc-actions {
+  opacity: 1 !important;
+}
+
+::ng-deep .uploaded-doc-actions:hover {
+  color: var(--color-destructive) !important;
+  transform: scale(1.1);
+}
+
+/* Confirmation alert styling */
+::ng-deep .alert.alert-warning,
+::ng-deep .alert.alert-danger {
+  /*background: rgba(234, 238, 239, 0.7) !important;*/
+  background: var(--color-destructive-foreground) !important;
+  border-radius: var(--radius-md) !important;
+  padding: var(--spacing-md) !important;
+  margin: var(--spacing-xs) 0 0 0 !important;
+}
+
+/* Confirmation message text */
+::ng-deep .alert.alert-warning span,
+::ng-deep .alert.alert-danger span {
+  font-size: var(--text-sm) !important;
+  font-weight: var(--font-medium) !important;
+  color: var(--grays-00) !important;
+  margin-bottom: var(--spacing-xs) !important;
+  display: block !important;
+}
+
+/* Buttons container */
+::ng-deep .alert .d-flex.gap-2 {
+  gap: var(--spacing-xs) !important;
+  margin-top: var(--spacing-xs) !important;
+  width: 100% !important;
+}
+
+::ng-deep .alert .btn {
+  font-size: var(--text-sm) !important;
+  font-weight: var(--font-regular) !important;
+  padding: var(--spacing-xs) var(--spacing-sm) !important;
+  transition: all 0.2s ease !important;
+  height: 32px !important;
+  border: none !important;
+  width: 100% !important;
+  border-radius: var(--radius-md) !important;
+  color: var(--grays-09);
+}
+
+/* Cancel button */
+::ng-deep .alert .btn.btn-light {
+  background-color: white;
+  color: var(--grays-00);
+}
+
+::ng-deep .alert .btn.btn-light:hover {
+  background-color: #ededed;
+}
+
+/* Confirm button */
+::ng-deep .alert .btn.btn-secondary {
+  background-color: var(--color-destructive);
+}
+
+::ng-deep .alert .btn.btn-secondary:hover {
+  background-color: var(--color-destructive-hover);
+}
+
+/* Header actions container */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+/* Menu container with dropdown */
+.menu-container {
+  position: relative;
+}
+
+.menu-trigger {
+  color: var(--grays-03) !important;
+}
+
+.menu-trigger:hover {
+  color: var(--grays-01) !important;
+}
+
+/* Dropdown menu styling */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + var(--spacing-xs));
+  right: 0;
+  background: rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(10px) !important;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: all 0.2s ease;
+  z-index: 1000;
+  padding: var(--spacing-sm);
+}
+
+.dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Dropdown items */
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: 0 !important;
+  border: none;
+  background: transparent;
+  color: var(--grays-00) !important;
+  font-size: var(--text-sm) !important;
+  font-weight: var(--font-regular);
+  text-align: start;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-radius: 0;
+  width: 80px !important;
+  justify-content: flex-start;
+}
+.dropdown-item:hover {
+  background: none !important;
+  transform: none;
+  font-weight: var(--font-medium);
+}
+
+.dropdown-item i {
+  font-size: var(--text-sm);
+  width: 16px;
+  color: var(--grays-03);
+}
+
+.dropdown-item:hover i {
+  color: var(--grays-01);
+}
+
+.dropdown-item:last-child:hover i,
+.dropdown-item:last-child:hover span {
+  color: var(--color-destructive);
+}
+
+/* Collapse/Expand arrow button */
+.collapse-trigger {
+  color: var(--grays-03) !important;
+  transition: all 0.2s ease !important;
+}
+
+.collapse-trigger:hover {
+  color: var(--grays-01) !important;
+}
+
+.collapse-trigger.collapsed {
+  transform: rotate(-90deg);
+}
+
+.collapse-trigger.collapsed:hover {
+  transform: rotate(-90deg) scale(1.1);
+}
+
+/* Collapsible content */
+.collapsible-content {
+  overflow: hidden;
+  transition: all 0.3s ease;
+  max-height: 1000px;
+  opacity: 1;
+}
+
+.collapsible-content.collapsed {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* Click outside to close menu */
+.menu-container.active::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dropdown-menu {
+    min-width: 140px;
+    right: var(--spacing-xs);
+  }
+
+  .dropdown-item {
+    padding: var(--spacing-sm);
+  }
+
+  .header-actions {
+    gap: var(--spacing-xs);
+  }
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+  .dropdown-menu {
+    background: var(--grays-01);
+    border-color: var(--grays-03);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .dropdown-item {
+    color: var(--grays-06);
+  }
+
+  .dropdown-item:hover {
+    background-color: var(--grays-02);
+    color: var(--grays-07);
+  }
+}
+
+/* Animation for smooth transitions */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+.dropdown-menu.show {
+  animation: slideDown 0.2s ease forwards;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .dropdown-menu,
+  .collapse-trigger,
+  .collapsible-content,
+  .dropdown-item {
+    transition: none;
+  }
+
+  .collapse-trigger.collapsed {
+    transform: rotate(-90deg);
+  }
+
+  .dropdown-menu.show {
+    animation: none;
+  }
+}
+
+/* Document overview container */
+::ng-deep sq-document-overview .d-flex {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: var(--spacing-xs) !important;
+  width: 100% !important;
+}
+
+/* Hide the overview text */
+::ng-deep sq-document-overview .overview-text {
+  display: none !important;
+}
+
+/* Upload button styling */
+::ng-deep sq-document-overview .btn.btn-light {
+  display: flex !important;
+  align-items: center !important;
+  gap: var(--spacing-xs) !important;
+  background: transparent !important;
+  border: none !important;
+  color: var(--grays-03) !important;
+  font-size: var(--text-sm) !important;
+  font-weight: var(--font-regular) !important;
+  padding: var(--spacing-xs) !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  width: 100% !important;
+  border-radius: var(--radius-xs) !important;
+}
+
+/* Add text content after the icon */
+::ng-deep sq-document-overview .btn.btn-light::after {
+  content: 'Upload a document' !important;
+  font-size: var(--text-sm) !important;
+  font-weight: inherit !important;
+  color: inherit !important;
+}
+
+/* Upload button icon styling */
+::ng-deep sq-document-overview .btn.btn-light .svg-inline--fa {
+  font-size: var(--text-sm) !important;
+  width: var(--text-sm) !important;
+  height: var(--text-sm) !important;
+  color: inherit !important;
+  transition: transform 0.2s ease !important;
+}
+
+/* Hover effects */
+::ng-deep sq-document-overview .btn.btn-light:hover {
+  background: transparent !important;
+  color: var(--grays-01) !important;
+  font-weight: var(--font-medium) !important;
+}
+
+::ng-deep sq-document-overview .btn.btn-light:hover .svg-inline--fa {
+  transform: scale(1.1) !important;
+}
+
+::ng-deep sq-document-overview .btn.btn-light:hover::after {
+  font-weight: var(--font-medium) !important;
+}
+
+/* Active state */
+::ng-deep sq-document-overview .btn.btn-light:active {
+  color: var(--grays-00) !important;
+}
+
+::ng-deep sq-document-overview .btn.btn-light:active .svg-inline--fa {
+  transform: scale(1.05) !important;
+}

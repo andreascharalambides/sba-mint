@@ -11,7 +11,6 @@ import {
   CollectionsComponent,
   OverrideUserDialogComponent,
   PrincipalStore,
-  ResetUserSettingsDialogComponent,
   UserSettingsStore
 } from '@sinequa/atomic-angular';
 
@@ -32,6 +31,7 @@ import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NavbarMenu } from '../navbar/navbar.component';
 import { NgIf } from '@angular/common';
+import { ResetUserSettingsDialogComponent } from '../../../custom-components/reset-user-settings.dialog';
 
 @Component({
   selector: 'app-user-menu',

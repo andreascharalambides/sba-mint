@@ -1,4 +1,3 @@
-/* You can add global styles to this file, and also import other style files */
 @import 'tailwindcss';
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
@@ -124,11 +123,15 @@ body {
   --color-primary-hover: var(--primary-01);
   --color-primary-active: var(--primary-00);
   --color-primary-foreground: #ffffff;
+  --color-primary-disabled: var(--grays-06);
+  --color-primary-dialog: color-mix(in srgb, var(--color-primary) 10%, var(--color-background));
 
   --color-secondary: var(--grays-02);
   --color-secondary-hover: var(--grays-01);
   --color-secondary-active: var(--grays-00);
   --color-secondary-foreground: #ffffff;
+  --color-secondary-disabled: var(--grays-06);
+  --color-secondary-dialog: color-mix(in srgb, var(--color-secondary) 10%, var(--color-background));
 
   --color-muted: var(--grays-09);
   --color-muted-foreground: var(--grays-02);
@@ -141,6 +144,7 @@ body {
   --color-destructive-active: #750b0b;
   --color-destructive-disable: #cb8585;
   --color-destructive-foreground: #fde3e3;
+  --color-destructive-dialog: color-mix(in srgb, var(--color-destructive) 10%, var(--color-background));
 
   --color-border: var(--grays-07);
   --color-input: var(--grays-06);
@@ -149,6 +153,15 @@ body {
   --color-alert: #a83434;
   --color-success: #469144;
   --color-highlight: #fbd995;
+
+  /* AI COLOR VARIANTS */
+  --color-ai-from: #1d4ed8; /* blue-700 */
+  --color-ai-via: #ec4899; /* pink-500 */
+  --color-ai-to: #fb923c; /* orange-400 */
+  --color-ai-foreground: #ffffff;
+  --color-ai: linear-gradient(to right, var(--color-ai-from), var(--color-ai-via), var(--color-ai-to));
+  --color-bg-ai-100: #dbeafe; /* light blue background for AI outline variants */
+  --underline-ai: underline;
 
   --shadow-dropdown: 6px 4px 20px 0px rgba(0, 0, 0, 0.2);
   --shadow-article: 4px 4px 12px 0px rgba(0, 0, 0, 0.15);
@@ -185,7 +198,6 @@ body {
 
   /* manage the backdrop with dialogs */
   dialog {
-    /* opacity: 0; */
     transition: opacity 0.2s ease-out allow-discrete;
 
     &:open {
@@ -234,6 +246,171 @@ body {
   }
 }
 
+@layer components {
+  /* =========================
+     GLASS CONTAINER COMPONENTS
+     ========================= */
+
+  /* Base glass container - used for all main content containers */
+  .glass-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    background: var(--glass-background);
+    backdrop-filter: var(--glass-backdrop-blur);
+    width: 100%;
+  }
+
+  .glass-container--full {
+    flex: 1;
+    min-height: 0;
+    max-height: 100vh;
+    overflow: hidden;
+  }
+
+  .glass-container--scrollable {
+    overflow: auto;
+  }
+
+  /* =========================
+     SECTION HEADER COMPONENTS
+     ========================= */
+
+  /* Standard section header with icon and title */
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+    width: 100%;
+    gap: var(--spacing-2xl);
+  }
+
+  .section-header__inner {
+    display: flex;
+    align-items: center;
+    flex: 1 0 0;
+    gap: var(--spacing-sm);
+    width: 100%;
+  }
+
+  .section-header__icon {
+    width: 24px;
+    height: 24px;
+    aspect-ratio: 1/1;
+    flex-shrink: 0;
+    color: var(--grays-00);
+  }
+
+  .section-header__text {
+    color: var(--grays-00);
+    font-weight: var(--font-medium);
+    font-size: var(--text-2xl);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    flex: 1 0 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-style: normal;
+    line-height: normal;
+  }
+
+  /* Header with search input variant */
+  .section-header__search-input {
+    width: 60%;
+  }
+
+  .section-header__search-input ::ng-deep .search-container {
+    background: rgba(205, 219, 221, 0.8);
+    border: none !important;
+  }
+
+  .section-header__search-input ::ng-deep .search-container:hover {
+    border: none !important;
+  }
+
+  /* =========================
+     CONTENT AREA COMPONENTS
+     ========================= */
+
+  /* Main content area that grows to fill available space */
+  .content-area {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .content-area--scrollable {
+    overflow: auto;
+    overflow-x: hidden;
+  }
+
+  /* Empty State */
+
+  .empty-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+  }
+
+  .empty-content {
+    text-align: center;
+    max-width: 300px;
+  }
+
+  .empty-title {
+    font-size: var(--text-xl);
+    font-weight: var(--font-medium);
+    color: var(--grays-02);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .empty-description {
+    font-size: var(--text-base);
+    color: var(--grays-04);
+    line-height: 1.5;
+  }
+
+  /* Loading states */
+  .loading-container {
+    height: 2px;
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--grays-08);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .loading-container {
+      background-color: var(--grays-02);
+    }
+  }
+
+  .loading-bar {
+    height: 2px;
+    animation: progress 2s ease-in-out infinite;
+  }
+
+  @keyframes progress {
+    0% {
+      transform: translateX(-100%);
+    }
+    50% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+}
+
 @layer utilities {
   .scroll-stable {
     scrollbar-gutter: stable;
@@ -250,6 +427,7 @@ body {
     word-break: break-word;
   }
 
+  /* Legacy glass utilities - keep for backward compatibility */
   .glass-card {
     background: var(--glass-background);
     backdrop-filter: var(--glass-backdrop-blur);
@@ -290,7 +468,6 @@ body {
 
 /* drawer stack and drawer preview */
 app-drawer-preview {
-  /* removes the "important!" when the position: obsolute will be removed from the component */
   position: fixed !important;
   top: 0;
 }
@@ -307,7 +484,7 @@ app-drawer:has(+ app-drawer + app-drawer) {
   display: none !important;
 }
 
-/* allow multi-line text in the taost description */
+/* allow multi-line text in the toast description */
 [data-description] {
   white-space: pre-line;
 }
@@ -343,7 +520,7 @@ sq-chat-v3 {
 
 /* Scrollbar */
 * {
-  scrollbar-width: thin; /* narrow bar */
+  scrollbar-width: thin;
   scrollbar-color: rgba(120, 120, 120, 0.3) transparent;
 }
 

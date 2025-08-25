@@ -5,18 +5,13 @@ import { getState } from '@ngrx/signals';
 
 import { Article, bisect } from '@sinequa/atomic';
 import { Basket, QueryParamsStore, UserSettingsStore } from '@sinequa/atomic-angular';
-import {
-  ButtonComponent,
-  DialogComponent,
-  DialogContentComponent,
-  DialogFooterComponent,
-  DialogHeaderComponent,
-  DialogInterface,
-  DialogResult,
-  DialogTitleComponent,
-  InputComponent,
-  ListItemComponent
-} from '@sinequa/ui';
+import { ButtonComponent, InputComponent, ListItemComponent } from '@sinequa/ui';
+import { DialogTitleComponent } from '../../dialog/dialog-title';
+import { DialogComponent } from '../../dialog/dialog';
+import { DialogHeaderComponent } from '../../dialog/dialog-header';
+import { DialogContentComponent } from '../../dialog/dialog-content';
+import { DialogFooterComponent } from '../../dialog/dialog-footer';
+import { DialogInterface, DialogResult } from '../../dialog/dialog.interface';
 
 @Component({
   selector: 'add-to-collection-dialog',

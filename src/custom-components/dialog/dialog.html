@@ -1,0 +1,6 @@
+@if (isOpen()) {
+  <ng-content select="DialogHeader" />
+  <ng-content select="DialogContent" />
+  <ng-content></ng-content>
+  <ng-content select="DialogFooter" />
+}

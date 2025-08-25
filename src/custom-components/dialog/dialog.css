@@ -1,0 +1,132 @@
+:host {
+  z-index: var(--z-backdrop, 1000);
+  margin: auto;
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  width: clamp(min(400px, 95vw), 50vw, min(600px, 90vw));
+  height: clamp(200px, auto, min(85vh, 700px));
+  aspect-ratio: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: var(--shadow-md);
+  border-width: 1px;
+  border-color: color-mix(in srgb, var(--color-foreground) 20%, transparent);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  overflow: hidden;
+
+  /* Ghost action buttons (refresh, delete, etc.) */
+  ::ng-deep .dialog-icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.2rem;
+    height: 1.2rem;
+    padding: var(--spacing-xs);
+    border: none;
+    background-color: transparent;
+    color: var(--grays-04);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: var(--text-base);
+  }
+
+  ::ng-deep .dialog-icon-button:hover {
+    transform: scale(1.1);
+  }
+
+  ::ng-deep .dialog-icon-button:active {
+    transform: scale(1.1);
+    color: var(--grays-02);
+  }
+
+  /* Dialog footer buttons base styles */
+  ::ng-deep .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--text-base);
+    font-weight: var(--font-regular);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 5rem;
+    text-align: center;
+    border: none;
+  }
+
+  /* Secondary dialog button (default for close, cancel, etc.) */
+  ::ng-deep .btn-secondary {
+    background-color: rgba(107, 114, 128, 0.1);
+    color: var(--grays-00);
+  }
+
+  ::ng-deep .btn-secondary:hover {
+    background-color: rgba(107, 114, 128, 0.15);
+  }
+
+  ::ng-deep .btn-secondary:active {
+    background-color: rgba(107, 114, 128, 0.2);
+  }
+
+  /* Primary dialog button (for confirm, save, submit, etc.) */
+  ::ng-deep .btn-primary {
+    background-color: var(--primary-05);
+    color: var(--primary-00);
+  }
+
+  ::ng-deep .btn-primary:hover {
+    background-color: color-mix(in srgb, var(--primary-04) 80%, var(--primary-05) 20%);
+  }
+
+  ::ng-deep .btn-primary:active {
+    background-color: var(--primary-04);
+  }
+
+  /* Destructive dialog button (for delete, remove, etc.) */
+  ::ng-deep .btn-destructive {
+    background-color: color-mix(in srgb, var(--color-destructive-foreground) 85%, white 15%);
+    color: var(--color-destructive);
+  }
+
+  ::ng-deep .btn-destructive:hover {
+    background-color: var(--color-destructive-foreground);
+  }
+
+  ::ng-deep .btn-destructive:active {
+    background-color: color-mix(in srgb, var(--color-destructive-foreground) 90%, var(--color-destructive-active) 10%);
+  }
+}
+
+:host > * {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Hide when not open */
+:host:not([open]) {
+  display: none;
+}
+
+/* Variant: AI */
+:host(.dialog-ai) {
+  background: linear-gradient(to right, rgba(29, 78, 216, 0.1), rgba(236, 72, 153, 0.1), rgba(251, 146, 60, 0.1));
+}
+
+/* Variant: Outline */
+:host(.dialog-outline) {
+  border-color: var(--color-foreground);
+}
+
+/* Variant: Ghost */
+:host(.dialog-ghost) {
+  background-color: transparent;
+  backdrop-filter: blur(40px);
+}
+
+/* Variant: None */
+:host(.dialog-none) {
+}
