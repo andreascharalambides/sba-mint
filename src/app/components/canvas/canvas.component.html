@@ -1,0 +1,14 @@
+<div
+  #canvasContainer
+  class="canvas-container"
+  [class.edit-mode]="editMode$ | async"
+  (mousedown)="onMouseDown($event)"
+  (mousemove)="onMouseMove($event)"
+  (mouseup)="onMouseUp()"
+  (mouseleave)="onMouseLeave()">
+  <div #canvasBackground class="canvas-background"></div>
+
+  <div #canvasContent class="canvas-content">
+    <ng-content></ng-content>
+  </div>
+</div>

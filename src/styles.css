@@ -261,6 +261,7 @@ body {
     border-radius: var(--radius-lg);
     background: var(--glass-background);
     backdrop-filter: var(--glass-backdrop-blur);
+    height: 100%;
     width: 100%;
   }
 
@@ -268,6 +269,7 @@ body {
     flex: 1;
     min-height: 0;
     max-height: 100vh;
+    height: 100%;
     overflow: hidden;
   }
 

@@ -1,105 +1,115 @@
-<!-- Loading State -->
-@if (query.isPending()) {
-  <!-- skeleton part -->
-  <div class="skeleton-header" aria-hidden="true">
-    @for (n of [1, 2, 3, 4, 5]; track $index) {
-      <button variant="inverse" class="skeleton-button-small" aria-hidden="true"></button>
-    }
-    <button variant="inverse" class="skeleton-button-medium" aria-hidden="true"></button>
-  </div>
-
-  <div class="skeleton-export">
-    <button variant="inverse" class="skeleton-button-medium" aria-hidden="true"></button>
-  </div>
-
-  <ul class="skeleton-list" aria-hidden="true">
-    @for (n of [1, 2, 3]; track $index) {
-      <li>
-        <CardSkeleton />
-      </li>
-    }
-  </ul>
-
-  <!-- Results Found -->
-} @else if (hasRowCount()) {
-  <!-- Assistant -->
-  @if (allowAI() && !b()) {
-    <div class="glass-container glass-container--full">
-      <div class="section-header">
-        <!-- Header Title-->
-        <div class="section-header__inner">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="section-header__icon">
-            <path
-              d="M4.3677 19.6879C3.76259 19.8166 3.24667 19.2392 3.44239 18.6523L4.17411 16.4584C4.25283 16.2223 4.21494 15.9643 4.08599 15.7515C2.03689 12.3701 2.98681 8.14241 6.39736 5.72365C9.92063 3.22596 14.9807 3.43069 18.2332 6.20302C21.4856 8.97634 21.9253 13.4594 19.2614 16.6901C16.653 19.8534 11.8577 20.8577 7.94531 19.0965C7.78303 19.0234 7.60184 19.0002 7.42777 19.0372L4.3677 19.6879Z"
-              fill="#1B3439"
-              stroke="#1B3439"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round" />
-          </svg>
-          <span class="section-header__text">Assistant</span>
-        </div>
-      </div>
-
-      @if (showAssistant()) {
-        <assistant class="content-area" [showAssistant]="showAssistant()" [instanceId]="instanceId()" (isStreaming)="isStreaming.set($event)" />
+<app-canvas>
+  <!-- Loading State -->
+  @if (query.isPending()) {
+    <!-- skeleton part -->
+    <div class="skeleton-header" aria-hidden="true">
+      @for (n of [1, 2, 3, 4, 5]; track $index) {
+        <button variant="inverse" class="skeleton-button-small" aria-hidden="true"></button>
       }
-    </div>
-  }
-
-  <!-- Preview -->
-  <app-preview-default [previewData]="selectedArticlePreviewData()" />
-
-  <!-- Results -->
-  <div class="glass-container glass-container--full">
-    <div class="section-header">
-      <!-- Header Title-->
-      <div class="section-header__inner">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none" class="section-header__icon">
-          <path
-            d="M14.1974 12.467C14.256 11.983 14.3 11.499 14.3 11.0003C14.3 10.5017 14.256 10.0177 14.1974 9.53366H16.676C16.7934 10.003 16.8667 10.4943 16.8667 11.0003C16.8667 11.5063 16.7934 11.9977 16.676 12.467M12.8994 16.5443C13.3394 15.7303 13.6767 14.8503 13.9114 13.9337H16.0747C15.3642 15.1571 14.237 16.0838 12.8994 16.5443ZM12.716 12.467H9.28402C9.21069 11.983 9.16669 11.499 9.16669 11.0003C9.16669 10.5017 9.21069 10.0103 9.28402 9.53366H12.716C12.782 10.0103 12.8334 10.5017 12.8334 11.0003C12.8334 11.499 12.782 11.983 12.716 12.467ZM11 16.8377C10.3914 15.9577 9.90002 14.9823 9.59935 13.9337H12.4007C12.1 14.9823 11.6087 15.9577 11 16.8377ZM8.06669 8.06699H5.92535C6.62836 6.84015 7.75477 5.9119 9.09335 5.45633C8.65335 6.27033 8.32335 7.15033 8.06669 8.06699ZM5.92535 13.9337H8.06669C8.32335 14.8503 8.65335 15.7303 9.09335 16.5443C7.75742 16.084 6.6325 15.157 5.92535 13.9337ZM5.32402 12.467C5.20669 11.9977 5.13335 11.5063 5.13335 11.0003C5.13335 10.4943 5.20669 10.003 5.32402 9.53366H7.80269C7.74402 10.0177 7.70002 10.5017 7.70002 11.0003C7.70002 11.499 7.74402 11.983 7.80269 12.467M11 5.15566C11.6087 6.03566 12.1 7.01833 12.4007 8.06699H9.59935C9.90002 7.01833 10.3914 6.03566 11 5.15566ZM16.0747 8.06699H13.9114C13.6815 7.15884 13.3416 6.28214 12.8994 5.45633C14.2487 5.91833 15.3707 6.84966 16.0747 8.06699ZM11 3.66699C6.94469 3.66699 3.66669 6.96699 3.66669 11.0003C3.66669 12.9452 4.4393 14.8105 5.81457 16.1858C6.49553 16.8667 7.30395 17.4069 8.19368 17.7754C9.0834 18.144 10.037 18.3337 11 18.3337C12.9449 18.3337 14.8102 17.561 16.1855 16.1858C17.5607 14.8105 18.3334 12.9452 18.3334 11.0003C18.3334 10.0373 18.1437 9.0837 17.7751 8.19398C17.4066 7.30426 16.8664 6.49584 16.1855 5.81488C15.5045 5.13391 14.6961 4.59374 13.8064 4.22521C12.9166 3.85667 11.963 3.66699 11 3.66699Z"
-            fill="#1B3439" />
-        </svg>
-        <span class="section-header__text">Explore</span>
-      </div>
-
-      <!-- Search Input-->
-      <app-search-input
-        class="section-header__search-input"
-        variant="basic"
-        [showSave]="true"
-        (saved)="saveSearch($event)"
-        (validated)="validated($event)"
-        (debounced)="debounced($event)">
-        <app-autocomplete [text]="searchText()" (onClick)="autocompleteItemClicked($event)" />
-      </app-search-input>
+      <button variant="inverse" class="skeleton-button-medium" aria-hidden="true"></button>
     </div>
 
-    <div class="filters-bar">
-      <filters-bar />
+    <div class="skeleton-export">
+      <button variant="inverse" class="skeleton-button-medium" aria-hidden="true"></button>
     </div>
 
-    <ul class="results-list" role="list" aria-label="results">
-      @for (page of query.data()?.pages; track page) {
-        @for (article of page.records; track article.id + $index) {
-          <ng-container
-            *ngComponentOutlet="getArticleType(article?.docformat); inputs: { article, strategy: 'replace', allowAI: allowAI() && enabledUserInput() }" />
-        }
+    <ul class="skeleton-list" aria-hidden="true">
+      @for (n of [1, 2, 3]; track $index) {
+        <li>
+          <CardSkeleton />
+        </li>
       }
     </ul>
 
-    <div class="sort-export-controls">
-      <sort-selector [result]="result()!" [position]="position()" (onSort)="onSort($event)" />
-    </div>
-  </div>
+    <!-- Results Found -->
+  } @else if (hasRowCount()) {
+    <!-- Assistant Widget -->
+    @if (allowAI() && !b()) {
+      <app-widget-wrapper widgetId="assistant">
+        <div class="glass-container glass-container--full">
+          <div class="section-header">
+            <!-- Header Title-->
+            <div class="section-header__inner">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="section-header__icon">
+                <path
+                  d="M4.3677 19.6879C3.76259 19.8166 3.24667 19.2392 3.44239 18.6523L4.17411 16.4584C4.25283 16.2223 4.21494 15.9643 4.08599 15.7515C2.03689 12.3701 2.98681 8.14241 6.39736 5.72365C9.92063 3.22596 14.9807 3.43069 18.2332 6.20302C21.4856 8.97634 21.9253 13.4594 19.2614 16.6901C16.653 19.8534 11.8577 20.8577 7.94531 19.0965C7.78303 19.0234 7.60184 19.0002 7.42777 19.0372L4.3677 19.6879Z"
+                  fill="#1B3439"
+                  stroke="#1B3439"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+              <span class="section-header__text">Assistant</span>
+            </div>
+          </div>
 
-  <!-- No Results Found -->
-} @else {
-  <div class="sticky-header">
-    @if (isTabSearchActive()) {
-      <navbar-tabs class="navbar-tabs" />
+          @if (showAssistant()) {
+            <assistant class="content-area" [showAssistant]="showAssistant()" [instanceId]="instanceId()" (isStreaming)="isStreaming.set($event)" />
+          }
+        </div>
+      </app-widget-wrapper>
     }
-    <filters-bar class="filters-bar" />
-  </div>
-  <NoResult class="no-result" />
-}
+
+    <!-- Preview Widget -->
+    <app-widget-wrapper widgetId="preview">
+      <app-preview-default [previewData]="selectedArticlePreviewData()" />
+    </app-widget-wrapper>
+
+    <!-- Explore Widget -->
+    <app-widget-wrapper widgetId="explore">
+      <div class="glass-container glass-container--full">
+        <div class="section-header">
+          <!-- Header Title-->
+          <div class="section-header__inner">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none" class="section-header__icon">
+              <path
+                d="M14.1974 12.467C14.256 11.983 14.3 11.499 14.3 11.0003C14.3 10.5017 14.256 10.0177 14.1974 9.53366H16.676C16.7934 10.003 16.8667 10.4943 16.8667 11.0003C16.8667 11.5063 16.7934 11.9977 16.676 12.467M12.8994 16.5443C13.3394 15.7303 13.6767 14.8503 13.9114 13.9337H16.0747C15.3642 15.1571 14.237 16.0838 12.8994 16.5443ZM12.716 12.467H9.28402C9.21069 11.983 9.16669 11.499 9.16669 11.0003C9.16669 10.5017 9.21069 10.0103 9.28402 9.53366H12.716C12.782 10.0103 12.8334 10.5017 12.8334 11.0003C12.8334 11.499 12.782 11.983 12.716 12.467ZM11 16.8377C10.3914 15.9577 9.90002 14.9823 9.59935 13.9337H12.4007C12.1 14.9823 11.6087 15.9577 11 16.8377ZM8.06669 8.06699H5.92535C6.62836 6.84015 7.75477 5.9119 9.09335 5.45633C8.65335 6.27033 8.32335 7.15033 8.06669 8.06699ZM5.92535 13.9337H8.06669C8.32335 14.8503 8.65335 15.7303 9.09335 16.5443C7.75742 16.084 6.6325 15.157 5.92535 13.9337ZM5.32402 12.467C5.20669 11.9977 5.13335 11.5063 5.13335 11.0003C5.13335 10.4943 5.20669 10.003 5.32402 9.53366H7.80269C7.74402 10.0177 7.70002 10.5017 7.70002 11.0003C7.70002 11.499 7.74402 11.983 7.80269 12.467M11 5.15566C11.6087 6.03566 12.1 7.01833 12.4007 8.06699H9.59935C9.90002 7.01833 10.3914 6.03566 11 5.15566ZM16.0747 8.06699H13.9114C13.6815 7.15884 13.3416 6.28214 12.8994 5.45633C14.2487 5.91833 15.3707 6.84966 16.0747 8.06699ZM11 3.66699C6.94469 3.66699 3.66669 6.96699 3.66669 11.0003C3.66669 12.9452 4.4393 14.8105 5.81457 16.1858C6.49553 16.8667 7.30395 17.4069 8.19368 17.7754C9.0834 18.144 10.037 18.3337 11 18.3337C12.9449 18.3337 14.8102 17.561 16.1855 16.1858C17.5607 14.8105 18.3334 12.9452 18.3334 11.0003C18.3334 10.0373 18.1437 9.0837 17.7751 8.19398C17.4066 7.30426 16.8664 6.49584 16.1855 5.81488C15.5045 5.13391 14.6961 4.59374 13.8064 4.22521C12.9166 3.85667 11.963 3.66699 11 3.66699Z"
+                fill="#1B3439" />
+            </svg>
+            <span class="section-header__text">Explore</span>
+          </div>
+
+          <!-- Search Input-->
+          <app-search-input
+            class="section-header__search-input"
+            variant="basic"
+            [showSave]="true"
+            (saved)="saveSearch($event)"
+            (validated)="validated($event)"
+            (debounced)="debounced($event)">
+            <app-autocomplete [text]="searchText()" (onClick)="autocompleteItemClicked($event)" />
+          </app-search-input>
+        </div>
+
+        <div class="filters-bar">
+          <filters-bar />
+        </div>
+
+        <ul class="results-list" role="list" aria-label="results">
+          @for (page of query.data()?.pages; track page) {
+            @for (article of page.records; track article.id + $index) {
+              <ng-container
+                *ngComponentOutlet="getArticleType(article?.docformat); inputs: { article, strategy: 'replace', allowAI: allowAI() && enabledUserInput() }" />
+            }
+          }
+        </ul>
+
+        <div class="sort-export-controls">
+          <sort-selector [result]="result()!" [position]="position()" (onSort)="onSort($event)" />
+        </div>
+      </div>
+    </app-widget-wrapper>
+
+    <!-- No Results Found -->
+  } @else {
+    <app-widget-wrapper widgetId="explore">
+      <div class="sticky-header">
+        @if (isTabSearchActive()) {
+          <navbar-tabs class="navbar-tabs" />
+        }
+        <filters-bar class="filters-bar" />
+      </div>
+      <NoResult class="no-result" />
+    </app-widget-wrapper>
+  }
+</app-canvas>

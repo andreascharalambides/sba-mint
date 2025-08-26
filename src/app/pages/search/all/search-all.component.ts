@@ -5,7 +5,8 @@ import { Placement } from '@floating-ui/dom';
 import { getState } from '@ngrx/signals';
 import { injectInfiniteQuery } from '@tanstack/angular-query-experimental';
 import { lastValueFrom, map, Subscription, tap } from 'rxjs';
-
+import { CanvasComponent } from '../../../components/canvas/canvas.component';
+import { WidgetWrapperComponent } from '../../../components/widget-wrapper/widget-wrapper.component';
 import { MessageHandler } from '@sinequa/assistant/chat';
 import { Aggregation, Article, CCApp, isNotInputEvent, PreviewData, Query, QueryParams, Result as R, Suggestion } from '@sinequa/atomic';
 import {
@@ -69,7 +70,9 @@ type QueryParamsProps = {
     CardSkeleton,
     PreviewComponent,
     AutocompleteComponent,
-    SearchInputComponent
+    SearchInputComponent,
+    CanvasComponent,
+    WidgetWrapperComponent
   ],
   templateUrl: './search-all.component.html',
   styleUrls: ['./search-all.component.css'],

@@ -2,7 +2,7 @@
 :host {
   font-family: var(--font-body);
   display: block;
-  height: 100%;
+  height: 100% !important;
 }
 
 /* Preview Section Container */

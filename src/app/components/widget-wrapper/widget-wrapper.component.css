@@ -1,0 +1,50 @@
+.widget-wrapper {
+  position: absolute;
+  transform-origin: 0 0;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.widget-wrapper.edit-mode {
+  cursor: move;
+}
+
+.widget-wrapper.edit-mode .widget-content {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.widget-wrapper.view-mode {
+  cursor: default;
+}
+
+.widget-wrapper.selected {
+  border: 2px solid #69939a;
+  box-shadow:
+    0 0 0 1px #69939a,
+    0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-lg);
+}
+
+.widget-content {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  transition: opacity 0.3s ease;
+}
+
+.resize-handle {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 16px;
+  height: 16px;
+  cursor: nwse-resize;
+  background: linear-gradient(135deg, transparent 40%, #69939a 40%);
+  border-radius: 0 0 4px 0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.widget-wrapper.edit-mode:hover .resize-handle {
+  opacity: 1;
+}

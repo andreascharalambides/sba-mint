@@ -1,0 +1,36 @@
+.canvas-container {
+  position: absolute;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  touch-action: none;
+}
+
+.canvas-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  transition:
+    background-image 0.3s ease,
+    opacity 0.3s ease;
+}
+
+/* Show dots only in edit mode */
+.edit-mode .canvas-background {
+  background-image: radial-gradient(rgba(156, 163, 175, 0.6) 1.5px, transparent 1.5px);
+  background-size: 20px 20px;
+  opacity: 0.7;
+}
+
+.canvas-content {
+  position: absolute;
+  overflow: visible;
+  transform-origin: 0 0;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
+}

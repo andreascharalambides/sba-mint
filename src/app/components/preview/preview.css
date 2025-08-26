@@ -9,6 +9,7 @@
   border-radius: var(--radius-lg);
   background: var(--glass-background);
   backdrop-filter: var(--glass-backdrop-blur);
+  height: 100% !important;
 }
 
 /* Navbar Container */
@@ -37,6 +38,7 @@
   position: relative;
   flex-grow: 1;
   overflow: auto;
+  height: 100% !important;
 }
 
 /* Tab Content Panel */

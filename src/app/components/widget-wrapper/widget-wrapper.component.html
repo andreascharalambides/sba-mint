@@ -1,0 +1,13 @@
+<div
+  #widgetElement
+  class="widget-wrapper"
+  [class.selected]="isSelected && editMode"
+  [class.edit-mode]="editMode"
+  [class.view-mode]="!editMode"
+  [attr.data-widget-id]="widgetId">
+  <div class="widget-content">
+    <ng-content></ng-content>
+  </div>
+
+  <div *ngIf="editMode" class="resize-handle" (mousedown)="onResizeStart($event)"></div>
+</div>

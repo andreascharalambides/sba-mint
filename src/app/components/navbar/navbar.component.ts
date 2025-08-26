@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, input, signal, Type, viewChild } from '@angular/core';
+import { Component, EventEmitter, inject, Input, input, Output, signal, Type, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterLink } from '@angular/router';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
@@ -87,7 +87,13 @@ export class NavbarComponent {
       });
     }
   }
+  @Input() showEditToggle = false;
+  @Input() editMode = false;
+  @Output() toggleEditMode = new EventEmitter<void>();
 
+  onToggleEditMode(): void {
+    this.toggleEditMode.emit();
+  }
   getSvg(path: string): SafeHtml | null {
     this.loadSvg(path); // Load if not cached
     return this.svgCache.get(path) || null;

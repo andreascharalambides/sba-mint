@@ -36,24 +36,46 @@
 }
 
 [popover] {
-  /* Select Firefox */
-  @supports (-moz-appearance: none) {
-    margin: calc(33.3333333333vh + 30px) 25vw;
-    width: 50vw;
+  /* Modern browsers with anchor positioning support */
+  @supports (anchor-name: --test) {
+    position-anchor: --anchor;
+    width: anchor-size(width);
+    top: anchor(bottom);
+    left: anchor(left);
+    margin: 0;
+    padding: 0;
   }
 
-  /* Select Safari */
-  @supports (background: -webkit-named-image(i)) {
-    margin: calc(33.3333333333vh + 30px) 25vw;
-    width: 50vw;
+  /* Fallback for browsers without anchor positioning (including Safari) */
+  @supports not (anchor-name: --test) {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    z-index: 1000;
+    margin-top: var(--spacing-sm) !important;
   }
 
-  position-anchor: --anchor;
-  width: anchor-size(width);
-  top: anchor(bottom);
-  left: anchor(left);
-  margin: 0;
-  padding: 0;
+  /* Additional Safari-specific fallback */
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    _::-webkit-full-page-media,
+    _:future,
+    :root [popover] {
+      position: absolute !important;
+      top: 100% !important;
+      left: 0 !important;
+      right: 0 !important;
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      z-index: 1000 !important;
+      margin-top: var(--spacing-sm) !important;
+    }
+  }
+
   border-radius: var(--radius-md);
 }
 

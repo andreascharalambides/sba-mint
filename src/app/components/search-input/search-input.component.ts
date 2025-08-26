@@ -59,6 +59,16 @@ export class SearchInputComponent {
 
   protected readonly saveAnimation = signal<boolean>(false);
 
+  private isSafari = computed(() => {
+    if (typeof navigator === 'undefined') return false;
+    return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  });
+
+  private supportsAnchorPositioning = computed(() => {
+    if (typeof CSS === 'undefined') return false;
+    return CSS.supports('anchor-name', '--test');
+  });
+
   hasFilters = computed(() => {
     // when the query parameters store updates, update the hasFilters signal
     // to show or hide the clear filters button
@@ -140,8 +150,43 @@ export class SearchInputComponent {
   }
 
   public inputClicked(): void {
-    this.popoverElement().showPopover();
+    this.showPopoverWithFallbackPositioning();
     this.clicked.emit();
+  }
+
+  private showPopoverWithFallbackPositioning(): void {
+    const popover = this.popoverElement();
+    if (!popover) return;
+
+    popover.showPopover();
+
+    // Apply manual positioning for Safari or browsers without anchor positioning
+    if (this.isSafari() || !this.supportsAnchorPositioning()) {
+      this.positionPopoverManually();
+    }
+  }
+
+  private positionPopoverManually(): void {
+    const popover = this.popoverElement();
+    const searchContainer = this.el.nativeElement.querySelector('.search-container');
+
+    if (!popover || !searchContainer) return;
+
+    // Get the bounding rect of the search container
+    const containerRect = searchContainer.getBoundingClientRect();
+
+    // Set popover position manually
+    requestAnimationFrame(() => {
+      Object.assign(popover.style, {
+        position: 'fixed',
+        top: `${containerRect.bottom + window.scrollY}px`,
+        left: `${containerRect.left + window.scrollX}px`,
+        width: `${containerRect.width}px`,
+        zIndex: '1000',
+        margin: '0',
+        padding: '0'
+      });
+    });
   }
 
   public setInput(text: string | undefined, silent: boolean = true): void {
@@ -204,7 +249,7 @@ export class SearchInputComponent {
     } else if (e.key === 'Escape') {
       this.popoverElement().hidePopover();
     } else if (this.value() !== '') {
-      this.popoverElement().showPopover();
+      this.showPopoverWithFallbackPositioning();
     }
   }
 

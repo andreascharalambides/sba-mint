@@ -1,7 +1,6 @@
 import { Component, inject, viewChild } from '@angular/core';
 import { provideTranslocoScope, TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 
-import { notify } from '@sinequa/atomic';
 import { ButtonComponent, DialogInterface } from '@sinequa/ui';
 import { UserSettingsStore } from '@sinequa/atomic-angular';
 import { DialogComponent } from './dialog/dialog';
