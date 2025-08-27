@@ -59,7 +59,8 @@ sq-chat-v3 ul.d-flex.flex-column.list-unstyled.gap-3.overflow-auto.flex-grow-1 {
   flex-direction: column;
   align-items: center;
   width: 100% !important;
-  max-height: calc(100vh - 200px);
+  height: calc(100% - 60px) !important;
+  max-height: calc(100% - 60px) !important;
 }
 
 /* Override Bootstrap's overflow-auto class */
@@ -234,11 +235,13 @@ sq-chat-v3 sq-chat-message .sq-chat-message-actions .btn:active {
 
 /* Main input container */
 sq-chat-v3 .user-input.mt-auto {
-  padding: 0 !important;
+  padding: var(--spacing-lg) !important;
   margin: 0 !important;
   flex-shrink: 0;
-  position: sticky;
+  position: absolute;
   bottom: 0;
+  left: 0;
+  right: 0;
   z-index: 999;
 }
 
