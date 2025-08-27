@@ -63,6 +63,17 @@ export class CanvasComponent implements AfterViewInit, OnDestroy {
 
   @HostListener('wheel', ['$event'])
   onWheel(event: WheelEvent): void {
+    // Check if the event target is inside a widget
+    const element = event.target as HTMLElement;
+    const widgetWrapper = element.closest('.widget-wrapper');
+
+    // If we're over a widget and NOT in edit mode, allow normal scrolling
+    if (widgetWrapper && !this.canvasService.getEditMode()) {
+      // Don't prevent default - let the widget content scroll naturally
+      return;
+    }
+
+    // Otherwise, handle as canvas zoom/pan
     event.preventDefault();
 
     const isTrackpad = Math.abs(event.deltaY) <= 40 || event.deltaX !== 0;

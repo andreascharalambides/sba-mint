@@ -24,51 +24,24 @@
 /* =========================
    SKELETON LOADING STATES
    ========================= */
-.skeleton-header {
-  margin-top: var(--spacing-lg);
-  display: flex;
-  justify-content: space-between;
-  gap: var(--spacing-sm);
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid var(--primary-05);
+  border-bottom-color: var(--grays-00);
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
 }
 
-.skeleton-header button:not(:last-child) {
-  margin-right: var(--spacing-sm);
-}
-
-.skeleton-header button:nth-last-child(2) {
-  margin-right: auto;
-}
-
-.skeleton-button-small {
-  height: 2.25rem;
-  width: 6rem;
-  opacity: 0.15;
-  background: var(--grays-07);
-  border-radius: var(--radius-sm);
-  animation: pulse 1.5s ease-in-out infinite;
-}
-
-.skeleton-button-medium {
-  height: 2.25rem;
-  width: 7rem;
-  opacity: 0.15;
-  background: var(--grays-07);
-  border-radius: var(--radius-sm);
-  animation: pulse 1.5s ease-in-out infinite;
-}
-
-.skeleton-export {
-  margin-top: var(--spacing-2xl);
-  display: flex;
-  justify-content: flex-end;
-}
-
-.skeleton-list {
-  margin-top: var(--spacing-lg);
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-  grid-column: 1 / -1;
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* =========================

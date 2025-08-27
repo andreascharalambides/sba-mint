@@ -1,25 +1,7 @@
 <app-canvas>
   <!-- Loading State -->
   @if (query.isPending()) {
-    <!-- skeleton part -->
-    <div class="skeleton-header" aria-hidden="true">
-      @for (n of [1, 2, 3, 4, 5]; track $index) {
-        <button variant="inverse" class="skeleton-button-small" aria-hidden="true"></button>
-      }
-      <button variant="inverse" class="skeleton-button-medium" aria-hidden="true"></button>
-    </div>
-
-    <div class="skeleton-export">
-      <button variant="inverse" class="skeleton-button-medium" aria-hidden="true"></button>
-    </div>
-
-    <ul class="skeleton-list" aria-hidden="true">
-      @for (n of [1, 2, 3]; track $index) {
-        <li>
-          <CardSkeleton />
-        </li>
-      }
-    </ul>
+    <span class="loader"></span>
 
     <!-- Results Found -->
   } @else if (hasRowCount()) {

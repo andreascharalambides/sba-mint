@@ -30,6 +30,15 @@
   /*opacity: 1;*/
 }
 
+/* Prevent text selection in edit mode */
+::ng-deep .search-layout-host.edit-mode,
+::ng-deep .search-layout-host.edit-mode * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 /* Page header styles */
 .page-header {
   z-index: 100;
