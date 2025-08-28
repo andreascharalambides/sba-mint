@@ -126,6 +126,7 @@ export class CanvasComponent implements AfterViewInit, OnDestroy {
       }
       this.isDragging = true;
       document.body.style.cursor = 'grabbing';
+      document.body.classList.add('canvas-dragging-no-select');
     }
   }
 
@@ -169,6 +170,7 @@ export class CanvasComponent implements AfterViewInit, OnDestroy {
     this.isMovingWidget = false;
     this.widgetStartPosition = null;
     document.body.style.cursor = 'default';
+    document.body.classList.remove('canvas-dragging-no-select');
   }
 
   onMouseLeave(): void {

@@ -12,10 +12,10 @@ import {
   AutocompleteService,
   debouncedSignal,
   DrawerAdvancedFiltersComponent,
-  SavedSearchDialog,
   DrawerStackService,
   QueryParamsStore,
   SavedSearch,
+  SavedSearchesService,
   UserSettingsStore
 } from '@sinequa/atomic-angular';
 import { ButtonComponent, cn, DialogService, InputSearchVariants, SearchComponent, SendHorizontalIconComponent } from '@sinequa/ui';
@@ -44,7 +44,7 @@ export class SearchInputComponent {
 
   private readonly autocompletePopover = viewChild<ElementRef>('autocompletePopover');
   private readonly popoverElement: Signal<HTMLDivElement> = computed(() => this.autocompletePopover()?.nativeElement);
-
+  private readonly savedSearchesService = inject(SavedSearchesService);
   protected readonly autocompleteService = inject(AutocompleteService);
   private readonly drawerStack = inject(DrawerStackService);
   protected readonly queryParamsStore = inject(QueryParamsStore);
@@ -226,12 +226,10 @@ export class SearchInputComponent {
       setTimeout(() => this.saveAnimation.set(false), 1000);
       this.saved.emit(this.savedSearch());
     } else {
-      this.dialogService.open(SavedSearchDialog, this.value()).then((event: any) => {
-        if (event === 'dialog-confirm') {
-          this.saveAnimation.set(true);
-          setTimeout(() => this.saveAnimation.set(false), 1000);
-        }
-      });
+      this.savedSearchesService.saveSearch(this.value());
+      this.saveAnimation.set(true);
+      setTimeout(() => this.saveAnimation.set(false), 1000);
+      this.saved.emit(undefined);
     }
   }
 

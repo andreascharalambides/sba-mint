@@ -552,3 +552,11 @@ sq-chat-v3 {
 b {
   font-weight: var(--font-weight-semibold);
 }
+
+.canvas-dragging-no-select,
+.canvas-dragging-no-select * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
