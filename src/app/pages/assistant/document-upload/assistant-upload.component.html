@@ -27,7 +27,7 @@
           <i class="fas fa-sync"></i>
           <span>{{ 'assistant.refresh' | transloco }}</span>
         </button>
-        <button class="dropdown-item" [title]="'assistant.delete-all' | transloco" (click)="documentList?.deleteAllDocuments(); closeMenu()">
+        <button class="dropdown-item" [title]="'assistant.delete-all' | transloco" (click)="handleDeleteAll(documentList)">
           <i class="fas fa-trash"></i>
           <span>{{ 'assistant.delete-all' | transloco }}</span>
         </button>

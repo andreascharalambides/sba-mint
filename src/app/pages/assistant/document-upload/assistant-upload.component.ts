@@ -28,17 +28,13 @@ import { ButtonComponent } from '@sinequa/ui';
 })
 export class AssistantUploadComponent {
   instanceId = input.required<string>();
-  // Add these properties to your component class
   isMenuOpen = false;
-  isCollapsed = false;
-
-  // Add these methods to your component class
+  isCollapsed = true;
 
   toggleMenu(event: Event) {
     event.stopPropagation();
     this.isMenuOpen = !this.isMenuOpen;
 
-    // Close menu when clicking outside
     if (this.isMenuOpen) {
       setTimeout(() => {
         document.addEventListener('click', this.closeMenuOnClickOutside);
@@ -66,7 +62,14 @@ export class AssistantUploadComponent {
     this.isCollapsed = !this.isCollapsed;
   }
 
-  // Clean up event listener on component destroy
+  handleDeleteAll(documentListRef: any) {
+    if (this.isCollapsed) {
+      this.isCollapsed = false;
+    }
+    documentListRef?.deleteAllDocuments();
+    this.closeMenu();
+  }
+
   ngOnDestroy() {
     document.removeEventListener('click', this.closeMenuOnClickOutside);
   }
