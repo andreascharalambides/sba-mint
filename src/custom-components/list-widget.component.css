@@ -4,8 +4,10 @@
   min-width: max-content !important;
   padding: var(--spacing-lg) !important;
   border-radius: var(--radius-md) !important;
-  box-shadow: none !important;
+  box-shadow: var(--shadow-md) !important;
   width: auto !important;
+  background-color: rgba(255, 255, 255, 0.4) !important;
+  backdrop-filter: var(--glass-backdrop-blur) !important;
 }
 
 /* Header */
