@@ -60,16 +60,13 @@ export class CanvasService {
   public widgets$ = this.widgetsSubject.asObservable();
 
   constructor() {
-    // Initialize widget positions
     this.initializeWidgetPositions();
-
-    // Listen for window resize events to update layout
     this.setupResponsiveHandling();
   }
 
   private setupResponsiveHandling(): void {
     fromEvent(window, 'resize')
-      .pipe(debounceTime(250)) // Debounce resize events
+      .pipe(debounceTime(250))
       .subscribe(() => {
         this.updateResponsiveLayout();
       });
