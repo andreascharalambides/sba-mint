@@ -34,3 +34,56 @@
   backface-visibility: hidden;
   will-change: transform;
 }
+
+.zoom-controls {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: var(--glass-border);
+  backdrop-filter: var(--glass-backdrop-blur);
+  border-radius: var(--radius-lg);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all var(--transition-normal);
+  pointer-events: none;
+  z-index: 100;
+}
+
+.zoom-controls.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.zoom-display {
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  color: var(--grays-00);
+  min-width: 60px;
+  text-align: center;
+}
+
+.zoom-reset-btn {
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: var(--primary-03);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.zoom-reset-btn:hover {
+  background: var(--primary-02);
+  transform: scale(1.05);
+}
+
+.zoom-reset-btn:active {
+  transform: scale(0.95);
+}

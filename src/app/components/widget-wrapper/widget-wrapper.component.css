@@ -62,3 +62,11 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+
+.widget-wrapper.hidden {
+  display: none;
+}
+
+.remove-handle:hover {
+  transform: scale(1.1);
+}

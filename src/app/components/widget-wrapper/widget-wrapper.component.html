@@ -4,11 +4,12 @@
   [class.selected]="isSelected && editMode"
   [class.edit-mode]="editMode"
   [class.view-mode]="!editMode"
+  [class.hidden]="!isVisible"
   [attr.data-widget-id]="widgetId">
   <div class="widget-content">
     <ng-content></ng-content>
   </div>
 
-  <div *ngIf="editMode" class="resize-handle" (mousedown)="onResizeStart($event)"></div>
-  <div *ngIf="editMode" class="remove-handle"></div>
+  <div *ngIf="editMode && isVisible" class="resize-handle" (mousedown)="onResizeStart($event)"></div>
+  <div *ngIf="editMode && isVisible" class="remove-handle" (click)="onRemove($event)"></div>
 </div>

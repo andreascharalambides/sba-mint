@@ -2,8 +2,8 @@
   <img id="logo" alt="logo" class="logo-image" />
 </a>
 
-@if (showEditToggle) {
-  <div class="edit-mode-toggle-container">
+<div class="widget-palette-container">
+  @if (showEditToggle) {
     <div class="toggle-wrapper">
       <div class="toggle-switch" [class.active]="editMode" (click)="onToggleEditMode()" [attr.title]="editMode ? 'Exit Edit Mode' : 'Enter Edit Mode'">
         <div class="toggle-track">
@@ -14,35 +14,52 @@
       <!--        {{ editMode ? 'View Mode' : 'Edit Mode' }}-->
       <!--      </span>-->
     </div>
-  </div>
-}
-<nav [class]="cn('navigation-container', !showMenu() && 'navigation-full-span')">
-  @if (showMenu()) {
-    @for (menu of menus(); track $index) {
-      <li>
-        @if (menu.routerLink === router.url) {
-          <button variant="ghost" title="{{ menu.display | transloco }}" [attr.aria-label]="menu.display | transloco" disabled>
-            <span *ngIf="menu.icon" [innerHTML]="getSvg(menu.icon)" class="menu-icon"></span>
-          </button>
-        } @else if (menu.component) {
-          <Popover class="popover-container">
-            <button class="menu-icon-btn" title="{{ menu.display | transloco }}" [attr.aria-label]="menu.display | transloco">
-              <span *ngIf="menu.icon" [innerHTML]="getSvg(menu.icon)" class="menu-icon"></span>
-            </button>
-
-            <PopoverContent class="popover-content" position="bottom-end">
-              <ng-container [ngComponentOutlet]="menu.component"></ng-container>
-            </PopoverContent>
-          </Popover>
-        } @else {
-          <button variant="icon" size="icon" title="{{ menu.display | transloco }}" [attr.aria-label]="menu.display | transloco">
-            <span *ngIf="menu.icon" [innerHTML]="getSvg(menu.icon)" class="menu-icon"></span>
-          </button>
-        }
-      </li>
-    }
   }
-  <li class="user-menu-container">
+  @if (showEditToggle && editMode) {
+    <Popover>
+      <button [class.active]="isWidgetPaletteOpen" (click)="toggleWidgetPalette()" class="widget-palette-btn" title="Add Widgets" aria-label="Add Widgets">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path
+            class="widget-icon-path"
+            d="M12.9 15.06C12.9 13.1934 12.9 12.2601 13.4931 11.6796C14.0862 11.0991 15.0411 11.1 16.95 11.1C18.8589 11.1 19.8138 11.1 20.4069 11.6796C21 12.261 21 13.1934 21 15.06V17.04C21 18.9066 21 19.8399 20.4069 20.4204C19.8138 21.0009 18.8589 21 16.95 21C15.0411 21 14.0862 21 13.4931 20.4204C12.9 19.839 12.9 18.9066 12.9 17.04V15.06ZM3 8.94C3 10.8066 3 11.7399 3.5931 12.3204C4.1862 12.9009 5.1411 12.9 7.05 12.9C8.9589 12.9 9.9138 12.9 10.5069 12.3204C11.1 11.739 11.1 10.8066 11.1 8.94V6.96C11.1 5.0934 11.1 4.1601 10.5069 3.5796C9.9138 2.9991 8.9589 3 7.05 3C5.1411 3 4.1862 3 3.5931 3.5796C3 4.161 3 5.0934 3 6.96V8.94ZM12.9 6.15C12.9 5.1717 12.9 4.683 13.0539 4.296C13.2549 3.78747 13.649 3.37915 14.1501 3.1602C14.5218 3 14.9943 3 15.9375 3H17.9625C18.9057 3 19.3782 3 19.7499 3.1602C20.2458 3.3726 20.6409 3.7812 20.8461 4.296C21 4.683 21 5.1717 21 6.15C21 7.1283 21 7.617 20.8461 8.004C20.6451 8.51253 20.251 8.92085 19.7499 9.1398C19.3782 9.3 18.9057 9.3 17.9625 9.3H15.9375C14.9943 9.3 14.5218 9.3 14.1501 9.1398C13.649 8.92085 13.2549 8.51253 13.0539 8.004C12.9 7.617 12.9 7.1283 12.9 6.15ZM3 17.85C3 18.8283 3 19.317 3.1539 19.704C3.35494 20.2125 3.74902 20.6209 4.2501 20.8398C4.6218 21 5.0943 21 6.0375 21H8.0625C9.0057 21 9.4782 21 9.8499 20.8398C10.3458 20.6274 10.7409 20.2188 10.9461 19.704C11.1 19.317 11.1 18.8283 11.1 17.85C11.1 16.8717 11.1 16.383 10.9461 15.996C10.7451 15.4875 10.351 15.0791 9.8499 14.8602C9.4782 14.7 9.0057 14.7 8.0625 14.7H6.0375C5.0943 14.7 4.6218 14.7 4.2501 14.8602C3.7542 15.0726 3.3591 15.4812 3.1539 15.996C3 16.383 3 16.8717 3 17.85Z"
+            fill="currentColor" />
+        </svg>
+      </button>
+      <PopoverContent position="bottom-start" class="widget-palette-popover">
+        <app-widget-palette></app-widget-palette>
+      </PopoverContent>
+    </Popover>
+  } @else {
     <app-user-menu />
-  </li>
-</nav>
+  }
+</div>
+<!--<nav [class]="cn('navigation-container', !showMenu() && 'navigation-full-span')">-->
+<!--  @if (showMenu()) {-->
+<!--    @for (menu of menus(); track $index) {-->
+<!--      <li>-->
+<!--        @if (menu.routerLink === router.url) {-->
+<!--          <button variant="ghost" title="{{ menu.display | transloco }}" [attr.aria-label]="menu.display | transloco" disabled>-->
+<!--            <span *ngIf="menu.icon" [innerHTML]="getSvg(menu.icon)" class="menu-icon"></span>-->
+<!--          </button>-->
+<!--        } @else if (menu.component) {-->
+<!--          <Popover class="popover-container">-->
+<!--            <button class="menu-icon-btn" title="{{ menu.display | transloco }}" [attr.aria-label]="menu.display | transloco">-->
+<!--              <span *ngIf="menu.icon" [innerHTML]="getSvg(menu.icon)" class="menu-icon"></span>-->
+<!--            </button>-->
+
+<!--            <PopoverContent class="popover-content" position="bottom-end">-->
+<!--              <ng-container [ngComponentOutlet]="menu.component"></ng-container>-->
+<!--            </PopoverContent>-->
+<!--          </Popover>-->
+<!--        } @else {-->
+<!--          <button variant="icon" size="icon" title="{{ menu.display | transloco }}" [attr.aria-label]="menu.display | transloco">-->
+<!--            <span *ngIf="menu.icon" [innerHTML]="getSvg(menu.icon)" class="menu-icon"></span>-->
+<!--          </button>-->
+<!--        }-->
+<!--      </li>-->
+<!--    }-->
+<!--  }-->
+<!--  <li class="user-menu-container">-->
+<!--    <app-user-menu />-->
+<!--  </li>-->
+<!--</nav>-->

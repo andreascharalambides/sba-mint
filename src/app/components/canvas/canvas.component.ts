@@ -1,8 +1,8 @@
-import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy, HostListener, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { Point } from '../../utils/point';
-import { CanvasService, GRID_SIZE, snapPointToGrid } from '../../services/canvas.service';
+import { CanvasService, GRID_SIZE, snapPointToGrid, snapToGrid } from '../../services/canvas.service';
 
 @Component({
   selector: 'app-canvas',
@@ -15,16 +15,21 @@ export class CanvasComponent implements AfterViewInit, OnDestroy {
   @ViewChild('canvasContainer') canvasContainer!: ElementRef<HTMLDivElement>;
   @ViewChild('canvasContent') canvasContent!: ElementRef<HTMLDivElement>;
   @ViewChild('canvasBackground') canvasBackground!: ElementRef<HTMLDivElement>;
+  @ViewChild('dropIndicator', { read: ElementRef }) dropIndicator?: ElementRef<HTMLDivElement>;
 
   private destroy$ = new Subject<void>();
   private isDragging = false;
   private dragStartPosition: Point | null = null;
   private isMovingWidget = false;
   private widgetStartPosition: Point | null = null;
+  private zoomTimeout: any;
 
   editMode$ = this.canvasService.editMode$;
   translation$ = this.canvasService.translation$;
   scale$ = this.canvasService.scale$;
+
+  zoomPercentage = 100;
+  showZoomIndicator = false;
 
   constructor(private canvasService: CanvasService) {}
 
@@ -35,12 +40,26 @@ export class CanvasComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+    if (this.zoomTimeout) {
+      clearTimeout(this.zoomTimeout);
+    }
   }
 
   private setupTransformations(): void {
-    this.canvasService.translation$.pipe(takeUntil(this.destroy$)).subscribe(translation => this.applyTransform());
+    this.canvasService.translation$.pipe(takeUntil(this.destroy$)).subscribe(() => this.applyTransform());
+    this.canvasService.scale$.pipe(takeUntil(this.destroy$)).subscribe(scale => {
+      this.zoomPercentage = Math.round(scale * 100);
+      this.showZoomIndicator = true;
 
-    this.canvasService.scale$.pipe(takeUntil(this.destroy$)).subscribe(scale => this.applyTransform());
+      if (this.zoomTimeout) {
+        clearTimeout(this.zoomTimeout);
+      }
+      this.zoomTimeout = setTimeout(() => {
+        this.showZoomIndicator = false;
+      }, 2000);
+
+      this.applyTransform();
+    });
   }
 
   private applyTransform(): void {
@@ -56,9 +75,42 @@ export class CanvasComponent implements AfterViewInit, OnDestroy {
     const bgX = translation.x;
     const bgY = translation.y;
     this.canvasBackground.nativeElement.style.backgroundPosition = `${bgX}px ${bgY}px`;
-
     const gridSize = Math.max(8, 20 * scale);
     this.canvasBackground.nativeElement.style.backgroundSize = `${gridSize}px ${gridSize}px`;
+  }
+
+  resetZoom(): void {
+    this.canvasService.updateScale(1);
+    this.canvasService.updateTranslation(new Point(window.innerWidth / 2, window.innerHeight / 2));
+  }
+
+  @HostListener('dragover', ['$event'])
+  onDragOver(event: DragEvent): void {
+    if (this.canvasService.getEditMode()) {
+      event.preventDefault();
+      event.dataTransfer!.dropEffect = 'copy';
+    }
+  }
+
+  @HostListener('drop', ['$event'])
+  onDrop(event: DragEvent): void {
+    if (this.canvasService.getEditMode()) {
+      event.preventDefault();
+
+      const widgetType = event.dataTransfer!.getData('widgetType') as 'assistant' | 'explore' | 'preview';
+      if (widgetType) {
+        const dropPoint = new Point(event.clientX, event.clientY);
+        const canvasPoint = this.canvasService.screenToCanvas(dropPoint);
+
+        const widgetWidth = snapToGrid(400);
+        const widgetHeight = snapToGrid(600);
+
+        // place widget's center at cursor
+        const position = snapPointToGrid(new Point(canvasPoint.x - widgetWidth / 2, canvasPoint.y - widgetHeight / 2));
+
+        this.canvasService.addWidget(widgetType, position, { width: widgetWidth, height: widgetHeight });
+      }
+    }
   }
 
   @HostListener('wheel', ['$event'])

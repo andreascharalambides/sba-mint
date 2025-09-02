@@ -26,10 +26,11 @@ import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { CollectionsComponent } from '../../../custom-components/collections/collections';
 import { BookmarksComponent } from '../../../custom-components/bookmarks/bookmarks';
+import { WidgetPaletteComponent } from '../widget-palette/widget-palette.component';
+import { CanvasService } from '../../services/canvas.service';
 
 export type NavbarMenu = {
   display: string;
-  // iconClass: string;
   routerLink?: string;
   keepOnMouseLeave?: boolean;
   component?: Type<unknown>;
@@ -49,7 +50,8 @@ export type NavbarMenu = {
     AutocompleteComponent,
     UserMenuComponent,
     PopoverComponent,
-    PopoverContentComponent
+    PopoverContentComponent,
+    WidgetPaletteComponent
   ],
   host: {
     '[attr.drawer-opened]': 'drawerOpened()'
@@ -75,6 +77,8 @@ export class NavbarComponent {
 
   private readonly http = inject(HttpClient);
   private readonly sanitizer = inject(DomSanitizer);
+
+  private canvasService = inject(CanvasService);
 
   svgCache = new Map<string, SafeHtml>();
 
@@ -119,32 +123,11 @@ export class NavbarComponent {
     this.transloco.events$.pipe(takeUntilDestroyed(), debounceTime(100)).subscribe(() => this.overflowManager()?.countItems());
   }
 
-  autocompleteItemClicked(item: Suggestion): void {
-    if (!item.display) {
-      console.error('No display property found on item', item);
-      return;
-    }
-
-    this.searchInput()?.closeAutocompletePopover();
-
-    this.search(item.display!);
-  }
-
   protected search(text: string): void {
     this.queryParamsStore.patch({ text });
 
     // ! we need to remove the page parameter from the query params when new search is performed
     this.router.navigate(['search'], { queryParams: { q: text, p: undefined }, queryParamsHandling: 'replace' });
-  }
-
-  /**
-   * Occurs when the search input is validated by the user
-   * (e.g. by pressing enter or clicking on a search button)
-   *
-   * @param text The validated text
-   */
-  protected validated(text: string): void {
-    this.search(text);
   }
 
   /**
@@ -166,5 +149,10 @@ export class NavbarComponent {
         this.savedSearchesService.deleteSavedSearch(index);
       }
     }
+  }
+
+  isWidgetPaletteOpen = false;
+  toggleWidgetPalette(): void {
+    this.isWidgetPaletteOpen = !this.isWidgetPaletteOpen;
   }
 }

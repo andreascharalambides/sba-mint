@@ -11,4 +11,9 @@
   <div #canvasContent class="canvas-content">
     <ng-content></ng-content>
   </div>
+
+  <div class="zoom-controls" [class.visible]="showZoomIndicator">
+    <div class="zoom-display">{{ zoomPercentage }}%</div>
+    <button class="zoom-reset-btn" (click)="resetZoom()" title="Reset to 100%" *ngIf="zoomPercentage !== 100">Reset</button>
+  </div>
 </div>

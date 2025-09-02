@@ -1,0 +1,96 @@
+.widget-palette-menu {
+  width: 300px;
+  padding: var(--spacing-lg);
+  overflow: hidden;
+  display: flex;
+  gap: var(--spacing-md);
+  flex-direction: column;
+}
+
+.palette-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-weight: var(--font-medium);
+  font-size: var(--text-xl);
+  color: var(--grays-00);
+  width: 100%;
+}
+
+.palette-items {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  overflow-x: scroll;
+}
+
+.palette-item {
+  display: flex;
+  min-width: 80px;
+  max-width: 80px;
+  width: 80px;
+  flex: 0 0 80px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-sm);
+  border-radius: var(--radius-md);
+  background: transparent;
+  cursor: grab;
+  transition: all var(--transition-normal);
+  position: relative;
+  color: var(--primary-01);
+  background: var(--grays-07);
+}
+
+.palette-item svg {
+  color: var(--primary-03) !important;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.palette-item .icon-path {
+  width: 100%;
+  height: 100%;
+}
+
+.palette-item:not(.disabled):hover {
+  background: var(--grays-06);
+}
+
+.palette-item.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.palette-item:not(.disabled):active {
+  cursor: grabbing;
+}
+
+.palette-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.widget-drag-preview {
+  position: absolute;
+  pointer-events: none;
+  z-index: 10000;
+}
+
+.widget-drop-preview {
+  will-change: transform;
+  transform-origin: 0 0;
+}

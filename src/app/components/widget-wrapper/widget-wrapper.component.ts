@@ -23,6 +23,7 @@ export class WidgetWrapperComponent implements AfterViewInit, OnDestroy {
   widget?: WidgetData;
   isSelected = false;
   editMode = false;
+  isVisible = true;
 
   constructor(private canvasService: CanvasService) {}
 
@@ -36,6 +37,12 @@ export class WidgetWrapperComponent implements AfterViewInit, OnDestroy {
   }
 
   private setupSubscriptions(): void {
+    this.canvasService.widgets$.pipe(takeUntil(this.destroy$)).subscribe(widgets => {
+      this.widget = widgets.get(this.widgetId);
+      this.isVisible = this.widget?.visible || false;
+      this.updatePosition();
+    });
+
     this.canvasService.widgets$.pipe(takeUntil(this.destroy$)).subscribe(widgets => {
       this.widget = widgets.get(this.widgetId);
       this.updatePosition();
@@ -100,5 +107,10 @@ export class WidgetWrapperComponent implements AfterViewInit, OnDestroy {
 
     document.addEventListener('mousemove', handleResize);
     document.addEventListener('mouseup', handleResizeEnd);
+  }
+
+  onRemove(event: MouseEvent): void {
+    event.stopPropagation();
+    this.canvasService.removeWidget(this.widgetId);
   }
 }

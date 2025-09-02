@@ -8,6 +8,8 @@ export interface WidgetData {
   position: Point;
   width: number;
   height: number;
+  visible: boolean;
+  type: 'assistant' | 'explore' | 'preview';
 }
 
 export const GRID_SIZE = 20;
@@ -53,6 +55,8 @@ export class CanvasService {
 
   private responsiveConfig: ResponsiveConfig = DEFAULT_RESPONSIVE_CONFIG;
 
+  private draggedWidgetTypeSubject = new BehaviorSubject<string | null>(null);
+  public draggedWidgetType$ = this.draggedWidgetTypeSubject.asObservable();
   public editMode$ = this.editModeSubject.asObservable();
   public translation$ = this.translationSubject.asObservable();
   public scale$ = this.scaleSubject.asObservable();
@@ -110,7 +114,9 @@ export class CanvasService {
       id: 'assistant',
       position: new Point(snapToGrid(viewportCenterX - dimensions.width * 1.5 - dimensions.padding), snapToGrid(viewportCenterY - dimensions.height / 2)),
       width: dimensions.width,
-      height: dimensions.height
+      height: dimensions.height,
+      visible: true,
+      type: 'assistant'
     });
 
     // Explore widget - center
@@ -118,7 +124,9 @@ export class CanvasService {
       id: 'explore',
       position: new Point(snapToGrid(viewportCenterX - dimensions.width / 2), snapToGrid(viewportCenterY - dimensions.height / 2)),
       width: dimensions.width,
-      height: dimensions.height
+      height: dimensions.height,
+      visible: true,
+      type: 'explore'
     });
 
     // Preview widget - right side
@@ -126,12 +134,73 @@ export class CanvasService {
       id: 'preview',
       position: new Point(snapToGrid(viewportCenterX + dimensions.width * 0.5 + dimensions.padding), snapToGrid(viewportCenterY - dimensions.height / 2)),
       width: dimensions.width,
-      height: dimensions.height
+      height: dimensions.height,
+      visible: true,
+      type: 'preview'
     });
 
     this.widgetsSubject.next(widgets);
   }
 
+  removeWidget(widgetId: string): void {
+    const widgets = new Map(this.widgetsSubject.value);
+    const widget = widgets.get(widgetId);
+    if (widget) {
+      widget.visible = false;
+      widgets.set(widgetId, widget);
+      this.widgetsSubject.next(widgets);
+      if (this.selectedWidgetSubject.value === widgetId) {
+        this.selectedWidgetSubject.next(null);
+      }
+    }
+  }
+
+  addWidget(widgetType: 'assistant' | 'explore' | 'preview', position?: Point, customSize?: { width: number; height: number }): void {
+    const widgets = new Map(this.widgetsSubject.value);
+    const widget = widgets.get(widgetType);
+
+    if (widget) {
+      // Use custom size if provided, otherwise use default dimensions
+      if (customSize) {
+        widget.width = customSize.width;
+        widget.height = customSize.height;
+      } else {
+        const dimensions = this.calculateResponsiveDimensions();
+        widget.width = dimensions.width;
+        widget.height = dimensions.height;
+      }
+
+      if (position) {
+        widget.position = snapPointToGrid(position);
+      } else {
+        // Calculate position in viewport center
+        const viewportCenter = new Point(
+          (window.innerWidth / 2 - this.translationSubject.value.x) / this.scaleSubject.value,
+          (window.innerHeight / 2 - this.translationSubject.value.y) / this.scaleSubject.value
+        );
+        widget.position = snapPointToGrid(new Point(viewportCenter.x - widget.width / 2, viewportCenter.y - widget.height / 2));
+      }
+
+      widget.visible = true;
+      widgets.set(widgetType, widget);
+      this.widgetsSubject.next(widgets);
+    }
+  }
+
+  isWidgetVisible(widgetId: string): boolean {
+    const widget = this.widgetsSubject.value.get(widgetId);
+    return widget?.visible || false;
+  }
+
+  setDraggedWidgetType(type: string | null): void {
+    this.draggedWidgetTypeSubject.next(type);
+  }
+
+  screenToCanvas(screenPoint: Point): Point {
+    const translation = this.getTranslation();
+    const scale = this.getScale();
+    return screenPoint.sub(translation).div(scale);
+  }
   private updateResponsiveLayout(): void {
     const dimensions = this.calculateResponsiveDimensions();
     const widgets = new Map(this.widgetsSubject.value);
