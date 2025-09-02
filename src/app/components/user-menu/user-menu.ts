@@ -102,14 +102,6 @@ export class UserMenuComponent {
     if (this.transloco.getActiveLang() !== lang) this.transloco.setActiveLang(lang);
   }
 
-  navigateToBookmarks() {
-    this.router.navigate(['/widgets/bookmarks']);
-  }
-
-  navigateToCollections() {
-    this.router.navigate(['/widgets/collections']);
-  }
-
   handleLogout() {
     setGlobalConfig({ userOverrideActive: false, userOverride: undefined });
     logout().then(() => this.router.navigate(['/logout']));

@@ -41,6 +41,8 @@ import { APP_FEATURES } from '../../../tokens';
 import { PreviewComponent } from '../../../components/preview/preview';
 import { AutocompleteComponent } from '../../../components/search-input/autocomplete/autocomplete.component';
 import { SearchInputComponent } from '../../../components/search-input/search-input.component';
+import { BookmarksComponent } from '../../widgets/bookmarks/bookmarks.component';
+import { CollectionsComponent } from '../../widgets/collections/collections.component';
 
 type Result = R & { nextPage?: number; previousPage?: number };
 type QueryParamsProps = {
@@ -72,7 +74,9 @@ type QueryParamsProps = {
     AutocompleteComponent,
     SearchInputComponent,
     CanvasComponent,
-    WidgetWrapperComponent
+    WidgetWrapperComponent,
+    BookmarksComponent,
+    CollectionsComponent
   ],
   templateUrl: './search-all.component.html',
   styleUrls: ['./search-all.component.css'],

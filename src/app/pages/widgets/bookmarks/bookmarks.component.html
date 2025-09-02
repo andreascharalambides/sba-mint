@@ -1,42 +1,31 @@
-<div class="layout-search" [attr.drawer-opened]="drawerOpened()">
-  <div class="content-container">
-    <div class="page-title-container">
-      <h1 class="page-title">
-        <i class="fa-fw fas fa-bookmark title-icon" aria-hidden></i>
-        {{ 'myBookmarks' | transloco }}
-      </h1>
-    </div>
-
-    @if (bookmarksArticle().length > 0) {
-      <ul class="bookmarks-list">
-        @for (bookmark of bookmarksArticle(); track bookmark.bookmark.id + $index) {
-          <li>
-            @if (bookmark.article && bookmark.article.docformat) {
-              <ng-container *ngComponentOutlet="getArticleType(bookmark.article.docformat)!; inputs: { article: bookmark.article, strategy: 'replace' }" />
-            } @else {
-              <div class="bookmark-item">
-                <span class="bookmark-id">{{ bookmark.bookmark.id }}</span>
-                <button
-                  class="delete-button"
-                  [attr.title]="'bookmark.removeBookmark' | transloco"
-                  [attr.aria-label]="'bookmark.removeBookmark' | transloco"
-                  (click)="onDelete(bookmark.bookmark)">
-                  <i class="fa-fw fa-regular fa-trash-can" aria-hidden="true"></i>
-                </button>
-              </div>
-            }
-          </li>
-        }
-      </ul>
-    } @else {
-      <div class="no-records-container">
-        <div class="main-text">
-          <p>No bookmarks found</p>
-        </div>
-        <div class="subtitle-text">
-          <p>You can bookmark articles from the results</p>
-        </div>
+<div class="content-container">
+  @if (bookmarksArticle().length > 0) {
+    <ul class="bookmarks-list">
+      @for (bookmark of bookmarksArticle(); track bookmark.bookmark.id + $index) {
+        <li>
+          @if (bookmark.article && bookmark.article.docformat) {
+            <ng-container *ngComponentOutlet="getArticleType(bookmark.article.docformat)!; inputs: { article: bookmark.article, strategy: 'replace' }" />
+          } @else {
+            <div class="bookmark-item">
+              <span class="bookmark-id">{{ bookmark.bookmark.id }}</span>
+              <button
+                class="delete-button"
+                [attr.title]="'bookmark.removeBookmark' | transloco"
+                [attr.aria-label]="'bookmark.removeBookmark' | transloco"
+                (click)="onDelete(bookmark.bookmark)">
+                <i class="fa-fw fa-regular fa-trash-can" aria-hidden="true"></i>
+              </button>
+            </div>
+          }
+        </li>
+      }
+    </ul>
+  } @else {
+    <div class="empty-state">
+      <div class="empty-content">
+        <h3 class="empty-title">No bookmarks found</h3>
+        <p class="empty-description">You can bookmark articles from the results</p>
       </div>
-    }
-  </div>
+    </div>
+  }
 </div>

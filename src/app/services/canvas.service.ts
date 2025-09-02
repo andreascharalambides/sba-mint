@@ -9,7 +9,7 @@ export interface WidgetData {
   width: number;
   height: number;
   visible: boolean;
-  type: 'assistant' | 'explore' | 'preview';
+  type: 'assistant' | 'explore' | 'preview' | 'bookmarks' | 'collections';
 }
 
 export const GRID_SIZE = 20;
@@ -109,7 +109,7 @@ export class CanvasService {
 
     const widgets = new Map<string, WidgetData>();
 
-    // Assistant widget - left side
+    // Assistant widget
     widgets.set('assistant', {
       id: 'assistant',
       position: new Point(snapToGrid(viewportCenterX - dimensions.width * 1.5 - dimensions.padding), snapToGrid(viewportCenterY - dimensions.height / 2)),
@@ -119,7 +119,7 @@ export class CanvasService {
       type: 'assistant'
     });
 
-    // Explore widget - center
+    // Explore widget
     widgets.set('explore', {
       id: 'explore',
       position: new Point(snapToGrid(viewportCenterX - dimensions.width / 2), snapToGrid(viewportCenterY - dimensions.height / 2)),
@@ -129,7 +129,7 @@ export class CanvasService {
       type: 'explore'
     });
 
-    // Preview widget - right side
+    // Preview widget
     widgets.set('preview', {
       id: 'preview',
       position: new Point(snapToGrid(viewportCenterX + dimensions.width * 0.5 + dimensions.padding), snapToGrid(viewportCenterY - dimensions.height / 2)),
@@ -137,6 +137,26 @@ export class CanvasService {
       height: dimensions.height,
       visible: true,
       type: 'preview'
+    });
+
+    // Bookmarks widget
+    widgets.set('bookmarks', {
+      id: 'bookmarks',
+      position: new Point(snapToGrid(viewportCenterX - dimensions.width / 2), snapToGrid(viewportCenterY - dimensions.height / 2)),
+      width: dimensions.width,
+      height: dimensions.height,
+      visible: false,
+      type: 'bookmarks'
+    });
+
+    // Collections widget
+    widgets.set('collections', {
+      id: 'collections',
+      position: new Point(snapToGrid(viewportCenterX - dimensions.width / 2), snapToGrid(viewportCenterY - dimensions.height / 2)),
+      width: dimensions.width,
+      height: dimensions.height,
+      visible: false,
+      type: 'collections'
     });
 
     this.widgetsSubject.next(widgets);
@@ -155,7 +175,11 @@ export class CanvasService {
     }
   }
 
-  addWidget(widgetType: 'assistant' | 'explore' | 'preview', position?: Point, customSize?: { width: number; height: number }): void {
+  addWidget(
+    widgetType: 'assistant' | 'explore' | 'preview' | 'bookmarks' | 'collections',
+    position?: Point,
+    customSize?: { width: number; height: number }
+  ): void {
     const widgets = new Map(this.widgetsSubject.value);
     const widget = widgets.get(widgetType);
 
@@ -228,6 +252,12 @@ export class CanvasService {
             snapToGrid(viewportCenterX + dimensions.width * 0.5 + dimensions.padding),
             snapToGrid(viewportCenterY - dimensions.height / 2)
           );
+          break;
+        case 'bookmarks':
+          widget.position = new Point(snapToGrid(viewportCenterX - dimensions.width / 2), snapToGrid(viewportCenterY - dimensions.height / 2));
+          break;
+        case 'collections':
+          widget.position = new Point(snapToGrid(viewportCenterX - dimensions.width / 2), snapToGrid(viewportCenterY - dimensions.height / 2));
           break;
       }
     });

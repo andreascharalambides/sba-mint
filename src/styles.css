@@ -369,16 +369,17 @@ body {
   }
 
   .empty-title {
-    font-size: var(--text-xl);
-    font-weight: var(--font-medium);
-    color: var(--grays-02);
     margin-bottom: var(--spacing-sm);
+    font-weight: var(--font-medium);
+    color: var(--primary-03);
+    font-size: var(--text-xl);
   }
 
   .empty-description {
-    font-size: var(--text-base);
-    color: var(--grays-04);
     line-height: 1.5;
+    color: var(--primary-04);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
   }
 
   /* Loading states */
