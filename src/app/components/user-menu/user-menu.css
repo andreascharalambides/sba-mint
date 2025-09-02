@@ -13,6 +13,49 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-xs);
+  transition: color 200ms ease;
+}
+
+::ng-deep .avatar-fallback:hover {
+  color: var(--primary-00) !important;
+}
+
+menuitem .item-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  display: block;
+  object-fit: contain;
+}
+
+menuitem .bookmarks {
+  height: 14px !important;
+}
+
+menuitem {
+  color: var(--primary-00) !important;
+  font-weight: var(--font-regular) !important;
+  width: 100% !important;
+
+  span {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  &:hover {
+    font-weight: var(--font-medium) !important;
+    background: none !important;
+
+    img,
+    svg {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.reset-settings {
+  color: var(--color-destructive) !important;
 }
 
 ::ng-deep .arrow-down {
@@ -25,9 +68,10 @@
 }
 
 .menu-content-main {
-  min-width: max-content;
+  min-width: 250px;
   background-color: rgba(255, 255, 255, 0.4) !important;
   backdrop-filter: var(--glass-backdrop-blur) !important;
+  padding: var(--spacing-md);
 }
 
 .menu-grow {

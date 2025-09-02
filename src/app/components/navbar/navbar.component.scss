@@ -83,7 +83,6 @@
   &:hover {
     .menu-icon {
       color: var(--primary-00);
-      //font-size: 20px !important;
     }
   }
 }
@@ -101,14 +100,7 @@
 
 /* User menu container */
 ::ng-deep app-user-menu {
-  flex-shrink: 0; /* shrink-0 */
-
-  &:hover {
-    i,
-    svg {
-      color: var(--primary-00) !important;
-    }
-  }
+  flex-shrink: 0;
 }
 
 /* Drawer opened state styles */

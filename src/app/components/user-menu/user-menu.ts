@@ -80,7 +80,6 @@ export class UserMenuComponent {
   loadSvg(path: string): void {
     if (!this.svgCache.has(path)) {
       this.http.get(path, { responseType: 'text' }).subscribe(svg => {
-        // Remove the fixed fill to make it CSS-customizable
         const modifiedSvg = svg.replace(/fill="#[^"]*"/g, 'fill="currentColor"');
         this.svgCache.set(path, this.sanitizer.bypassSecurityTrustHtml(modifiedSvg));
       });
@@ -94,17 +93,6 @@ export class UserMenuComponent {
 
   protected readonly userIcon = './../../assets/icons/user.svg';
 
-  readonly initials = computed(() => {
-    const principal = this.user();
-    const separator = principal.fullName ? ' ' : '.';
-    return (principal.fullName || principal.name || '')
-      .split(separator)
-      .filter(word => word[0] && word[0] === word[0].toUpperCase())
-      .map(word => word[0])
-      .join('')
-      .slice(0, 3);
-  });
-
   readonly allowUserOverride = computed(() => this.principalStore.allowUserOverride());
   readonly isOverridingUser = computed(() => this.principalStore.isOverridingUser());
 
@@ -112,6 +100,14 @@ export class UserMenuComponent {
     this.userSettingsStore.updateLanguage(lang);
 
     if (this.transloco.getActiveLang() !== lang) this.transloco.setActiveLang(lang);
+  }
+
+  navigateToBookmarks() {
+    this.router.navigate(['/widgets/bookmarks']);
+  }
+
+  navigateToCollections() {
+    this.router.navigate(['/widgets/collections']);
   }
 
   handleLogout() {
